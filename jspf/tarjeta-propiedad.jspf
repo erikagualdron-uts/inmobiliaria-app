@@ -1,0 +1,42 @@
+<%
+    // =========================================================================
+    // Tarjeta de propiedad reutilizable (catalogo, destacadas, etc.).
+    // La pagina que incluye este JSPF debe declarar, justo ANTES de cada
+    // include, una variable local:
+    //     Map<String, Object> prop = ... ;
+    // con las llaves: id, titulo, precio, operacion, estado, habitaciones,
+    // banos, area, ciudad, tipo, imagen.
+    // =========================================================================
+    {
+        String hgEstadoTarjeta = (String) prop.get("estado");
+        String hgOperacionTarjeta = (String) prop.get("operacion");
+        Object hgImgTarjeta = prop.get("imagen");
+        String hgImgUrlTarjeta = hgImgTarjeta != null ? hgImgTarjeta.toString()
+                : "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=75&auto=format&fit=crop";
+        java.text.NumberFormat hgFormatoCOP = java.text.NumberFormat.getInstance(new java.util.Locale("es", "CO"));
+        String hgPrecioTxt = "$ " + hgFormatoCOP.format(prop.get("precio")) + ("arriendo".equals(hgOperacionTarjeta) ? " / mes" : "");
+        Object hgHabTarjeta = prop.get("habitaciones");
+        Object hgBanosTarjeta = prop.get("banos");
+%>
+<div class="col-12 col-md-6 col-lg-4">
+    <a class="hg-card" href="<%= request.getContextPath() %>/detalle.jsp?id=<%= prop.get("id") %>" style="text-decoration:none;">
+        <div class="hg-card__media">
+            <img src="<%= hgImgUrlTarjeta %>" alt="<%= prop.get("titulo") %>" loading="lazy">
+            <span class="hg-badge"><%= "venta".equals(hgOperacionTarjeta) ? "Venta" : "Arriendo" %></span>
+            <span class="hg-badge--estado hg-badge--<%= hgEstadoTarjeta %>"><%= hgEstadoTarjeta.substring(0, 1).toUpperCase() + hgEstadoTarjeta.substring(1) %></span>
+        </div>
+        <div class="hg-card__body">
+            <span class="hg-card__price"><%= hgPrecioTxt %></span>
+            <span class="hg-card__title"><%= prop.get("titulo") %></span>
+            <span class="hg-card__loc">📍 <%= prop.get("ciudad") %> &middot; <%= prop.get("tipo") %></span>
+            <div class="hg-card__feats">
+                <% if (hgHabTarjeta != null) { %><span>🛏 <%= hgHabTarjeta %></span><% } %>
+                <% if (hgBanosTarjeta != null) { %><span>🛁 <%= hgBanosTarjeta %></span><% } %>
+                <span>📐 <%= prop.get("area") %> m²</span>
+            </div>
+        </div>
+    </a>
+</div>
+<%
+    }
+%>

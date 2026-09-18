@@ -22,7 +22,7 @@
         </button>
 
         <nav class="hg-navmenu" id="hg-navmenu">
-            <a href="<%= request.getContextPath() %>/index.jsp#destacadas">Propiedades</a>
+            <a href="<%= request.getContextPath() %>/catalogo.jsp">Propiedades</a>
             <a href="<%= request.getContextPath() %>/index.jsp#nosotros">Nosotros</a>
             <a href="<%= request.getContextPath() %>/index.jsp#contacto">Contacto</a>
 

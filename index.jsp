@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ page import="java.sql.PreparedStatement, java.sql.ResultSet" %>
-<%@ page import="java.text.NumberFormat, java.util.Locale" %>
 <%@ page import="java.util.ArrayList, java.util.List, java.util.Map, java.util.LinkedHashMap" %>
 <%@ include file="/jspf/conexion.jspf" %>
 <%
@@ -85,8 +84,6 @@
 
         try { conexion.close(); } catch (Exception ignored) { }
     }
-
-    NumberFormat formatoCOP = NumberFormat.getInstance(new Locale("es", "CO"));
 %><!DOCTYPE html>
 <html lang="es">
 <head>
@@ -190,34 +187,8 @@
         <div class="hg-alert">Por ahora no hay propiedades disponibles para mostrar. Vuelve pronto.</div>
         <% } else { %>
         <div class="row g-4">
-            <% for (Map<String, Object> prop : destacadas) {
-                String estado = (String) prop.get("estado");
-                String operacion = (String) prop.get("operacion");
-                Object img = prop.get("imagen");
-                String imgUrl = img != null ? img.toString() : "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=75&auto=format&fit=crop";
-                String precioTxt = "$ " + formatoCOP.format(prop.get("precio")) + ("arriendo".equals(operacion) ? " / mes" : "");
-                Object hab = prop.get("habitaciones");
-                Object banos = prop.get("banos");
-            %>
-            <div class="col-12 col-md-6 col-lg-4">
-                <a class="hg-card" href="<%= request.getContextPath() %>/detalle.jsp?id=<%= prop.get("id") %>" style="text-decoration:none;">
-                    <div class="hg-card__media">
-                        <img src="<%= imgUrl %>" alt="<%= prop.get("titulo") %>" loading="lazy">
-                        <span class="hg-badge"><%= "venta".equals(operacion) ? "Venta" : "Arriendo" %></span>
-                        <span class="hg-badge--estado hg-badge--<%= estado %>"><%= estado.substring(0,1).toUpperCase() + estado.substring(1) %></span>
-                    </div>
-                    <div class="hg-card__body">
-                        <span class="hg-card__price"><%= precioTxt %></span>
-                        <span class="hg-card__title"><%= prop.get("titulo") %></span>
-                        <span class="hg-card__loc">📍 <%= prop.get("ciudad") %> &middot; <%= prop.get("tipo") %></span>
-                        <div class="hg-card__feats">
-                            <% if (hab != null) { %><span>🛏 <%= hab %></span><% } %>
-                            <% if (banos != null) { %><span>🛁 <%= banos %></span><% } %>
-                            <span>📐 <%= prop.get("area") %> m²</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
+            <% for (Map<String, Object> prop : destacadas) { %>
+            <%@ include file="/jspf/tarjeta-propiedad.jspf" %>
             <% } %>
         </div>
         <% } %>
