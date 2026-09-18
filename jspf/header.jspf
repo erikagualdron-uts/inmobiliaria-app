@@ -1,3 +1,4 @@
+<%@ page pageEncoding="UTF-8" %>
 <%
     // Header incluido en las paginas publicas. Si ya existe sesion iniciada
     // (la establecera el futuro modulo de login con session.setAttribute

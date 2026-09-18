@@ -1,3 +1,4 @@
+<%@ page pageEncoding="UTF-8" %>
 <%
     // Barra superior para paginas internas ya protegidas por seguridad.jspf.
     String hgNombrePanel = (String) session.getAttribute("nombreUsuario");

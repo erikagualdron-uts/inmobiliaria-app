@@ -1,3 +1,4 @@
+<%@ page pageEncoding="UTF-8" %>
 <footer class="hg-footer" id="contacto">
     <div class="hg-footer__inner">
         <div class="hg-footer__brand">
