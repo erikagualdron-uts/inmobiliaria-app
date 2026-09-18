@@ -87,7 +87,7 @@
 %><!DOCTYPE html>
 <html lang="es">
 <head>
-    <% String hgTitulo = "Encuentra tu proximo hogar"; %>
+    <% String hgTitulo = "Encuentra tu próximo hogar"; %>
     <%@ include file="/jspf/head-comun.jspf" %>
     <meta name="description" content="Hogaria: compra, venta y arriendo de propiedades en las principales ciudades de Colombia.">
 </head>
@@ -107,8 +107,8 @@
         <div class="hg-hero__inner">
             <div>
                 <span class="hg-eyebrow">Inmobiliaria digital</span>
-                <h1>Encuentra el lugar donde empieza <em>tu proxima historia</em></h1>
-                <p class="hg-hero__lede">Hogaria conecta compradores, arrendatarios e inmobiliarias en un solo lugar: busca por ciudad, tipo y precio, agenda tu visita y haz seguimiento a tu tramite sin salir de la plataforma.</p>
+                <h1>Encuentra el lugar donde empieza <em>tu próxima historia</em></h1>
+                <p class="hg-hero__lede">Hogaria conecta compradores, arrendatarios e inmobiliarias en un solo lugar: busca por ciudad, tipo y precio, agenda tu visita y haz seguimiento a tu trámite sin salir de la plataforma.</p>
 
                 <div class="hg-hero__stats">
                     <div><strong><%= totalPropiedades %></strong><span>Propiedades activas</span></div>
@@ -136,7 +136,7 @@
                         </select>
                     </div>
                     <div class="hg-field">
-                        <label for="f-operacion">Operacion</label>
+                        <label for="f-operacion">Operación</label>
                         <select class="form-select" id="f-operacion" name="operacion">
                             <option value="">Venta o arriendo</option>
                             <option value="venta">Venta</option>
@@ -144,11 +144,11 @@
                         </select>
                     </div>
                     <div class="hg-field">
-                        <label for="f-precio">Precio maximo</label>
-                        <input class="form-control" type="number" id="f-precio" name="precioMax" min="0" step="100000" placeholder="Sin limite">
+                        <label for="f-precio">Precio máximo</label>
+                        <input class="form-control" type="number" id="f-precio" name="precioMax" min="0" step="100000" placeholder="Sin límite">
                     </div>
                     <button class="hg-btn hg-btn--primary" type="submit">Buscar</button>
-                    <small class="hg-search__hint text-danger" hidden style="grid-column:1/-1;">Elige al menos un criterio de busqueda (ciudad, tipo u operacion).</small>
+                    <small class="hg-search__hint text-danger" hidden style="grid-column:1/-1;">Elige al menos un criterio de búsqueda (ciudad, tipo u operación).</small>
                 </form>
             </div>
 
@@ -168,11 +168,11 @@
     <div class="hg-container">
         <div class="hg-section__head">
             <div>
-                <span class="hg-eyebrow">Seleccion Hogaria</span>
+                <span class="hg-eyebrow">Selección Hogaria</span>
                 <h2>Propiedades destacadas</h2>
-                <p>Los inmuebles mas recientes disponibles ahora mismo en nuestra plataforma.</p>
+                <p>Los inmuebles más recientes disponibles ahora mismo en nuestra plataforma.</p>
             </div>
-            <a class="hg-btn hg-btn--ghost" href="<%= request.getContextPath() %>/catalogo.jsp">Ver todo el catalogo</a>
+            <a class="hg-btn hg-btn--ghost" href="<%= request.getContextPath() %>/catalogo.jsp">Ver todo el catálogo</a>
         </div>
 
         <% if (destacadas.isEmpty()) { %>
@@ -196,11 +196,11 @@
             </div>
             <div>
                 <span class="hg-eyebrow">Sobre Hogaria</span>
-                <h2>Acompanamos cada paso, desde la busqueda hasta la firma</h2>
-                <p style="color:var(--hg-ink-muted); margin-top:14px;">Somos una plataforma que conecta clientes con inmobiliarias aliadas en toda Colombia. Verificamos cada publicacion, hacemos seguimiento a citas y solicitudes, y mantenemos tu informacion protegida en todo momento.</p>
+                <h2>Acompañamos cada paso, desde la búsqueda hasta la firma</h2>
+                <p style="color:var(--hg-ink-muted); margin-top:14px;">Somos una plataforma que conecta clientes con inmobiliarias aliadas en toda Colombia. Verificamos cada publicación, hacemos seguimiento a citas y solicitudes, y mantenemos tu información protegida en todo momento.</p>
                 <ul>
-                    <li>🔒 <span><strong>Cuentas seguras:</strong> contrasenas cifradas y control de acceso por rol.</span></li>
-                    <li>🏘️ <span><strong>Catalogo verificado:</strong> matricula inmobiliaria unica por publicacion.</span></li>
+                    <li>🔒 <span><strong>Cuentas seguras:</strong> contraseñas cifradas y control de acceso por rol.</span></li>
+                    <li>🏘️ <span><strong>Catálogo verificado:</strong> matrícula inmobiliaria única por publicación.</span></li>
                     <li>📅 <span><strong>Citas sin cruces:</strong> agenda visitas sin duplicar horarios sobre el mismo inmueble.</span></li>
                 </ul>
             </div>
@@ -213,7 +213,7 @@
     <div class="hg-container">
         <div class="hg-section__head">
             <div>
-                <span class="hg-eyebrow">Por que Hogaria</span>
+                <span class="hg-eyebrow">Por qué Hogaria</span>
                 <h2>Todo lo que necesitas en un solo lugar</h2>
             </div>
         </div>
@@ -221,14 +221,14 @@
             <div class="col-12 col-md-4">
                 <div class="hg-feature">
                     <div class="hg-feature__icon">🔍</div>
-                    <h3>Busqueda con filtros</h3>
-                    <p>Filtra por ciudad, tipo de inmueble, precio y caracteristicas para encontrar justo lo que buscas.</p>
+                    <h3>Búsqueda con filtros</h3>
+                    <p>Filtra por ciudad, tipo de inmueble, precio y características para encontrar justo lo que buscas.</p>
                 </div>
             </div>
             <div class="col-12 col-md-4">
                 <div class="hg-feature">
                     <div class="hg-feature__icon">📋</div>
-                    <h3>Tramites en linea</h3>
+                    <h3>Trámites en línea</h3>
                     <p>Radica documentos de compra o arriendo y consulta el estado de tu solicitud en tiempo real.</p>
                 </div>
             </div>
@@ -236,7 +236,7 @@
                 <div class="hg-feature">
                     <div class="hg-feature__icon">🤝</div>
                     <h3>Inmobiliarias aliadas</h3>
-                    <p>Agentes verificados que atienden tus citas y aprueban tu documentacion sin demoras.</p>
+                    <p>Agentes verificados que atienden tus citas y aprueban tu documentación sin demoras.</p>
                 </div>
             </div>
         </div>
@@ -249,7 +249,7 @@
         <div class="hg-cta">
             <div>
                 <h2>Crea tu cuenta y guarda tus propiedades favoritas</h2>
-                <p>Regístrate gratis para agendar citas, radicar solicitudes y llevar el control de tus tramites con Hogaria.</p>
+                <p>Regístrate gratis para agendar citas, radicar solicitudes y llevar el control de tus trámites con Hogaria.</p>
             </div>
             <a class="hg-btn hg-btn--solid" href="<%= request.getContextPath() %>/registro.jsp">Crear cuenta gratis</a>
         </div>

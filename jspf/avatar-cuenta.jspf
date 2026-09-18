@@ -43,6 +43,6 @@
     </button>
     <div class="dropdown-menu dropdown-menu-end hg-cuenta-menu" aria-labelledby="hg-avatar-trigger">
         <a class="dropdown-item" href="<%= hgAvPanel %>"><i class="bi bi-speedometer2"></i> Mi panel</a>
-        <a class="dropdown-item" href="<%= request.getContextPath() %>/logout.jsp"><i class="bi bi-box-arrow-right"></i> Cerrar sesion</a>
+        <a class="dropdown-item" href="<%= request.getContextPath() %>/logout.jsp"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a>
     </div>
 </div>

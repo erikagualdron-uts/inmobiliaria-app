@@ -45,7 +45,7 @@
         }
     }
 
-    if ("1".equals(request.getParameter("creado"))) { mensaje = "Propiedad publicada con exito."; }
+    if ("1".equals(request.getParameter("creado"))) { mensaje = "Propiedad publicada con éxito."; }
     if ("1".equals(request.getParameter("actualizado"))) { mensaje = "Los cambios se guardaron correctamente."; }
 
     List<Map<String, Object>> propiedades = new ArrayList<>();
@@ -102,7 +102,7 @@
     </div>
 
     <% if (idInmobiliaria == null) { %>
-    <div class="hg-alert hg-alert--error">Tu cuenta aun no esta asociada a ninguna inmobiliaria. Contacta al administrador para poder publicar propiedades.</div>
+    <div class="hg-alert hg-alert--error">Tu cuenta aún no está asociada a ninguna inmobiliaria. Contacta al administrador para poder publicar propiedades.</div>
     <% } else { %>
 
         <% if (mensaje != null) { %>
@@ -113,7 +113,7 @@
         <div class="hg-panel-card">
             <div class="hg-panel-empty">
                 <div class="hg-panel-empty__icon"><i class="bi bi-house"></i></div>
-                <p>Aun no has publicado ninguna propiedad.</p>
+                <p>Aún no has publicado ninguna propiedad.</p>
                 <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/inmobiliaria/propiedad-form.jsp">Publicar la primera</a>
             </div>
         </div>
@@ -148,7 +148,7 @@
                         <div class="hg-mgmt-card__acciones">
                             <a class="hg-btn hg-btn--ghost hg-btn--sm" href="<%= request.getContextPath() %>/detalle.jsp?id=<%= p.get("id") %>" target="_blank"><i class="bi bi-eye"></i> Ver ficha</a>
                             <a class="hg-btn hg-btn--ghost hg-btn--sm" href="<%= request.getContextPath() %>/inmobiliaria/propiedad-form.jsp?id=<%= p.get("id") %>"><i class="bi bi-pencil"></i> Editar</a>
-                            <a class="hg-btn hg-btn--ghost hg-btn--sm" href="<%= request.getContextPath() %>/inmobiliaria/propiedad-galeria.jsp?id=<%= p.get("id") %>"><i class="bi bi-images"></i> Galeria</a>
+                            <a class="hg-btn hg-btn--ghost hg-btn--sm" href="<%= request.getContextPath() %>/inmobiliaria/propiedad-galeria.jsp?id=<%= p.get("id") %>"><i class="bi bi-images"></i> Galería</a>
                             <form method="post" action="<%= request.getContextPath() %>/inmobiliaria/mis-propiedades.jsp">
                                 <input type="hidden" name="accion" value="toggleActivo">
                                 <input type="hidden" name="idPropiedad" value="<%= p.get("id") %>">

@@ -74,7 +74,7 @@
 
 <div class="hg-panel-body">
     <div class="hg-panel-hero">
-        <span class="hg-eyebrow">Panel de administracion</span>
+        <span class="hg-eyebrow">Panel de administración</span>
         <h1>Reportes</h1>
         <p><a href="<%= request.getContextPath() %>/administrador/dashboard-administrador.jsp">&larr; Volver a mi panel</a></p>
     </div>

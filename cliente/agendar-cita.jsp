@@ -57,10 +57,10 @@
         try {
             fechaHora = LocalDateTime.parse(fecha + "T" + hora + ":00");
             if (fechaHora.isBefore(LocalDateTime.now().plusHours(1))) {
-                errores.add("Elige una fecha y hora con al menos una hora de anticipacion.");
+                errores.add("Elige una fecha y hora con al menos una hora de anticipación.");
             }
         } catch (DateTimeParseException e) {
-            errores.add("Ingresa una fecha y hora validas.");
+            errores.add("Ingresa una fecha y hora válidas.");
         }
         if (observaciones.length() > 255) {
             errores.add("Las observaciones no pueden superar 255 caracteres.");
@@ -107,7 +107,7 @@
     <div class="hg-panel-card">
         <div class="hg-panel-empty">
             <div class="hg-panel-empty__icon"><i class="bi bi-check-circle-fill"></i></div>
-            <p>Tu cita quedo registrada como <strong>pendiente</strong>. La inmobiliaria la confirmara pronto.</p>
+            <p>Tu cita quedó registrada como <strong>pendiente</strong>. La inmobiliaria la confirmará pronto.</p>
             <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/cliente/mis-citas.jsp">Ver mis citas</a>
         </div>
     </div>

@@ -49,7 +49,7 @@
             if (rolesParam != null) for (String r : rolesParam) nuevosRoles.add(r);
 
             if (!nuevoEstado.matches("^(activo|inactivo|bloqueado)$")) {
-                errores.add("Estado invalido.");
+                errores.add("Estado inválido.");
             }
 
             boolean tendrianAdministrador = false;
@@ -150,7 +150,7 @@
 
 <div class="hg-panel-body">
     <div class="hg-panel-hero">
-        <span class="hg-eyebrow">Panel de administracion</span>
+        <span class="hg-eyebrow">Panel de administración</span>
         <h1>Usuarios y roles</h1>
         <p><a href="<%= request.getContextPath() %>/administrador/dashboard-administrador.jsp">&larr; Volver a mi panel</a></p>
     </div>
@@ -166,7 +166,7 @@
         <div class="hg-panel-grid" style="margin-bottom:0; align-items:end;">
             <div class="hg-field">
                 <label for="filtroTexto"><i class="bi bi-search"></i> Buscar por nombre o correo</label>
-                <input class="form-control" type="text" id="filtroTexto" placeholder="Ej. Maria, agente@hogaria.com...">
+                <input class="form-control" type="text" id="filtroTexto" placeholder="Ej. María, agente@hogaria.com...">
             </div>
             <div class="hg-field">
                 <label for="filtroRol">Rol</label>

@@ -78,7 +78,7 @@
             }
 
             if (urlFinal == null && errores.isEmpty()) {
-                errores.add("Sube una imagen desde tu equipo o ingresa una URL valida (debe iniciar con http:// o https://).");
+                errores.add("Sube una imagen desde tu equipo o ingresa una URL válida (debe iniciar con http:// o https://).");
             }
 
             if (errores.isEmpty()) {
@@ -174,12 +174,12 @@
 <div class="hg-panel-body" style="max-width:820px;">
     <div class="hg-panel-hero">
         <span class="hg-eyebrow">Panel de inmobiliaria</span>
-        <h1>Galeria: <%= tituloPropiedad %></h1>
+        <h1>Galería: <%= tituloPropiedad %></h1>
         <p><a href="<%= request.getContextPath() %>/inmobiliaria/mis-propiedades.jsp">&larr; Volver a mis propiedades</a></p>
     </div>
 
     <% if (esNueva) { %>
-    <div class="hg-alert hg-alert--success" style="margin-bottom:20px;">Propiedad publicada. Ahora agrega al menos una foto para que se muestre en el catalogo.</div>
+    <div class="hg-alert hg-alert--success" style="margin-bottom:20px;">Propiedad publicada. Ahora agrega al menos una foto para que se muestre en el catálogo.</div>
     <% } %>
 
     <% if (!errores.isEmpty()) { %>
@@ -192,7 +192,7 @@
     <div class="hg-panel-card" style="margin-bottom:24px;">
         <div class="hg-panel-empty">
             <div class="hg-panel-empty__icon"><i class="bi bi-images"></i></div>
-            <p>Esta propiedad todavia no tiene fotos.</p>
+            <p>Esta propiedad todavía no tiene fotos.</p>
         </div>
     </div>
     <% } else { %>

@@ -40,7 +40,7 @@
     <div class="hg-panel-hero">
         <span class="hg-eyebrow">Panel de cliente</span>
         <h1>Hola, <%= session.getAttribute("nombreUsuario") %></h1>
-        <p>Aqui podras ver tus citas, tus solicitudes y tus propiedades favoritas.</p>
+        <p>Aquí podrás ver tus citas, tus solicitudes y tus propiedades favoritas.</p>
     </div>
 
     <div class="hg-panel-grid">
@@ -59,7 +59,7 @@
     </div>
 
     <div class="hg-panel-card">
-        <h3 class="hg-panel-card__titulo"><i class="bi bi-lightning-charge-fill"></i> Acciones rapidas</h3>
+        <h3 class="hg-panel-card__titulo"><i class="bi bi-lightning-charge-fill"></i> Acciones rápidas</h3>
         <div class="hg-quick-actions">
             <a class="hg-quick-action" href="<%= request.getContextPath() %>/catalogo.jsp">
                 <i class="bi bi-search"></i>

@@ -26,7 +26,7 @@
 %><!DOCTYPE html>
 <html lang="es">
 <head>
-    <% String hgTitulo = "Panel de administracion"; %>
+    <% String hgTitulo = "Panel de administración"; %>
     <%@ include file="/jspf/head-comun.jspf" %>
 </head>
 <body>
@@ -34,9 +34,9 @@
 
 <div class="hg-panel-body">
     <div class="hg-panel-hero">
-        <span class="hg-eyebrow">Panel de administracion</span>
+        <span class="hg-eyebrow">Panel de administración</span>
         <h1>Hola, <%= session.getAttribute("nombreUsuario") %></h1>
-        <p>Vision general de la operacion de Hogaria.</p>
+        <p>Visión general de la operación de Hogaria.</p>
     </div>
 
     <div class="hg-panel-grid">
@@ -59,7 +59,7 @@
     </div>
 
     <div class="hg-panel-card">
-        <h3 class="hg-panel-card__titulo"><i class="bi bi-lightning-charge-fill"></i> Acciones rapidas</h3>
+        <h3 class="hg-panel-card__titulo"><i class="bi bi-lightning-charge-fill"></i> Acciones rápidas</h3>
         <div class="hg-quick-actions">
             <a class="hg-quick-action" href="<%= request.getContextPath() %>/administrador/reportes.jsp">
                 <i class="bi bi-graph-up-arrow"></i>
@@ -71,11 +71,11 @@
             </a>
             <a class="hg-quick-action" href="<%= request.getContextPath() %>/administrador/catalogos.jsp">
                 <i class="bi bi-tags"></i>
-                <span>Parametrizar catalogos</span>
+                <span>Parametrizar catálogos</span>
             </a>
             <a class="hg-quick-action" href="<%= request.getContextPath() %>/administrador/auditoria.jsp">
                 <i class="bi bi-journal-text"></i>
-                <span>Consultar auditoria</span>
+                <span>Consultar auditoría</span>
             </a>
         </div>
     </div>

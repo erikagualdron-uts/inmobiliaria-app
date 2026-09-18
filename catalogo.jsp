@@ -104,7 +104,7 @@
 %><!DOCTYPE html>
 <html lang="es">
 <head>
-    <% String hgTitulo = "Catalogo de propiedades"; %>
+    <% String hgTitulo = "Catálogo de propiedades"; %>
     <%@ include file="/jspf/head-comun.jspf" %>
 </head>
 <body>
@@ -114,8 +114,8 @@
     <div class="hg-container">
         <div class="hg-section__head">
             <div>
-                <span class="hg-eyebrow">Catalogo</span>
-                <h2>Encuentra tu proxima propiedad</h2>
+                <span class="hg-eyebrow">Catálogo</span>
+                <h2>Encuentra tu próxima propiedad</h2>
                 <p><%= resultados.size() %> propiedad<%= resultados.size() == 1 ? "" : "es" %> disponible<%= resultados.size() == 1 ? "" : "s" %> con los filtros seleccionados.</p>
             </div>
         </div>
@@ -140,7 +140,7 @@
                 </select>
             </div>
             <div class="hg-field">
-                <label for="f-operacion">Operacion</label>
+                <label for="f-operacion">Operación</label>
                 <select class="form-select" id="f-operacion" name="operacion">
                     <option value="">Venta o arriendo</option>
                     <option value="venta" <%= "venta".equals(fOperacion) ? "selected" : "" %>>Venta</option>
@@ -148,21 +148,21 @@
                 </select>
             </div>
             <div class="hg-field">
-                <label for="f-precioMin">Precio minimo</label>
+                <label for="f-precioMin">Precio mínimo</label>
                 <input class="form-control" type="number" id="f-precioMin" name="precioMin" min="0" step="100000" value="<%= fPrecioMin %>">
             </div>
             <div class="hg-field">
-                <label for="f-precioMax">Precio maximo</label>
+                <label for="f-precioMax">Precio máximo</label>
                 <input class="form-control" type="number" id="f-precioMax" name="precioMax" min="0" step="100000" value="<%= fPrecioMax %>">
             </div>
             <div class="hg-field">
-                <label for="f-habitaciones">Habitaciones minimas</label>
+                <label for="f-habitaciones">Habitaciones mínimas</label>
                 <input class="form-control" type="number" id="f-habitaciones" name="habitaciones" min="0" step="1" value="<%= fHabitaciones %>">
             </div>
             <div class="hg-field">
                 <label for="f-orden">Ordenar por</label>
                 <select class="form-select" id="f-orden" name="orden">
-                    <option value="recientes" <%= "recientes".equals(fOrden) ? "selected" : "" %>>Mas recientes</option>
+                    <option value="recientes" <%= "recientes".equals(fOrden) ? "selected" : "" %>>Más recientes</option>
                     <option value="precio_asc" <%= "precio_asc".equals(fOrden) ? "selected" : "" %>>Precio: menor a mayor</option>
                     <option value="precio_desc" <%= "precio_desc".equals(fOrden) ? "selected" : "" %>>Precio: mayor a menor</option>
                 </select>
@@ -174,7 +174,7 @@
         <% if (resultados.isEmpty()) { %>
         <div class="hg-panel-empty">
             <div class="hg-panel-empty__icon"><i class="bi bi-search"></i></div>
-            <p>No encontramos propiedades con esos filtros. Intenta ampliar tu busqueda.</p>
+            <p>No encontramos propiedades con esos filtros. Intenta ampliar tu búsqueda.</p>
         </div>
         <% } else { %>
         <div class="row g-4">

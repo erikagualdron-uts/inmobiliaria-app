@@ -92,12 +92,12 @@
     </div>
 
     <% if (idInmobiliaria == null) { %>
-    <div class="hg-alert hg-alert--error">Tu cuenta aun no esta asociada a ninguna inmobiliaria.</div>
+    <div class="hg-alert hg-alert--error">Tu cuenta aún no está asociada a ninguna inmobiliaria.</div>
     <% } else if (citas.isEmpty()) { %>
     <div class="hg-panel-card">
         <div class="hg-panel-empty">
             <div class="hg-panel-empty__icon"><i class="bi bi-calendar3"></i></div>
-            <p>Todavia no tienes citas agendadas.</p>
+            <p>Todavía no tienes citas agendadas.</p>
         </div>
     </div>
     <% } else { %>

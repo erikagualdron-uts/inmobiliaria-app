@@ -63,7 +63,7 @@
     <div class="hg-panel-card">
         <div class="hg-panel-empty">
             <div class="hg-panel-empty__icon"><i class="bi bi-heart"></i></div>
-            <p>Aun no has guardado ninguna propiedad como favorita.</p>
+            <p>Aún no has guardado ninguna propiedad como favorita.</p>
             <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/catalogo.jsp">Explorar propiedades</a>
         </div>
     </div>

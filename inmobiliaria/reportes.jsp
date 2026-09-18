@@ -151,7 +151,7 @@
     </div>
 
     <% if (idInmobiliaria == null) { %>
-    <div class="hg-alert hg-alert--error">Tu cuenta aun no esta asociada a ninguna inmobiliaria.</div>
+    <div class="hg-alert hg-alert--error">Tu cuenta aún no está asociada a ninguna inmobiliaria.</div>
     <% } else { %>
 
     <div class="hg-panel-grid">
@@ -223,10 +223,10 @@
 
     <div class="hg-panel-card" style="margin-top:20px; padding:0; overflow-x:auto;">
         <table class="hg-tabla">
-            <thead><tr><th>Propiedad</th><th>Ciudad / Tipo</th><th>Operacion</th><th>Estado</th><th>Precio</th></tr></thead>
+            <thead><tr><th>Propiedad</th><th>Ciudad / Tipo</th><th>Operación</th><th>Estado</th><th>Precio</th></tr></thead>
             <tbody>
                 <% if (cerradas.isEmpty()) { %>
-                <tr><td colspan="5" style="text-align:center; color:var(--hg-ink-muted); padding:24px;">Aun no tienes ventas ni arriendos concretados.</td></tr>
+                <tr><td colspan="5" style="text-align:center; color:var(--hg-ink-muted); padding:24px;">Aún no tienes ventas ni arriendos concretados.</td></tr>
                 <% } %>
                 <% for (Map<String, Object> f : cerradas) {
                     String estadoF = (String) f.get("estado");

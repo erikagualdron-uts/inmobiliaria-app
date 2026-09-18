@@ -30,8 +30,8 @@
             <% if (hgRolesPanel != null && hgRolesPanel.contains("Administrador")) { %>
             <a href="<%= request.getContextPath() %>/administrador/reportes.jsp"><i class="bi bi-graph-up"></i> Reportes</a>
             <a href="<%= request.getContextPath() %>/administrador/usuarios.jsp"><i class="bi bi-people"></i> Usuarios</a>
-            <a href="<%= request.getContextPath() %>/administrador/catalogos.jsp"><i class="bi bi-tags"></i> Catalogos</a>
-            <a href="<%= request.getContextPath() %>/administrador/auditoria.jsp"><i class="bi bi-journal-text"></i> Auditoria</a>
+            <a href="<%= request.getContextPath() %>/administrador/catalogos.jsp"><i class="bi bi-tags"></i> Catálogos</a>
+            <a href="<%= request.getContextPath() %>/administrador/auditoria.jsp"><i class="bi bi-journal-text"></i> Auditoría</a>
             <% } %>
         </nav>
 

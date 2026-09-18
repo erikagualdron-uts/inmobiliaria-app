@@ -126,12 +126,12 @@
     </div>
 
     <% if (idInmobiliaria == null) { %>
-    <div class="hg-alert hg-alert--error">Tu cuenta aun no esta asociada a ninguna inmobiliaria.</div>
+    <div class="hg-alert hg-alert--error">Tu cuenta aún no está asociada a ninguna inmobiliaria.</div>
     <% } else if (solicitudes.isEmpty()) { %>
     <div class="hg-panel-card">
         <div class="hg-panel-empty">
             <div class="hg-panel-empty__icon"><i class="bi bi-clipboard"></i></div>
-            <p>Todavia no tienes solicitudes radicadas.</p>
+            <p>Todavía no tienes solicitudes radicadas.</p>
         </div>
     </div>
     <% } else { %>
@@ -146,7 +146,7 @@
                 <div>
                     <a href="<%= request.getContextPath() %>/detalle.jsp?id=<%= s.get("idPropiedad") %>" style="font-weight:600;"><%= s.get("titulo") %></a>
                     <p style="color:var(--hg-ink-muted); font-size:.86rem; margin-top:2px;">
-                        <%= s.get("cliente") %> &middot; <%= s.get("telefono") != null ? s.get("telefono") : "sin telefono" %> &middot; <%= "compra".equals(s.get("tipo")) ? "Compra" : "Arriendo" %>
+                        <%= s.get("cliente") %> &middot; <%= s.get("telefono") != null ? s.get("telefono") : "sin teléfono" %> &middot; <%= "compra".equals(s.get("tipo")) ? "Compra" : "Arriendo" %>
                     </p>
                 </div>
                 <span class="hg-badge--estado hg-badge--<%= estadoS %>" style="position:static; display:inline-block; height:fit-content;"><%= estadoS.substring(0,1).toUpperCase() + estadoS.substring(1).replace("_", " ") %></span>
@@ -157,7 +157,7 @@
             <% } %>
 
             <% if (documentos.isEmpty()) { %>
-            <p style="color:var(--hg-ink-muted); font-size:.86rem; margin-bottom:12px;">El cliente aun no ha radicado documentos.</p>
+            <p style="color:var(--hg-ink-muted); font-size:.86rem; margin-bottom:12px;">El cliente aún no ha radicado documentos.</p>
             <% } else { %>
             <div class="hg-doc-list" style="margin-bottom:12px;">
                 <% for (Map<String, Object> d : documentos) {
@@ -188,7 +188,7 @@
                 <% if ("pendiente".equals(estadoS)) { %>
                 <form method="post" action="<%= request.getContextPath() %>/inmobiliaria/solicitudes-recibidas.jsp">
                     <input type="hidden" name="accion" value="revisar"><input type="hidden" name="idSolicitud" value="<%= s.get("id") %>">
-                    <button class="hg-btn hg-btn--ghost hg-btn--sm" type="submit"><i class="bi bi-hourglass-split"></i> Poner en revision</button>
+                    <button class="hg-btn hg-btn--ghost hg-btn--sm" type="submit"><i class="bi bi-hourglass-split"></i> Poner en revisión</button>
                 </form>
                 <% } %>
                 <form method="post" action="<%= request.getContextPath() %>/inmobiliaria/solicitudes-recibidas.jsp">

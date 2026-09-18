@@ -47,7 +47,7 @@
         observaciones = request.getParameter("observaciones") != null ? request.getParameter("observaciones").trim() : "";
 
         if (!"compra".equals(tipoSolicitud) && !"arriendo".equals(tipoSolicitud)) {
-            errores.add("Selecciona un tipo de solicitud valido.");
+            errores.add("Selecciona un tipo de solicitud válido.");
         }
         if (observaciones.length() > 255) {
             errores.add("Las observaciones no pueden superar 255 caracteres.");
@@ -90,7 +90,7 @@
     <div class="hg-panel-card">
         <div class="hg-panel-empty">
             <div class="hg-panel-empty__icon"><i class="bi bi-clipboard"></i></div>
-            <p>Tu solicitud quedo <strong>pendiente</strong> de revision. Ahora puedes radicar los documentos requeridos.</p>
+            <p>Tu solicitud quedó <strong>pendiente</strong> de revisión. Ahora puedes radicar los documentos requeridos.</p>
             <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/cliente/mis-solicitudes.jsp">Ir a mis solicitudes</a>
         </div>
     </div>

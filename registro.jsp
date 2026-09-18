@@ -28,31 +28,31 @@
         String confirmarContrasena = valor(request.getParameter("confirmarContrasena"));
 
         if (nombres.isEmpty() || !nombres.matches("^[\\p{L} ]{2,80}$")) {
-            errores.add("Ingresa un nombre valido (solo letras, entre 2 y 80 caracteres).");
+            errores.add("Ingresa un nombre válido (solo letras, entre 2 y 80 caracteres).");
         }
         if (apellidos.isEmpty() || !apellidos.matches("^[\\p{L} ]{2,80}$")) {
-            errores.add("Ingresa un apellido valido (solo letras, entre 2 y 80 caracteres).");
+            errores.add("Ingresa un apellido válido (solo letras, entre 2 y 80 caracteres).");
         }
         if (!tipoDocumento.matches("^(CC|CE|TI|PAS)$")) {
-            errores.add("Selecciona un tipo de documento valido.");
+            errores.add("Selecciona un tipo de documento válido.");
         }
         if (!numeroDocumento.matches("^[0-9]{5,15}$")) {
-            errores.add("El numero de documento debe tener entre 5 y 15 digitos.");
+            errores.add("El número de documento debe tener entre 5 y 15 dígitos.");
         }
         if (!correo.matches("^[\\w.+-]+@[\\w-]+\\.[a-zA-Z]{2,}$")) {
-            errores.add("Ingresa un correo electronico valido.");
+            errores.add("Ingresa un correo electrónico válido.");
         }
         if (!telefono.isEmpty() && !telefono.matches("^[0-9]{7,15}$")) {
-            errores.add("El telefono debe contener solo numeros (7 a 15 digitos).");
+            errores.add("El teléfono debe contener solo números (7 a 15 dígitos).");
         }
         if (direccion.length() > 150) {
-            errores.add("La direccion no puede superar 150 caracteres.");
+            errores.add("La dirección no puede superar 150 caracteres.");
         }
         if (contrasena.length() < 8) {
-            errores.add("La contrasena debe tener minimo 8 caracteres.");
+            errores.add("La contraseña debe tener mínimo 8 caracteres.");
         }
         if (!contrasena.equals(confirmarContrasena)) {
-            errores.add("Las contrasenas no coinciden.");
+            errores.add("Las contraseñas no coinciden.");
         }
 
         if (errores.isEmpty()) {
@@ -104,7 +104,7 @@
                     if ("23000".equals(sqlEx.getSQLState()) && msg.contains("correo")) {
                         errores.add("Este correo ya se encuentra registrado.");
                     } else if ("23000".equals(sqlEx.getSQLState()) && msg.contains("documento")) {
-                        errores.add("Este numero de documento ya esta registrado.");
+                        errores.add("Este número de documento ya está registrado.");
                     } else if ("23000".equals(sqlEx.getSQLState())) {
                         errores.add("Ya existe un registro con esos datos.");
                     } else {
@@ -142,10 +142,10 @@
         </div>
 
         <% if (registroExitoso) { %>
-            <h1 class="hg-auth__title">Cuenta creada con exito</h1>
-            <p class="hg-auth__subtitle">Ya puedes iniciar sesion con tu correo y contrasena.</p>
-            <div class="hg-alert hg-alert--success" style="margin-bottom:18px;">Tu cuenta quedo registrada como Cliente. Bienvenido a Hogaria.</div>
-            <a class="hg-btn hg-btn--primary hg-btn--block" href="<%= request.getContextPath() %>/login.jsp?registrado=1">Ir a iniciar sesion</a>
+            <h1 class="hg-auth__title">Cuenta creada con éxito</h1>
+            <p class="hg-auth__subtitle">Ya puedes iniciar sesión con tu correo y contraseña.</p>
+            <div class="hg-alert hg-alert--success" style="margin-bottom:18px;">Tu cuenta quedó registrada como Cliente. Bienvenido a Hogaria.</div>
+            <a class="hg-btn hg-btn--primary hg-btn--block" href="<%= request.getContextPath() %>/login.jsp?registrado=1">Ir a iniciar sesión</a>
         <% } else { %>
             <h1 class="hg-auth__title">Crea tu cuenta</h1>
             <p class="hg-auth__subtitle">Guarda favoritos, agenda citas y radica tus solicitudes con Hogaria.</p>
@@ -173,42 +173,42 @@
                     <div class="hg-field">
                         <label for="tipoDocumento">Tipo de documento</label>
                         <select class="form-select" id="tipoDocumento" name="tipoDocumento">
-                            <option value="CC" <%= "CC".equals(tipoDocumento) ? "selected" : "" %>>Cedula de ciudadania</option>
-                            <option value="CE" <%= "CE".equals(tipoDocumento) ? "selected" : "" %>>Cedula de extranjeria</option>
+                            <option value="CC" <%= "CC".equals(tipoDocumento) ? "selected" : "" %>>Cédula de ciudadanía</option>
+                            <option value="CE" <%= "CE".equals(tipoDocumento) ? "selected" : "" %>>Cédula de extranjería</option>
                             <option value="TI" <%= "TI".equals(tipoDocumento) ? "selected" : "" %>>Tarjeta de identidad</option>
                             <option value="PAS" <%= "PAS".equals(tipoDocumento) ? "selected" : "" %>>Pasaporte</option>
                         </select>
                     </div>
                     <div class="hg-field">
-                        <label for="numeroDocumento">Numero de documento</label>
+                        <label for="numeroDocumento">Número de documento</label>
                         <input class="form-control" type="text" id="numeroDocumento" name="numeroDocumento" value="<%= numeroDocumento %>" maxlength="15" required>
                     </div>
                     <div class="hg-field hg-field--full">
-                        <label for="correo">Correo electronico</label>
+                        <label for="correo">Correo electrónico</label>
                         <input class="form-control" type="email" id="correo" name="correo" value="<%= correo %>" maxlength="120" required>
                     </div>
                     <div class="hg-field">
-                        <label for="telefono">Telefono (opcional)</label>
+                        <label for="telefono">Teléfono (opcional)</label>
                         <input class="form-control" type="tel" id="telefono" name="telefono" value="<%= telefono %>" maxlength="20">
                     </div>
                     <div class="hg-field">
-                        <label for="direccion">Direccion (opcional)</label>
+                        <label for="direccion">Dirección (opcional)</label>
                         <input class="form-control" type="text" id="direccion" name="direccion" value="<%= direccion %>" maxlength="150">
                     </div>
                     <div class="hg-field">
-                        <label for="contrasena">Contrasena</label>
+                        <label for="contrasena">Contraseña</label>
                         <div class="hg-password-field">
                             <input class="form-control" type="password" id="contrasena" name="contrasena" minlength="8" required>
-                            <button type="button" class="hg-password-toggle" data-toggle-password="contrasena" aria-label="Mostrar contrasena">
+                            <button type="button" class="hg-password-toggle" data-toggle-password="contrasena" aria-label="Mostrar contraseña">
                                 <i class="bi bi-eye"></i>
                             </button>
                         </div>
                     </div>
                     <div class="hg-field">
-                        <label for="confirmarContrasena">Confirmar contrasena</label>
+                        <label for="confirmarContrasena">Confirmar contraseña</label>
                         <div class="hg-password-field">
                             <input class="form-control" type="password" id="confirmarContrasena" name="confirmarContrasena" minlength="8" required>
-                            <button type="button" class="hg-password-toggle" data-toggle-password="confirmarContrasena" aria-label="Mostrar contrasena">
+                            <button type="button" class="hg-password-toggle" data-toggle-password="confirmarContrasena" aria-label="Mostrar contraseña">
                                 <i class="bi bi-eye"></i>
                             </button>
                         </div>
@@ -217,7 +217,7 @@
                 <button class="hg-btn hg-btn--primary hg-btn--block" type="submit">Crear cuenta</button>
             </form>
 
-            <p class="hg-auth__footer">¿Ya tienes cuenta? <a href="<%= request.getContextPath() %>/login.jsp">Inicia sesion</a></p>
+            <p class="hg-auth__footer">¿Ya tienes cuenta? <a href="<%= request.getContextPath() %>/login.jsp">Inicia sesión</a></p>
         <% } %>
     </div>
 </div>

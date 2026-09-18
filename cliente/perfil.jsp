@@ -54,22 +54,22 @@
             direccion = valor(request.getParameter("direccion"));
 
             if (nombres.isEmpty() || !nombres.matches("^[\\p{L} ]{2,80}$")) {
-                errores.add("Ingresa un nombre valido (solo letras, entre 2 y 80 caracteres).");
+                errores.add("Ingresa un nombre válido (solo letras, entre 2 y 80 caracteres).");
             }
             if (apellidos.isEmpty() || !apellidos.matches("^[\\p{L} ]{2,80}$")) {
-                errores.add("Ingresa un apellido valido (solo letras, entre 2 y 80 caracteres).");
+                errores.add("Ingresa un apellido válido (solo letras, entre 2 y 80 caracteres).");
             }
             if (!tipoDocumento.matches("^(CC|CE|TI|PAS)$")) {
-                errores.add("Selecciona un tipo de documento valido.");
+                errores.add("Selecciona un tipo de documento válido.");
             }
             if (!numeroDocumento.matches("^[0-9]{5,15}$")) {
-                errores.add("El numero de documento debe tener entre 5 y 15 digitos.");
+                errores.add("El número de documento debe tener entre 5 y 15 dígitos.");
             }
             if (!telefono.isEmpty() && !telefono.matches("^[0-9]{7,15}$")) {
-                errores.add("El telefono debe contener solo numeros (7 a 15 digitos).");
+                errores.add("El teléfono debe contener solo números (7 a 15 dígitos).");
             }
             if (direccion.length() > 150) {
-                errores.add("La direccion no puede superar 150 caracteres.");
+                errores.add("La dirección no puede superar 150 caracteres.");
             }
 
             if (errores.isEmpty() && conexion != null) {
@@ -92,7 +92,7 @@
                     session.setAttribute("telefonoUsuario", telefono.isEmpty() ? null : telefono);
                 } catch (SQLException sqlEx) {
                     if ("23000".equals(sqlEx.getSQLState())) {
-                        errores.add("Ese numero de documento ya esta registrado por otra cuenta.");
+                        errores.add("Ese número de documento ya está registrado por otra cuenta.");
                     } else {
                         errores.add("No fue posible actualizar tu perfil. Intenta nuevamente.");
                     }
@@ -119,7 +119,7 @@
     </div>
 
     <% if (guardadoExitoso) { %>
-    <div class="hg-alert hg-alert--success" style="margin-bottom:20px;">Tu perfil se actualizo correctamente.</div>
+    <div class="hg-alert hg-alert--success" style="margin-bottom:20px;">Tu perfil se actualizó correctamente.</div>
     <% } %>
     <% if (!errores.isEmpty()) { %>
     <div class="hg-alert hg-alert--error" style="margin-bottom:20px;">
@@ -129,7 +129,7 @@
 
     <div class="hg-panel-card">
         <div class="hg-field" style="margin-bottom:18px;">
-            <label>Correo (credencial de ingreso, no editable aqui)</label>
+            <label>Correo (credencial de ingreso, no editable aquí)</label>
             <input class="form-control" type="email" value="<%= correoCuenta %>" disabled>
         </div>
 
@@ -146,22 +146,22 @@
                 <div class="hg-field">
                     <label for="tipoDocumento">Tipo de documento</label>
                     <select class="form-select" id="tipoDocumento" name="tipoDocumento">
-                        <option value="CC" <%= "CC".equals(tipoDocumento) ? "selected" : "" %>>Cedula de ciudadania</option>
-                        <option value="CE" <%= "CE".equals(tipoDocumento) ? "selected" : "" %>>Cedula de extranjeria</option>
+                        <option value="CC" <%= "CC".equals(tipoDocumento) ? "selected" : "" %>>Cédula de ciudadanía</option>
+                        <option value="CE" <%= "CE".equals(tipoDocumento) ? "selected" : "" %>>Cédula de extranjería</option>
                         <option value="TI" <%= "TI".equals(tipoDocumento) ? "selected" : "" %>>Tarjeta de identidad</option>
                         <option value="PAS" <%= "PAS".equals(tipoDocumento) ? "selected" : "" %>>Pasaporte</option>
                     </select>
                 </div>
                 <div class="hg-field">
-                    <label for="numeroDocumento">Numero de documento</label>
+                    <label for="numeroDocumento">Número de documento</label>
                     <input class="form-control" type="text" id="numeroDocumento" name="numeroDocumento" value="<%= numeroDocumento %>" maxlength="15" required>
                 </div>
                 <div class="hg-field">
-                    <label for="telefono">Telefono (opcional)</label>
+                    <label for="telefono">Teléfono (opcional)</label>
                     <input class="form-control" type="tel" id="telefono" name="telefono" value="<%= telefono %>" maxlength="20">
                 </div>
                 <div class="hg-field hg-field--full">
-                    <label for="direccion">Direccion (opcional)</label>
+                    <label for="direccion">Dirección (opcional)</label>
                     <input class="form-control" type="text" id="direccion" name="direccion" value="<%= direccion %>" maxlength="150">
                 </div>
             </div>

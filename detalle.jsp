@@ -160,12 +160,12 @@
 
 <section class="hg-section" style="padding-top:32px;">
     <div class="hg-container">
-        <a class="hg-auth__back" href="<%= request.getContextPath() %>/catalogo.jsp">&larr; Volver al catalogo</a>
+        <a class="hg-auth__back" href="<%= request.getContextPath() %>/catalogo.jsp">&larr; Volver al catálogo</a>
 
         <div class="hg-detalle">
             <div class="hg-detalle__galeria">
                 <% if (imagenes.isEmpty()) { %>
-                <div class="hg-detalle__sinfoto">Sin fotografias disponibles</div>
+                <div class="hg-detalle__sinfoto">Sin fotografías disponibles</div>
                 <% } else { %>
                 <div id="carruselPropiedad" class="carousel slide hg-carousel" data-bs-ride="false">
                     <div class="carousel-inner">
@@ -234,7 +234,7 @@
 
                 <div class="hg-detalle__specs">
                     <% if (propiedad.get("habitaciones") != null) { %><span><i class="bi bi-door-open"></i> <%= propiedad.get("habitaciones") %> habitaciones</span><% } %>
-                    <% if (propiedad.get("banos") != null) { %><span><i class="bi bi-droplet"></i> <%= propiedad.get("banos") %> banos</span><% } %>
+                    <% if (propiedad.get("banos") != null) { %><span><i class="bi bi-droplet"></i> <%= propiedad.get("banos") %> baños</span><% } %>
                     <% if (propiedad.get("parqueaderos") != null && ((Number) propiedad.get("parqueaderos")).intValue() > 0) { %><span><i class="bi bi-car-front"></i> <%= propiedad.get("parqueaderos") %> parqueaderos</span><% } %>
                     <span><i class="bi bi-rulers"></i> <%= propiedad.get("area") %> m²</span>
                 </div>
@@ -251,7 +251,7 @@
                     <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/cliente/agendar-cita.jsp?propiedad=<%= idPropiedad %>"><i class="bi bi-calendar-plus"></i> Agendar visita</a>
                     <a class="hg-btn hg-btn--ghost" href="<%= request.getContextPath() %>/cliente/radicar-solicitud.jsp?propiedad=<%= idPropiedad %>"><i class="bi bi-clipboard-check"></i> Solicitar <%= "venta".equals(operacion) ? "compra" : "arriendo" %></a>
                     <% } else { %>
-                    <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/login.jsp"><i class="bi bi-box-arrow-in-right"></i> Inicia sesion para agendar una visita</a>
+                    <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/login.jsp"><i class="bi bi-box-arrow-in-right"></i> Inicia sesión para agendar una visita</a>
                     <% } %>
                 </div>
             </div>
@@ -259,11 +259,11 @@
 
         <div class="hg-detalle__cuerpo">
             <div class="hg-detalle__descripcion">
-                <h3>Descripcion</h3>
-                <p><%= propiedad.get("descripcion") != null ? propiedad.get("descripcion") : "Sin descripcion disponible." %></p>
+                <h3>Descripción</h3>
+                <p><%= propiedad.get("descripcion") != null ? propiedad.get("descripcion") : "Sin descripción disponible." %></p>
 
                 <% if (!caracteristicas.isEmpty()) { %>
-                <h3>Caracteristicas</h3>
+                <h3>Características</h3>
                 <div class="hg-detalle__caracteristicas">
                     <% for (Map<String, Object> car : caracteristicas) { %>
                     <span class="hg-chip">✓ <%= car.get("nombre") %><%= car.get("valor") != null ? " (" + car.get("valor") + ")" : "" %></span>
@@ -275,7 +275,7 @@
             <div class="hg-detalle__contacto">
                 <h3>Publicado por</h3>
                 <p class="hg-detalle__inmobiliaria"><%= propiedad.get("inmobiliaria") %></p>
-                <p style="color:var(--hg-ink-muted); font-size:.86rem;">Matricula inmobiliaria: <%= propiedad.get("matricula") %></p>
+                <p style="color:var(--hg-ink-muted); font-size:.86rem;">Matrícula inmobiliaria: <%= propiedad.get("matricula") %></p>
 
                 <% if (haySesion) { %>
                 <div class="hg-detalle__contacto-datos">
@@ -284,7 +284,7 @@
                 </div>
                 <% } else { %>
                 <div class="hg-alert" style="margin-top:14px;">
-                    <a href="<%= request.getContextPath() %>/login.jsp">Inicia sesion</a> para ver los datos de contacto completos.
+                    <a href="<%= request.getContextPath() %>/login.jsp">Inicia sesión</a> para ver los datos de contacto completos.
                 </div>
                 <% } %>
             </div>

@@ -62,7 +62,7 @@
     <div class="hg-panel-hero">
         <span class="hg-eyebrow">Panel de inmobiliaria</span>
         <h1>Hola, <%= session.getAttribute("nombreUsuario") %></h1>
-        <p><% if (nombreInmobiliaria != null) { %>Agente de <strong><%= nombreInmobiliaria %></strong>.<% } else { %>Tu cuenta aun no esta asociada a ninguna inmobiliaria; contacta al administrador.<% } %></p>
+        <p><% if (nombreInmobiliaria != null) { %>Agente de <strong><%= nombreInmobiliaria %></strong>.<% } else { %>Tu cuenta aún no está asociada a ninguna inmobiliaria; contacta al administrador.<% } %></p>
     </div>
 
     <div class="hg-panel-grid">
@@ -81,7 +81,7 @@
     </div>
 
     <div class="hg-panel-card">
-        <h3 class="hg-panel-card__titulo"><i class="bi bi-lightning-charge-fill"></i> Acciones rapidas</h3>
+        <h3 class="hg-panel-card__titulo"><i class="bi bi-lightning-charge-fill"></i> Acciones rápidas</h3>
         <div class="hg-quick-actions">
             <a class="hg-quick-action" href="<%= request.getContextPath() %>/inmobiliaria/propiedad-form.jsp">
                 <i class="bi bi-plus-circle"></i>
@@ -97,7 +97,7 @@
             </a>
             <a class="hg-quick-action" href="<%= request.getContextPath() %>/catalogo.jsp" target="_blank">
                 <i class="bi bi-eye"></i>
-                <span>Ver catalogo publico</span>
+                <span>Ver catálogo público</span>
             </a>
         </div>
     </div>

@@ -24,7 +24,7 @@
 
             <% if (idUsuarioSesion == null) { %>
             <div class="hg-navmenu__auth">
-                <a class="hg-btn hg-btn--ghost" href="<%= request.getContextPath() %>/login.jsp">Iniciar sesion</a>
+                <a class="hg-btn hg-btn--ghost" href="<%= request.getContextPath() %>/login.jsp">Iniciar sesión</a>
                 <a class="hg-btn hg-btn--solid" href="<%= request.getContextPath() %>/registro.jsp">Registrarse</a>
             </div>
             <% } %>

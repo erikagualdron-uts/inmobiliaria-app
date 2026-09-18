@@ -17,17 +17,17 @@ VALUES
    'Apartamento con acabados modernos, cerca a centros comerciales y parques.',
    'Av 6N #28-15, Cali', 380000000.00, 88.00, 3, 2, 1, 'venta', 'disponible', 1, '2025-04-02 09:00:00'),
 
-(3, 9, 1, 'MI-CTG-0014', 'Casa colonial en el centro historico',
+(3, 9, 1, 'MI-CTG-0014', 'Casa colonial en el centro histórico',
    'Casa colonial restaurada, ideal para vivienda o negocio boutique.',
    'Cl del Arsenal #6-40, Cartagena', 8500000.00, 180.00, 4, 3, 2, 'arriendo', 'disponible', 1, '2025-04-05 10:30:00'),
 
 (1, 1, 4, 'MI-BGA-0015', 'Oficina ejecutiva en Cabecera',
-   'Oficina lista para operar, edificio con porteria y parqueadero de visitantes.',
+   'Oficina lista para operar, edificio con portería y parqueadero de visitantes.',
    'Cra 33 #52-10, Bucaramanga', 2800000.00, 60.00, NULL, 1, 1, 'arriendo', 'disponible', 1, '2025-04-08 11:15:00'),
 
 (2, 6, 3, 'MI-MED-0016', 'Local comercial en Provenza',
-   'Local esquinero de alto flujo peatonal, zona gastronomica y comercial.',
-   'Cra 37 #8A-20, Medellin', 650000000.00, 90.00, NULL, 1, 0, 'venta', 'disponible', 1, '2025-04-10 08:45:00');
+   'Local esquinero de alto flujo peatonal, zona gastronómica y comercial.',
+   'Cra 37 #8A-20, Medellín', 650000000.00, 90.00, NULL, 1, 0, 'venta', 'disponible', 1, '2025-04-10 08:45:00');
 
 -- Nota: se referencia cada propiedad por su matricula (UNIQUE) en vez del
 -- id_propiedad, porque el contador AUTO_INCREMENT puede no coincidir con

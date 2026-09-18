@@ -73,7 +73,7 @@
     <div class="hg-panel-card">
         <div class="hg-panel-empty">
             <div class="hg-panel-empty__icon"><i class="bi bi-calendar3"></i></div>
-            <p>Aun no has agendado ninguna visita.</p>
+            <p>Aún no has agendado ninguna visita.</p>
             <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/catalogo.jsp">Explorar propiedades</a>
         </div>
     </div>

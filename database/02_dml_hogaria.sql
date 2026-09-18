@@ -21,10 +21,10 @@ USE hogaria_db;
 -- 1. ROL
 -- =====================================================================
 INSERT INTO rol (nombre_rol, descripcion) VALUES
-('Visitante',     'Navega el catalogo publico sin autenticarse.'),
+('Visitante',     'Navega el catálogo público sin autenticarse.'),
 ('Cliente',       'Busca propiedades, agenda citas y radica solicitudes.'),
-('Inmobiliaria',  'Agente que publica y administra propiedades y tramites.'),
-('Administrador', 'Acceso total: usuarios, roles, catalogos y auditoria.');
+('Inmobiliaria',  'Agente que publica y administra propiedades y trámites.'),
+('Administrador', 'Acceso total: usuarios, roles, catálogos y auditoría.');
 
 -- =====================================================================
 -- 2. CIUDAD
@@ -32,13 +32,13 @@ INSERT INTO rol (nombre_rol, descripcion) VALUES
 INSERT INTO ciudad (nombre_ciudad, departamento) VALUES
 ('Bucaramanga',   'Santander'),
 ('Floridablanca', 'Santander'),
-('Giron',         'Santander'),
+('Girón',         'Santander'),
 ('Piedecuesta',   'Santander'),
-('Bogota',        'Cundinamarca'),
-('Medellin',      'Antioquia'),
+('Bogotá',        'Cundinamarca'),
+('Medellín',      'Antioquia'),
 ('Cali',          'Valle del Cauca'),
-('Barranquilla',  'Atlantico'),
-('Cartagena',     'Bolivar'),
+('Barranquilla',  'Atlántico'),
+('Cartagena',     'Bolívar'),
 ('Bello',         'Antioquia');
 
 -- =====================================================================
@@ -59,8 +59,8 @@ INSERT INTO caracteristica (nombre_caracteristica, icono) VALUES
 ('Parqueadero',          'bi-p-square'),
 ('Ascensor',             'bi-arrow-up-square'),
 ('Gimnasio',             'bi-bicycle'),
-('Jardin',               'bi-tree'),
-('Balcon',               'bi-door-open'),
+('Jardín',               'bi-tree'),
+('Balcón',               'bi-door-open'),
 ('Seguridad 24 horas',   'bi-shield-check'),
 ('Zona BBQ',             'bi-fire'),
 ('Aire acondicionado',   'bi-snow'),
@@ -71,8 +71,8 @@ INSERT INTO caracteristica (nombre_caracteristica, icono) VALUES
 -- =====================================================================
 INSERT INTO inmobiliaria (nombre_comercial, nit, telefono, direccion, logo_url, fecha_registro) VALUES
 ('Hogaria',                '900123456-7', '6076001122', 'Cra 27 #38-45, Bucaramanga',      'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=200&q=80', '2025-01-05 08:00:00'),
-('Vivienda Total S.A.S.',  '900234567-8', '6042223344', 'Cra 43A #10-20, Medellin',         'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=200&q=80', '2025-01-08 09:00:00'),
-('Raices Inmobiliaria',    '900345678-9', '6053334455', 'Cl 5 #8-30, Cartagena',            'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=200&q=80', '2025-01-10 10:00:00');
+('Vivienda Total S.A.S.',  '900234567-8', '6042223344', 'Cra 43A #10-20, Medellín',         'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=200&q=80', '2025-01-08 09:00:00'),
+('Raíces Inmobiliaria',    '900345678-9', '6053334455', 'Cl 5 #8-30, Cartagena',            'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=200&q=80', '2025-01-10 10:00:00');
 
 -- =====================================================================
 -- 6. USUARIO  (id_usuario 1..11, autoincremental en este orden)
@@ -110,17 +110,17 @@ INSERT INTO usuario_rol (id_usuario, id_rol, fecha_asignacion) VALUES
 -- 8. PERFIL  (1:1 con usuario)
 -- =====================================================================
 INSERT INTO perfil (id_usuario, nombres, apellidos, tipo_documento, numero_documento, telefono, direccion) VALUES
-(1,  'Laura',     'Martinez Rojas',    'CC', '63489215',  '3001234567', 'Cra 27 #45-12, Bucaramanga'),
-(2,  'Carlos',    'Pinzon Duarte',     'CC', '91234567',  '3012345678', 'Cl 56 #22-10, Bucaramanga'),
-(3,  'Valentina', 'Gomez Rueda',       'CC', '63512890',  '3023456789', 'Cra 33 #40-18, Floridablanca'),
-(4,  'Andres',    'Castaneda Rios',    'CC', '71234567',  '3034567890', 'Cra 43A #10-20, Medellin'),
-(5,  'Daniela',   'Ortiz Marin',       'CC', '43598721',  '3045678901', 'Cl 5 #8-30, Cartagena'),
-(6,  'Juan',      'Perez Lopez',       'CC', '1098765432','3101234567', 'Cl 30 #12-40, Bucaramanga'),
-(7,  'Maria',     'Rodriguez Sanchez', 'CC', '1102345678','3112345678', 'Cra 10 #20-15, Floridablanca'),
-(8,  'Santiago',  'Vargas Cortes',     'CC', '1099876543','3123456789', 'Cl 45 #9-22, Bucaramanga'),
-(9,  'Camila',    'Herrera Buitrago',  'CC', '1105678234','3134567890', 'Cra 15 #33-20, Bogota'),
-(10, 'Diego',     'Moreno Salazar',    'CC', '1096543210','3145678901', 'Cl 70 #52-30, Medellin'),
-(11, 'Isabella',  'Cardenas Nino',     'CC', '1101234987','3156789012', 'Cra 8 #12-40, Cartagena');
+(1,  'Laura',     'Martínez Rojas',    'CC', '63489215',  '3001234567', 'Cra 27 #45-12, Bucaramanga'),
+(2,  'Carlos',    'Pinzón Duarte',     'CC', '91234567',  '3012345678', 'Cl 56 #22-10, Bucaramanga'),
+(3,  'Valentina', 'Gómez Rueda',       'CC', '63512890',  '3023456789', 'Cra 33 #40-18, Floridablanca'),
+(4,  'Andrés',    'Castañeda Ríos',    'CC', '71234567',  '3034567890', 'Cra 43A #10-20, Medellín'),
+(5,  'Daniela',   'Ortiz Marín',       'CC', '43598721',  '3045678901', 'Cl 5 #8-30, Cartagena'),
+(6,  'Juan',      'Pérez López',       'CC', '1098765432','3101234567', 'Cl 30 #12-40, Bucaramanga'),
+(7,  'María',     'Rodríguez Sánchez', 'CC', '1102345678','3112345678', 'Cra 10 #20-15, Floridablanca'),
+(8,  'Santiago',  'Vargas Cortés',     'CC', '1099876543','3123456789', 'Cl 45 #9-22, Bucaramanga'),
+(9,  'Camila',    'Herrera Buitrago',  'CC', '1105678234','3134567890', 'Cra 15 #33-20, Bogotá'),
+(10, 'Diego',     'Moreno Salazar',    'CC', '1096543210','3145678901', 'Cl 70 #52-30, Medellín'),
+(11, 'Isabella',  'Cárdenas Niño',     'CC', '1101234987','3156789012', 'Cra 8 #12-40, Cartagena');
 
 -- =====================================================================
 -- 9. PROPIEDAD  (id_propiedad 1..12)
@@ -128,11 +128,11 @@ INSERT INTO perfil (id_usuario, nombres, apellidos, tipo_documento, numero_docum
 INSERT INTO propiedad
 (id_inmobiliaria, id_ciudad, id_tipo, matricula_inmobiliaria, titulo, descripcion, direccion, precio, area_m2, num_habitaciones, num_banos, num_parqueaderos, operacion, estado, activo, fecha_publicacion)
 VALUES
-(1, 1,  1, 'MI-BGA-0001', 'Casa campestre en Canaveral',
+(1, 1,  1, 'MI-BGA-0001', 'Casa campestre en Cañaveral',
    'Amplia casa campestre de dos plantas con zonas verdes, ideal para familias grandes.',
    'Cra 27 #103-45, Bucaramanga', 480000000.00, 220.00, 4, 3, 2, 'venta', 'disponible', 1, '2025-03-01 09:00:00'),
 
-(1, 2,  2, 'MI-FLB-0002', 'Apartamento moderno en Canaveral Real',
+(1, 2,  2, 'MI-FLB-0002', 'Apartamento moderno en Cañaveral Real',
    'Apartamento de acabados modernos, muy cerca a centros comerciales y colegios.',
    'Cl 30 #12-08, Floridablanca', 350000000.00, 85.00, 3, 2, 1, 'venta', 'disponible', 1, '2025-03-03 10:00:00'),
 
@@ -142,38 +142,38 @@ VALUES
 
 (1, 5,  2, 'MI-BOG-0004', 'Apartaestudio en Chapinero Central',
    'Apartaestudio funcional, ideal para estudiantes o profesionales solos.',
-   'Cra 13 #58-20, Bogota', 1800000.00, 45.00, 1, 1, 0, 'arriendo', 'disponible', 1, '2025-03-06 12:00:00'),
+   'Cra 13 #58-20, Bogotá', 1800000.00, 45.00, 1, 1, 0, 'arriendo', 'disponible', 1, '2025-03-06 12:00:00'),
 
 (2, 6,  1, 'MI-MED-0005', 'Casa de lujo en El Poblado',
    'Casa con acabados de lujo, piscina privada y zona social amplia.',
-   'Cl 10 #35-40, Medellin', 950000000.00, 300.00, 5, 4, 3, 'venta', 'disponible', 1, '2025-03-08 09:30:00'),
+   'Cl 10 #35-40, Medellín', 950000000.00, 300.00, 5, 4, 3, 'venta', 'disponible', 1, '2025-03-08 09:30:00'),
 
 (2, 6,  2, 'MI-MED-0006', 'Apartamento con vista en Laureles',
-   'Apartamento en piso alto con vista panoramica y excelente iluminacion.',
-   'Cra 76 #34-10, Medellin', 420000000.00, 90.00, 3, 2, 1, 'venta', 'reservado', 1, '2025-03-10 10:30:00'),
+   'Apartamento en piso alto con vista panorámica y excelente iluminación.',
+   'Cra 76 #34-10, Medellín', 420000000.00, 90.00, 3, 2, 1, 'venta', 'reservado', 1, '2025-03-10 10:30:00'),
 
 (2, 7,  4, 'MI-CAL-0007', 'Oficina ejecutiva Zona Norte',
-   'Oficina lista para operar, con recepcion y sala de juntas independiente.',
+   'Oficina lista para operar, con recepción y sala de juntas independiente.',
    'Av 6N #23-50, Cali', 3200000.00, 70.00, NULL, 1, 1, 'arriendo', 'disponible', 1, '2025-03-11 14:00:00'),
 
 (3, 8,  1, 'MI-BAQ-0008', 'Casa frente al mar en Puerto Colombia',
    'Casa de playa con acceso directo a la orilla y terraza con zona BBQ.',
-   'Via al Mar Km 5, Barranquilla', 1200000000.00, 250.00, 4, 3, 2, 'venta', 'disponible', 1, '2025-03-12 08:45:00'),
+   'Vía al Mar Km 5, Barranquilla', 1200000000.00, 250.00, 4, 3, 2, 'venta', 'disponible', 1, '2025-03-12 08:45:00'),
 
 (3, 9,  2, 'MI-CTG-0009', 'Apartamento amoblado en Bocagrande',
    'Apartamento totalmente amoblado, a pasos de la playa y zona hotelera.',
    'Cra 1 #8-45, Cartagena', 6500000.00, 75.00, 2, 2, 1, 'arriendo', 'disponible', 1, '2025-03-13 09:15:00'),
 
-(3, 3,  5, 'MI-GIR-0010', 'Lote urbanizable en Giron',
-   'Lote plano con servicios cercanos, ideal para proyecto de vivienda o inversion.',
-   'Vereda Chocoa, Giron', 180000000.00, 500.00, NULL, NULL, 0, 'venta', 'disponible', 1, '2025-03-14 10:00:00'),
+(3, 3,  5, 'MI-GIR-0010', 'Lote urbanizable en Girón',
+   'Lote plano con servicios cercanos, ideal para proyecto de vivienda o inversión.',
+   'Vereda Chocoa, Girón', 180000000.00, 500.00, NULL, NULL, 0, 'venta', 'disponible', 1, '2025-03-14 10:00:00'),
 
-(1, 4,  1, 'MI-PIE-0011', 'Casa finca con vista a las montanas',
-   'Casa finca con vista panoramica, arboles frutales y amplio jardin.',
+(1, 4,  1, 'MI-PIE-0011', 'Casa finca con vista a las montañas',
+   'Casa finca con vista panorámica, árboles frutales y amplio jardín.',
    'Vereda Sevilla, Piedecuesta', 620000000.00, 400.00, 4, 3, 4, 'venta', 'vendido', 1, '2025-03-15 11:20:00'),
 
-(1, 10, 3, 'MI-BEL-0012', 'Local esquinero en Niquia',
-   'Local esquinero con buena visibilidad, cerca a la estacion del metro.',
+(1, 10, 3, 'MI-BEL-0012', 'Local esquinero en Niquía',
+   'Local esquinero con buena visibilidad, cerca a la estación del metro.',
    'Cl 50 #45-10, Bello', 1900000.00, 55.00, NULL, 1, 0, 'arriendo', 'arrendado', 1, '2025-03-16 13:40:00');
 
 -- =====================================================================
@@ -244,7 +244,7 @@ INSERT INTO cita (id_propiedad, id_cliente, fecha_hora, estado, observaciones, f
 (2,  6,  '2025-11-10 14:00:00', 'realizada',  'Visita realizada, cliente satisfecho.',   '2025-10-30 10:00:00'),
 (4,  9,  '2025-11-08 11:00:00', 'confirmada', NULL,                                      '2025-10-30 11:00:00'),
 (5,  7,  '2025-11-09 16:00:00', 'pendiente',  NULL,                                      '2025-10-31 08:20:00'),
-(5,  10, '2025-11-12 10:00:00', 'cancelada',  'Cliente reprogramara para otra fecha.',   '2025-10-31 09:00:00'),
+(5,  10, '2025-11-12 10:00:00', 'cancelada',  'Cliente reprogramará para otra fecha.',   '2025-10-31 09:00:00'),
 (6,  11, '2025-11-11 13:00:00', 'confirmada', NULL,                                      '2025-11-01 07:45:00'),
 (8,  8,  '2025-11-13 09:00:00', 'pendiente',  NULL,                                      '2025-11-02 12:00:00'),
 (9,  9,  '2025-11-14 17:00:00', 'rechazada',  'Horario no disponible para el agente.',   '2025-11-02 12:30:00'),
@@ -255,7 +255,7 @@ INSERT INTO cita (id_propiedad, id_cliente, fecha_hora, estado, observaciones, f
 -- 13. SOLICITUD
 -- =====================================================================
 INSERT INTO solicitud (id_propiedad, id_cliente, tipo_solicitud, estado, fecha_solicitud, observaciones) VALUES
-(1,  6,  'compra',   'aprobada',    '2025-10-20 09:00:00', 'Documentacion completa y verificada.'),
+(1,  6,  'compra',   'aprobada',    '2025-10-20 09:00:00', 'Documentación completa y verificada.'),
 (2,  7,  'compra',   'en_revision', '2025-10-21 10:00:00', NULL),
 (3,  8,  'arriendo', 'pendiente',   '2025-10-22 11:00:00', NULL),
 (4,  9,  'arriendo', 'aprobada',    '2025-10-22 12:00:00', 'Contrato listo para firma.'),
@@ -263,7 +263,7 @@ INSERT INTO solicitud (id_propiedad, id_cliente, tipo_solicitud, estado, fecha_s
 (6,  11, 'compra',   'rechazada',   '2025-10-23 10:30:00', 'Capacidad de pago insuficiente.'),
 (7,  6,  'arriendo', 'en_revision', '2025-10-24 08:15:00', NULL),
 (8,  7,  'compra',   'pendiente',   '2025-10-25 09:45:00', NULL),
-(9,  8,  'arriendo', 'aprobada',    '2025-10-26 10:15:00', 'Deposito de garantia recibido.'),
+(9,  8,  'arriendo', 'aprobada',    '2025-10-26 10:15:00', 'Depósito de garantía recibido.'),
 (10, 9,  'compra',   'pendiente',   '2025-10-27 11:30:00', NULL),
 (11, 10, 'compra',   'en_revision', '2025-10-28 12:45:00', NULL),
 (12, 11, 'arriendo', 'rechazada',   '2025-10-28 13:15:00', 'Referencias no verificables.');
@@ -272,22 +272,22 @@ INSERT INTO solicitud (id_propiedad, id_cliente, tipo_solicitud, estado, fecha_s
 -- 14. DOCUMENTO_SOLICITUD
 -- =====================================================================
 INSERT INTO documento_solicitud (id_solicitud, nombre_documento, url_documento, estado, fecha_carga) VALUES
-(1,  'Cedula de ciudadania',       'https://docs.hogaria.test/sol1/cedula.pdf',       'aprobado',  '2025-10-20 09:10:00'),
+(1,  'Cédula de ciudadanía',       'https://docs.hogaria.test/sol1/cedula.pdf',       'aprobado',  '2025-10-20 09:10:00'),
 (1,  'Carta laboral',              'https://docs.hogaria.test/sol1/laboral.pdf',      'aprobado',  '2025-10-20 09:15:00'),
-(2,  'Cedula de ciudadania',       'https://docs.hogaria.test/sol2/cedula.pdf',       'aprobado',  '2025-10-21 10:10:00'),
+(2,  'Cédula de ciudadanía',       'https://docs.hogaria.test/sol2/cedula.pdf',       'aprobado',  '2025-10-21 10:10:00'),
 (2,  'Certificado de ingresos',    'https://docs.hogaria.test/sol2/ingresos.pdf',     'pendiente', '2025-10-21 10:20:00'),
-(3,  'Cedula de ciudadania',       'https://docs.hogaria.test/sol3/cedula.pdf',       'pendiente', '2025-10-22 11:05:00'),
-(4,  'Cedula de ciudadania',       'https://docs.hogaria.test/sol4/cedula.pdf',       'aprobado',  '2025-10-22 12:05:00'),
+(3,  'Cédula de ciudadanía',       'https://docs.hogaria.test/sol3/cedula.pdf',       'pendiente', '2025-10-22 11:05:00'),
+(4,  'Cédula de ciudadanía',       'https://docs.hogaria.test/sol4/cedula.pdf',       'aprobado',  '2025-10-22 12:05:00'),
 (4,  'Referencia bancaria',        'https://docs.hogaria.test/sol4/referencia.pdf',   'aprobado',  '2025-10-22 12:10:00'),
-(5,  'Cedula de ciudadania',       'https://docs.hogaria.test/sol5/cedula.pdf',       'pendiente', '2025-10-23 09:35:00'),
-(6,  'Cedula de ciudadania',       'https://docs.hogaria.test/sol6/cedula.pdf',       'rechazado', '2025-10-23 10:35:00'),
-(7,  'Cedula de ciudadania',       'https://docs.hogaria.test/sol7/cedula.pdf',       'pendiente', '2025-10-24 08:20:00'),
-(8,  'Cedula de ciudadania',       'https://docs.hogaria.test/sol8/cedula.pdf',       'pendiente', '2025-10-25 09:50:00'),
-(9,  'Cedula de ciudadania',       'https://docs.hogaria.test/sol9/cedula.pdf',       'aprobado',  '2025-10-26 10:20:00'),
-(9,  'Codeudor - Cedula',          'https://docs.hogaria.test/sol9/codeudor.pdf',     'aprobado',  '2025-10-26 10:25:00'),
-(10, 'Cedula de ciudadania',       'https://docs.hogaria.test/sol10/cedula.pdf',      'pendiente', '2025-10-27 11:35:00'),
-(11, 'Cedula de ciudadania',       'https://docs.hogaria.test/sol11/cedula.pdf',      'aprobado',  '2025-10-28 12:50:00'),
-(12, 'Cedula de ciudadania',       'https://docs.hogaria.test/sol12/cedula.pdf',      'rechazado', '2025-10-28 13:20:00');
+(5,  'Cédula de ciudadanía',       'https://docs.hogaria.test/sol5/cedula.pdf',       'pendiente', '2025-10-23 09:35:00'),
+(6,  'Cédula de ciudadanía',       'https://docs.hogaria.test/sol6/cedula.pdf',       'rechazado', '2025-10-23 10:35:00'),
+(7,  'Cédula de ciudadanía',       'https://docs.hogaria.test/sol7/cedula.pdf',       'pendiente', '2025-10-24 08:20:00'),
+(8,  'Cédula de ciudadanía',       'https://docs.hogaria.test/sol8/cedula.pdf',       'pendiente', '2025-10-25 09:50:00'),
+(9,  'Cédula de ciudadanía',       'https://docs.hogaria.test/sol9/cedula.pdf',       'aprobado',  '2025-10-26 10:20:00'),
+(9,  'Codeudor - Cédula',          'https://docs.hogaria.test/sol9/codeudor.pdf',     'aprobado',  '2025-10-26 10:25:00'),
+(10, 'Cédula de ciudadanía',       'https://docs.hogaria.test/sol10/cedula.pdf',      'pendiente', '2025-10-27 11:35:00'),
+(11, 'Cédula de ciudadanía',       'https://docs.hogaria.test/sol11/cedula.pdf',      'aprobado',  '2025-10-28 12:50:00'),
+(12, 'Cédula de ciudadanía',       'https://docs.hogaria.test/sol12/cedula.pdf',      'rechazado', '2025-10-28 13:20:00');
 
 -- =====================================================================
 -- 15. FAVORITO
@@ -310,15 +310,15 @@ INSERT INTO favorito (id_usuario, id_propiedad, fecha_agregado) VALUES
 -- 16. AUDITORIA
 -- =====================================================================
 INSERT INTO auditoria (id_usuario, accion, tabla_afectada, descripcion, fecha_hora, ip_origen) VALUES
-(1, 'login',                  NULL,                  'Inicio de sesion exitoso.',                                   '2025-11-01 07:55:00', '190.85.23.10'),
-(2, 'creacion_propiedad',     'propiedad',           'Publico la propiedad MI-BGA-0001.',                           '2025-03-01 09:00:00', '186.30.15.22'),
-(3, 'creacion_propiedad',     'propiedad',           'Publico la propiedad MI-FLB-0002.',                           '2025-03-03 10:00:00', '186.30.15.40'),
-(4, 'actualizacion_propiedad','propiedad',           'Actualizo el estado de MI-MED-0006 a reservado.',             '2025-04-01 15:00:00', '200.14.10.5'),
-(1, 'asignacion_rol',         'usuario_rol',         'Asigno rol Inmobiliaria a agente@raicesinmobiliaria.com.',    '2025-01-10 10:15:00', '190.85.23.10'),
-(2, 'aprobacion_solicitud',   'solicitud',           'Aprobo la solicitud de compra #1.',                           '2025-10-20 09:05:00', '186.30.15.22'),
-(6, 'login',                  NULL,                  'Inicio de sesion exitoso.',                                   '2025-10-15 07:50:00', '181.52.10.3'),
-(7, 'registro_usuario',       'usuario',             'Se registro como nuevo cliente.',                             '2025-02-02 12:10:00', '181.52.11.9'),
-(5, 'rechazo_solicitud',      'solicitud',           'Rechazo la solicitud de arriendo #12.',                       '2025-10-28 13:15:00', '200.75.44.2'),
-(1, 'bloqueo_cuenta',         'usuario',             'Bloqueo temporalmente la cuenta cliente6@gmail.com.',         '2025-11-02 16:00:00', '190.85.23.10'),
-(9, 'radicacion_documento',   'documento_solicitud', 'Cargo el documento Certificado de ingresos.',                 '2025-10-21 10:20:00', '191.90.12.7'),
-(1, 'consulta_auditoria',     'auditoria',           'Consulto el reporte de auditoria del sistema.',               '2025-11-03 09:00:00', '190.85.23.10');
+(1, 'login',                  NULL,                  'Inicio de sesión exitoso.',                                   '2025-11-01 07:55:00', '190.85.23.10'),
+(2, 'creacion_propiedad',     'propiedad',           'Publicó la propiedad MI-BGA-0001.',                           '2025-03-01 09:00:00', '186.30.15.22'),
+(3, 'creacion_propiedad',     'propiedad',           'Publicó la propiedad MI-FLB-0002.',                           '2025-03-03 10:00:00', '186.30.15.40'),
+(4, 'actualizacion_propiedad','propiedad',           'Actualizó el estado de MI-MED-0006 a reservado.',             '2025-04-01 15:00:00', '200.14.10.5'),
+(1, 'asignacion_rol',         'usuario_rol',         'Asignó rol Inmobiliaria a agente@raicesinmobiliaria.com.',    '2025-01-10 10:15:00', '190.85.23.10'),
+(2, 'aprobacion_solicitud',   'solicitud',           'Aprobó la solicitud de compra #1.',                           '2025-10-20 09:05:00', '186.30.15.22'),
+(6, 'login',                  NULL,                  'Inicio de sesión exitoso.',                                   '2025-10-15 07:50:00', '181.52.10.3'),
+(7, 'registro_usuario',       'usuario',             'Se registró como nuevo cliente.',                             '2025-02-02 12:10:00', '181.52.11.9'),
+(5, 'rechazo_solicitud',      'solicitud',           'Rechazó la solicitud de arriendo #12.',                       '2025-10-28 13:15:00', '200.75.44.2'),
+(1, 'bloqueo_cuenta',         'usuario',             'Bloqueó temporalmente la cuenta cliente6@gmail.com.',         '2025-11-02 16:00:00', '190.85.23.10'),
+(9, 'radicacion_documento',   'documento_solicitud', 'Cargó el documento Certificado de ingresos.',                 '2025-10-21 10:20:00', '191.90.12.7'),
+(1, 'consulta_auditoria',     'auditoria',           'Consultó el reporte de auditoría del sistema.',               '2025-11-03 09:00:00', '190.85.23.10');

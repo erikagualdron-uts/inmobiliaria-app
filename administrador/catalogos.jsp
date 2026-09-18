@@ -55,7 +55,7 @@
                 String nombre = request.getParameter("nombre").trim();
                 String icono = request.getParameter("icono") != null ? request.getParameter("icono").trim() : "";
                 if (nombre.isEmpty()) {
-                    errores.add("Ingresa el nombre de la caracteristica.");
+                    errores.add("Ingresa el nombre de la característica.");
                 } else {
                     try (PreparedStatement ps = conexion.prepareStatement(
                             "INSERT INTO caracteristica (nombre_caracteristica, icono) VALUES (?, ?)")) {
@@ -75,10 +75,10 @@
                 if (msg.contains("duplicate")) {
                     errores.add("Ya existe un registro con ese nombre.");
                 } else {
-                    errores.add("No se puede eliminar: esta en uso por una o mas propiedades.");
+                    errores.add("No se puede eliminar: está en uso por una o más propiedades.");
                 }
             } else {
-                errores.add("No fue posible completar la accion. Intenta nuevamente.");
+                errores.add("No fue posible completar la acción. Intenta nuevamente.");
             }
         } catch (Exception ignored) { }
 
@@ -89,7 +89,7 @@
         }
     }
 
-    if ("1".equals(request.getParameter("actualizado"))) mensaje = "Catalogo actualizado correctamente.";
+    if ("1".equals(request.getParameter("actualizado"))) mensaje = "Catálogo actualizado correctamente.";
 
     List<Map<String, Object>> ciudades = new ArrayList<>();
     List<Map<String, Object>> tipos = new ArrayList<>();
@@ -128,7 +128,7 @@
 %><!DOCTYPE html>
 <html lang="es">
 <head>
-    <% String hgTitulo = "Catalogos"; %>
+    <% String hgTitulo = "Catálogos"; %>
     <%@ include file="/jspf/head-comun.jspf" %>
 </head>
 <body>
@@ -136,8 +136,8 @@
 
 <div class="hg-panel-body">
     <div class="hg-panel-hero">
-        <span class="hg-eyebrow">Panel de administracion</span>
-        <h1>Catalogos del sistema</h1>
+        <span class="hg-eyebrow">Panel de administración</span>
+        <h1>Catálogos del sistema</h1>
         <p><a href="<%= request.getContextPath() %>/administrador/dashboard-administrador.jsp">&larr; Volver a mi panel</a></p>
     </div>
 
@@ -188,13 +188,13 @@
             <form method="post" action="<%= request.getContextPath() %>/administrador/catalogos.jsp" style="display:flex; flex-direction:column; gap:10px;">
                 <input type="hidden" name="accion" value="agregarTipo">
                 <input class="form-control" type="text" name="nombre" placeholder="Nombre del tipo" maxlength="40" required>
-                <input class="form-control" type="text" name="descripcion" placeholder="Descripcion (opcional)" maxlength="150">
+                <input class="form-control" type="text" name="descripcion" placeholder="Descripción (opcional)" maxlength="150">
                 <button class="hg-btn hg-btn--primary hg-btn--sm" type="submit"><i class="bi bi-plus-lg"></i> Agregar tipo</button>
             </form>
         </div>
 
         <div class="hg-panel-card">
-            <h3 style="margin-bottom:14px;">Caracteristicas</h3>
+            <h3 style="margin-bottom:14px;">Características</h3>
             <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:16px;">
                 <% for (Map<String, Object> car : caracteristicas) { %>
                 <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px dashed var(--hg-border); font-size:.9rem;">
@@ -209,9 +209,9 @@
             </div>
             <form method="post" action="<%= request.getContextPath() %>/administrador/catalogos.jsp" style="display:flex; flex-direction:column; gap:10px;">
                 <input type="hidden" name="accion" value="agregarCaracteristica">
-                <input class="form-control" type="text" name="nombre" placeholder="Nombre de la caracteristica" maxlength="50" required>
-                <input class="form-control" type="text" name="icono" placeholder="Icono (opcional, ej. bi-water)" maxlength="50">
-                <button class="hg-btn hg-btn--primary hg-btn--sm" type="submit"><i class="bi bi-plus-lg"></i> Agregar caracteristica</button>
+                <input class="form-control" type="text" name="nombre" placeholder="Nombre de la característica" maxlength="50" required>
+                <input class="form-control" type="text" name="icono" placeholder="Ícono (opcional, ej. bi-water)" maxlength="50">
+                <button class="hg-btn hg-btn--primary hg-btn--sm" type="submit"><i class="bi bi-plus-lg"></i> Agregar característica</button>
             </form>
         </div>
     </div>

@@ -18,7 +18,7 @@
         String contrasena = valor(request.getParameter("contrasena"));
 
         if (correo.isEmpty() || contrasena.isEmpty()) {
-            errores.add("Ingresa tu correo y tu contrasena.");
+            errores.add("Ingresa tu correo y tu contraseña.");
         } else if (conexion == null) {
             errores.add(errorConexion != null ? errorConexion : "No fue posible conectar con la base de datos.");
         } else {
@@ -40,11 +40,11 @@
                 }
 
                 if (idUsuarioBd == null || !verificarClave(contrasena, hashBd)) {
-                    errores.add("Correo o contrasena incorrectos.");
+                    errores.add("Correo o contraseña incorrectos.");
                 } else if ("bloqueado".equals(estadoBd)) {
-                    errores.add("Tu cuenta esta bloqueada temporalmente. Contacta al administrador.");
+                    errores.add("Tu cuenta está bloqueada temporalmente. Contacta al administrador.");
                 } else if ("inactivo".equals(estadoBd)) {
-                    errores.add("Tu cuenta esta inactiva. Contacta al administrador.");
+                    errores.add("Tu cuenta está inactiva. Contacta al administrador.");
                 } else {
                     String nombreUsuario = null, apellidosUsuario = null, telefonoUsuario = null;
                     try (PreparedStatement ps = conexion.prepareStatement(
@@ -92,7 +92,7 @@
                     return;
                 }
             } catch (Exception e) {
-                errores.add("No fue posible iniciar sesion. Intenta nuevamente.");
+                errores.add("No fue posible iniciar sesión. Intenta nuevamente.");
             }
         }
     }
@@ -103,7 +103,7 @@
 %><!DOCTYPE html>
 <html lang="es">
 <head>
-    <% String hgTitulo = "Iniciar sesion"; %>
+    <% String hgTitulo = "Iniciar sesión"; %>
     <%@ include file="/jspf/head-comun.jspf" %>
 </head>
 <body>
@@ -121,11 +121,11 @@
             </span>
         </div>
 
-        <h1 class="hg-auth__title">Inicia sesion</h1>
-        <p class="hg-auth__subtitle">Ingresa a tu cuenta para gestionar tus tramites con Hogaria.</p>
+        <h1 class="hg-auth__title">Inicia sesión</h1>
+        <p class="hg-auth__subtitle">Ingresa a tu cuenta para gestionar tus trámites con Hogaria.</p>
 
         <% if (vieneDeRegistro) { %>
-        <div class="hg-alert hg-alert--success" style="margin-bottom:18px;">Tu cuenta fue creada con exito. Ahora inicia sesion.</div>
+        <div class="hg-alert hg-alert--success" style="margin-bottom:18px;">Tu cuenta fue creada con éxito. Ahora inicia sesión.</div>
         <% } %>
 
         <% if (!errores.isEmpty()) { %>
@@ -140,22 +140,22 @@
 
         <form method="post" action="<%= request.getContextPath() %>/login.jsp" novalidate class="js-form-cargando">
             <div class="hg-field">
-                <label for="correo">Correo electronico</label>
+                <label for="correo">Correo electrónico</label>
                 <input class="form-control" type="email" id="correo" name="correo" value="<%= correo %>" required>
             </div>
             <div class="hg-field">
-                <label for="contrasena">Contrasena</label>
+                <label for="contrasena">Contraseña</label>
                 <div class="hg-password-field">
                     <input class="form-control" type="password" id="contrasena" name="contrasena" required>
-                    <button type="button" class="hg-password-toggle" data-toggle-password="contrasena" aria-label="Mostrar contrasena">
+                    <button type="button" class="hg-password-toggle" data-toggle-password="contrasena" aria-label="Mostrar contraseña">
                         <i class="bi bi-eye"></i>
                     </button>
                 </div>
             </div>
-            <button class="hg-btn hg-btn--primary hg-btn--block" type="submit">Iniciar sesion</button>
+            <button class="hg-btn hg-btn--primary hg-btn--block" type="submit">Iniciar sesión</button>
         </form>
 
-        <p class="hg-auth__footer">¿Aun no tienes cuenta? <a href="<%= request.getContextPath() %>/registro.jsp">Registrate gratis</a></p>
+        <p class="hg-auth__footer">¿Aún no tienes cuenta? <a href="<%= request.getContextPath() %>/registro.jsp">Regístrate gratis</a></p>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

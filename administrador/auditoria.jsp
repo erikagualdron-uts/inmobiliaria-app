@@ -45,7 +45,7 @@
 %><!DOCTYPE html>
 <html lang="es">
 <head>
-    <% String hgTitulo = "Auditoria"; %>
+    <% String hgTitulo = "Auditoría"; %>
     <%@ include file="/jspf/head-comun.jspf" %>
 </head>
 <body>
@@ -53,8 +53,8 @@
 
 <div class="hg-panel-body">
     <div class="hg-panel-hero">
-        <span class="hg-eyebrow">Panel de administracion</span>
-        <h1>Auditoria del sistema</h1>
+        <span class="hg-eyebrow">Panel de administración</span>
+        <h1>Auditoría del sistema</h1>
         <p><a href="<%= request.getContextPath() %>/administrador/dashboard-administrador.jsp">&larr; Volver a mi panel</a></p>
     </div>
 
@@ -62,7 +62,7 @@
     <div class="hg-panel-card">
         <div class="hg-panel-empty">
             <div class="hg-panel-empty__icon"><i class="bi bi-journal-text"></i></div>
-            <p>Aun no hay eventos de auditoria registrados.</p>
+            <p>Aún no hay eventos de auditoría registrados.</p>
         </div>
     </div>
     <% } else { %>
@@ -74,7 +74,7 @@
                 <input class="form-control" type="text" id="filtroUsuario" placeholder="Ej. Laura, admin@hogaria.com...">
             </div>
             <div class="hg-field">
-                <label for="filtroAccion">Tipo de accion</label>
+                <label for="filtroAccion">Tipo de acción</label>
                 <select class="form-select" id="filtroAccion">
                     <option value="">Todas las acciones</option>
                     <% for (String accionRaw : accionesCatalogo) { %>
@@ -95,7 +95,7 @@
 
     <div class="hg-panel-card" style="padding:0; overflow-x:auto;">
         <table class="hg-tabla">
-            <thead><tr><th>Fecha</th><th>Usuario</th><th>Accion</th><th>Tabla</th><th>Descripcion</th><th>IP</th></tr></thead>
+            <thead><tr><th>Fecha</th><th>Usuario</th><th>Acción</th><th>Tabla</th><th>Descripción</th><th>IP</th></tr></thead>
             <tbody id="cuerpoAuditoria">
                 <% for (Map<String, Object> e : eventos) {
                     String accionRaw = (String) e.get("accion");
@@ -182,16 +182,16 @@
     private String accionEtiqueta(String accion) {
         if (accion == null) return "-";
         switch (accion) {
-            case "login": return "Inicio de sesion";
+            case "login": return "Inicio de sesión";
             case "registro_usuario": return "Registro de usuario";
-            case "creacion_propiedad": return "Creacion de propiedad";
-            case "actualizacion_propiedad": return "Actualizacion de propiedad";
-            case "aprobacion_solicitud": return "Aprobacion de solicitud";
+            case "creacion_propiedad": return "Creación de propiedad";
+            case "actualizacion_propiedad": return "Actualización de propiedad";
+            case "aprobacion_solicitud": return "Aprobación de solicitud";
             case "rechazo_solicitud": return "Rechazo de solicitud";
-            case "asignacion_rol": return "Asignacion de rol";
+            case "asignacion_rol": return "Asignación de rol";
             case "bloqueo_cuenta": return "Bloqueo de cuenta";
-            case "radicacion_documento": return "Radicacion de documento";
-            case "consulta_auditoria": return "Consulta de auditoria";
+            case "radicacion_documento": return "Radicación de documento";
+            case "consulta_auditoria": return "Consulta de auditoría";
             default: return accion.replace('_', ' ');
         }
     }

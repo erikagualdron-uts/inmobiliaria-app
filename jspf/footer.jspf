@@ -10,7 +10,7 @@
                 </svg>
                 <span>Hogaria</span>
             </a>
-            <p>Encontramos el lugar donde empieza tu proxima historia. Compra, venta y arriendo de propiedades en las principales ciudades de Colombia.</p>
+            <p>Encontramos el lugar donde empieza tu próxima historia. Compra, venta y arriendo de propiedades en las principales ciudades de Colombia.</p>
         </div>
 
         <div class="hg-footer__col">
@@ -30,6 +30,6 @@
 
     <div class="hg-footer__bottom">
         <span>&copy; <%= java.time.Year.now() %> Hogaria. Todos los derechos reservados.</span>
-        <span>Proyecto academico &mdash; UTS, Programacion Java</span>
+        <span>Proyecto académico &mdash; UTS, Programación Java</span>
     </div>
 </footer>

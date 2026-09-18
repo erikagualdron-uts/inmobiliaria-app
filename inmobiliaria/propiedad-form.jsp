@@ -154,35 +154,35 @@
             Integer habNum = null, banosNum = null, parqNum = null;
 
             if (matricula.isEmpty() || !matricula.matches("^[A-Za-z0-9-]{4,30}$")) {
-                errores.add("La matricula inmobiliaria debe tener entre 4 y 30 caracteres (letras, numeros y guiones).");
+                errores.add("La matrícula inmobiliaria debe tener entre 4 y 30 caracteres (letras, números y guiones).");
             }
             if (titulo.isEmpty() || titulo.length() < 5 || titulo.length() > 120) {
-                errores.add("El titulo debe tener entre 5 y 120 caracteres.");
+                errores.add("El título debe tener entre 5 y 120 caracteres.");
             }
             if (direccion.isEmpty() || direccion.length() > 150) {
-                errores.add("Ingresa una direccion valida (maximo 150 caracteres).");
+                errores.add("Ingresa una dirección válida (máximo 150 caracteres).");
             }
             if (idCiudad.isEmpty()) errores.add("Selecciona una ciudad.");
             if (idTipo.isEmpty()) errores.add("Selecciona un tipo de propiedad.");
-            if (!operacion.equals("venta") && !operacion.equals("arriendo")) errores.add("Selecciona una operacion valida.");
-            if (!estado.matches("^(disponible|reservado|vendido|arrendado)$")) errores.add("Selecciona un estado valido.");
+            if (!operacion.equals("venta") && !operacion.equals("arriendo")) errores.add("Selecciona una operación válida.");
+            if (!estado.matches("^(disponible|reservado|vendido|arrendado)$")) errores.add("Selecciona un estado válido.");
 
             try { precioNum = new BigDecimal(precio); if (precioNum.signum() <= 0) throw new NumberFormatException(); }
-            catch (Exception e) { errores.add("Ingresa un precio valido, mayor a cero."); }
+            catch (Exception e) { errores.add("Ingresa un precio válido, mayor a cero."); }
 
             try { areaNum = new BigDecimal(area); if (areaNum.signum() <= 0) throw new NumberFormatException(); }
-            catch (Exception e) { errores.add("Ingresa un area valida, mayor a cero."); }
+            catch (Exception e) { errores.add("Ingresa un área válida, mayor a cero."); }
 
             if (!habitaciones.isEmpty()) {
                 try { habNum = Integer.valueOf(habitaciones); if (habNum < 0) throw new NumberFormatException(); }
-                catch (Exception e) { errores.add("El numero de habitaciones no es valido."); }
+                catch (Exception e) { errores.add("El número de habitaciones no es válido."); }
             }
             if (!banos.isEmpty()) {
                 try { banosNum = Integer.valueOf(banos); if (banosNum < 0) throw new NumberFormatException(); }
-                catch (Exception e) { errores.add("El numero de banos no es valido."); }
+                catch (Exception e) { errores.add("El número de baños no es válido."); }
             }
             try { parqNum = parqueaderos.isEmpty() ? 0 : Integer.valueOf(parqueaderos); if (parqNum < 0) throw new NumberFormatException(); }
-            catch (Exception e) { errores.add("El numero de parqueaderos no es valido."); }
+            catch (Exception e) { errores.add("El número de parqueaderos no es válido."); }
 
             // Galeria de imagenes (solo aplica al publicar una propiedad nueva;
             // en edicion las fotos se administran aparte en propiedad-galeria.jsp).
@@ -218,7 +218,7 @@
                             if (urlImg.matches("^https?://.+")) {
                                 urlsImagenesFinal.add(urlImg);
                             } else {
-                                errores.add("Una de las URL de imagen ingresadas no es valida.");
+                                errores.add("Una de las URL de imagen ingresadas no es válida.");
                             }
                         }
                     }
@@ -333,7 +333,7 @@
                     try { conexion.rollback(); } catch (SQLException ignored) { }
                     String msg = sqlEx.getMessage() != null ? sqlEx.getMessage().toLowerCase() : "";
                     if ("23000".equals(sqlEx.getSQLState()) && msg.contains("matricula")) {
-                        errores.add("Ya existe una propiedad publicada con esa matricula inmobiliaria.");
+                        errores.add("Ya existe una propiedad publicada con esa matrícula inmobiliaria.");
                     } else {
                         errores.add("No fue posible guardar la propiedad. Intenta nuevamente.");
                     }
@@ -373,26 +373,26 @@
         <form method="post" enctype="multipart/form-data" action="<%= request.getContextPath() %>/inmobiliaria/propiedad-form.jsp<%= esEdicion ? "?id=" + idPropiedadEdicion : "" %>" class="js-form-cargando">
             <div class="hg-auth__grid" style="margin-bottom:16px;">
                 <div class="hg-field">
-                    <label for="matricula">Matricula inmobiliaria</label>
+                    <label for="matricula">Matrícula inmobiliaria</label>
                     <input class="form-control" type="text" id="matricula" name="matricula" value="<%= matricula %>" maxlength="30" required>
                 </div>
                 <div class="hg-field">
-                    <label for="operacion">Operacion</label>
+                    <label for="operacion">Operación</label>
                     <select class="form-select" id="operacion" name="operacion">
                         <option value="venta" <%= "venta".equals(operacion) ? "selected" : "" %>>Venta</option>
                         <option value="arriendo" <%= "arriendo".equals(operacion) ? "selected" : "" %>>Arriendo</option>
                     </select>
                 </div>
                 <div class="hg-field hg-field--full">
-                    <label for="titulo">Titulo del anuncio</label>
+                    <label for="titulo">Título del anuncio</label>
                     <input class="form-control" type="text" id="titulo" name="titulo" value="<%= titulo %>" maxlength="120" required>
                 </div>
                 <div class="hg-field hg-field--full">
-                    <label for="descripcion">Descripcion</label>
+                    <label for="descripcion">Descripción</label>
                     <textarea class="form-control" id="descripcion" name="descripcion" rows="4"><%= descripcion %></textarea>
                 </div>
                 <div class="hg-field hg-field--full">
-                    <label for="direccion">Direccion</label>
+                    <label for="direccion">Dirección</label>
                     <input class="form-control" type="text" id="direccion" name="direccion" value="<%= direccion %>" maxlength="150" required>
                 </div>
                 <div class="hg-field">
@@ -418,7 +418,7 @@
                     <input class="form-control" type="number" id="precio" name="precio" min="0" step="1000" value="<%= precio %>" required>
                 </div>
                 <div class="hg-field">
-                    <label for="area">Area (m²)</label>
+                    <label for="area">Área (m²)</label>
                     <input class="form-control" type="number" id="area" name="area" min="0" step="0.1" value="<%= area %>" required>
                 </div>
                 <div class="hg-field">
@@ -426,7 +426,7 @@
                     <input class="form-control" type="number" id="habitaciones" name="habitaciones" min="0" step="1" value="<%= habitaciones %>">
                 </div>
                 <div class="hg-field">
-                    <label for="banos">Banos</label>
+                    <label for="banos">Baños</label>
                     <input class="form-control" type="number" id="banos" name="banos" min="0" step="1" value="<%= banos %>">
                 </div>
                 <div class="hg-field">
@@ -446,7 +446,7 @@
                 <% } %>
             </div>
 
-            <label style="display:block; margin-bottom:8px; font-weight:600; font-size:.9rem;">Caracteristicas</label>
+            <label style="display:block; margin-bottom:8px; font-weight:600; font-size:.9rem;">Características</label>
             <div class="hg-detalle__caracteristicas" style="margin-bottom:24px;">
                 <% for (Map<String, Object> car : caracteristicasCatalogo) {
                     String idCarStr = String.valueOf(car.get("id"));
@@ -460,8 +460,8 @@
             </div>
 
             <% if (!esEdicion) { %>
-            <label style="display:block; margin-bottom:8px; font-weight:600; font-size:.9rem;">Galeria de imagenes</label>
-            <p style="color:var(--hg-ink-muted); font-size:.85rem; margin-top:-4px; margin-bottom:12px;">Sube fotos desde tu equipo o pega enlaces de imagenes; puedes combinar ambas formas. La primera que agregues queda como portada, pero puedes cambiarla.</p>
+            <label style="display:block; margin-bottom:8px; font-weight:600; font-size:.9rem;">Galería de imágenes</label>
+            <p style="color:var(--hg-ink-muted); font-size:.85rem; margin-top:-4px; margin-bottom:12px;">Sube fotos desde tu equipo o pega enlaces de imágenes; puedes combinar ambas formas. La primera que agregues queda como portada, pero puedes cambiarla.</p>
 
             <div class="hg-o-alternativa" style="margin-bottom:14px;">
                 <div class="hg-field">
@@ -482,7 +482,7 @@
 
             <div id="galeriaVacio" class="hg-panel-empty" style="margin-bottom:24px;">
                 <div class="hg-panel-empty__icon"><i class="bi bi-images"></i></div>
-                <p>Aun no has agregado imagenes. Puedes publicar sin fotos y agregarlas despues.</p>
+                <p>Aún no has agregado imágenes. Puedes publicar sin fotos y agregarlas después.</p>
             </div>
             <div id="galeriaPreview" class="hg-galeria-grid" style="display:none;"></div>
 
@@ -536,16 +536,16 @@
         var archivos = Array.prototype.slice.call(inputArchivos.files);
         for (var i = 0; i < archivos.length; i++) {
             if (galeria.length >= LIMITE_IMAGENES) {
-                mostrarError('Solo puedes agregar hasta ' + LIMITE_IMAGENES + ' imagenes.');
+                mostrarError('Solo puedes agregar hasta ' + LIMITE_IMAGENES + ' imágenes.');
                 break;
             }
             var f = archivos[i];
             if (!extensionValida(f.name)) {
-                mostrarError('"' + f.name + '" no es un formato valido (solo JPG, PNG o WEBP).');
+                mostrarError('"' + f.name + '" no es un formato válido (solo JPG, PNG o WEBP).');
                 continue;
             }
             if (f.size > TAMANO_MAXIMO) {
-                mostrarError('"' + f.name + '" supera el tamano maximo de 5MB.');
+                mostrarError('"' + f.name + '" supera el tamaño máximo de 5MB.');
                 continue;
             }
             var item = { id: contadorId++, tipo: 'file', file: f, previewUrl: URL.createObjectURL(f) };
@@ -559,11 +559,11 @@
         limpiarError();
         var url = inputUrlNueva.value.trim();
         if (!/^https?:\/\/.+/i.test(url)) {
-            mostrarError('Ingresa una URL valida (debe iniciar con http:// o https://).');
+            mostrarError('Ingresa una URL válida (debe iniciar con http:// o https://).');
             return;
         }
         if (galeria.length >= LIMITE_IMAGENES) {
-            mostrarError('Solo puedes agregar hasta ' + LIMITE_IMAGENES + ' imagenes.');
+            mostrarError('Solo puedes agregar hasta ' + LIMITE_IMAGENES + ' imágenes.');
             return;
         }
         var item = { id: contadorId++, tipo: 'url', url: url, previewUrl: url };

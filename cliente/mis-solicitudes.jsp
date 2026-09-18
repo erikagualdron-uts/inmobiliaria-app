@@ -49,7 +49,7 @@
                 errores.add("Ingresa un nombre para el documento.");
             }
             if (urlFinal == null && errores.isEmpty()) {
-                errores.add("Sube un archivo desde tu equipo o ingresa una URL valida (debe iniciar con http:// o https://).");
+                errores.add("Sube un archivo desde tu equipo o ingresa una URL válida (debe iniciar con http:// o https://).");
             }
 
             if (errores.isEmpty()) {
@@ -144,7 +144,7 @@
     <div class="hg-panel-card">
         <div class="hg-panel-empty">
             <div class="hg-panel-empty__icon"><i class="bi bi-clipboard"></i></div>
-            <p>Aun no has radicado ninguna solicitud de compra o arriendo.</p>
+            <p>Aún no has radicado ninguna solicitud de compra o arriendo.</p>
             <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/catalogo.jsp">Explorar propiedades</a>
         </div>
     </div>
@@ -180,7 +180,7 @@
                 <form method="post" action="<%= request.getContextPath() %>/cliente/mis-solicitudes.jsp" enctype="multipart/form-data" style="display:flex; flex-direction:column; gap:10px; margin-top:12px;">
                     <input type="hidden" name="accion" value="radicarDocumento">
                     <input type="hidden" name="idSolicitud" value="<%= s.get("id") %>">
-                    <input class="form-control" type="text" name="nombreDocumento" placeholder="Ej. Cedula de ciudadania" required>
+                    <input class="form-control" type="text" name="nombreDocumento" placeholder="Ej. Cédula de ciudadanía" required>
                     <div class="hg-o-alternativa">
                         <div class="hg-field">
                             <label><i class="bi bi-upload"></i> Subir archivo (PDF, JPG, PNG o Word, max. 5MB)</label>
