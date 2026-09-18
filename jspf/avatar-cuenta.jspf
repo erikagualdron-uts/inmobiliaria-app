@@ -1,22 +1,20 @@
 <%@ page pageEncoding="UTF-8" %>
 <%
     // =========================================================================
-    // Avatar + modal de cuenta para un usuario con sesion iniciada. Se
-    // apoya UNICAMENTE en atributos de sesion (nombreUsuario, apellidosUsuario,
-    // correoUsuario, telefonoUsuario, fotoUrlUsuario, roles), cacheados por
-    // login.jsp y refrescados por cliente/perfil.jsp -- asi evitamos abrir
-    // una segunda conexion a la base de datos solo para pintar el header.
+    // Avatar de cuenta para un usuario con sesion iniciada: circulo con la
+    // inicial del nombre + nombre y apellido. Al hacer clic despliega un
+    // recuadro simple (NO un modal de Bootstrap) con "Mi panel" y "Cerrar
+    // sesion". Se implementa con JS propio (ver assets/js/main.js), sin
+    // backdrop ni libreria de modales, para evitar que quede atrapado
+    // dentro de contenedores con overflow:hidden (como el menu movil
+    // colapsable), que es lo que rompia la version anterior.
     //
-    // Se incluye tanto desde header.jspf (paginas publicas) como desde
-    // panel-header.jspf (paginas internas), siempre que haya sesion activa.
-    // Da, ademas, la forma de volver "a mi panel" desde cualquier pagina
-    // publica sin sentir que se perdio la sesion.
+    // Se apoya UNICAMENTE en atributos de sesion (nombreUsuario,
+    // apellidosUsuario, roles), cacheados por login.jsp y refrescados por
+    // cliente/perfil.jsp -- no abre una segunda conexion a la base de datos.
     // =========================================================================
     String hgAvNombre = (String) session.getAttribute("nombreUsuario");
     String hgAvApellidos = (String) session.getAttribute("apellidosUsuario");
-    String hgAvCorreo = (String) session.getAttribute("correoUsuario");
-    String hgAvTelefono = (String) session.getAttribute("telefonoUsuario");
-    String hgAvFoto = (String) session.getAttribute("fotoUrlUsuario");
 
     @SuppressWarnings("unchecked")
     java.util.List<String> hgAvRoles = (java.util.List<String>) session.getAttribute("roles");
@@ -33,52 +31,14 @@
         hgAvPanel = request.getContextPath() + "/inmobiliaria/dashboard-inmobiliaria.jsp";
     }
 %>
-<button type="button" class="hg-avatar-trigger" id="hg-avatar-trigger" aria-haspopup="dialog" aria-label="Mi cuenta">
-    <% if (hgAvFoto != null && !hgAvFoto.isEmpty()) { %>
-    <img class="hg-avatar" src="<%= hgAvFoto %>" alt="">
-    <% } else { %>
-    <span class="hg-avatar hg-avatar--inicial"><%= hgAvInicial %></span>
-    <% } %>
-    <span class="hg-avatar-trigger__nombre"><%= hgAvNombre != null ? hgAvNombre : "Mi cuenta" %></span>
-</button>
-
-<div class="modal fade" id="hgModalCuenta" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content hg-modal-cuenta">
-            <div class="modal-body">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-
-                <div class="hg-modal-cuenta__header">
-                    <% if (hgAvFoto != null && !hgAvFoto.isEmpty()) { %>
-                    <img class="hg-avatar hg-avatar--lg" src="<%= hgAvFoto %>" alt="">
-                    <% } else { %>
-                    <span class="hg-avatar hg-avatar--lg hg-avatar--inicial"><%= hgAvInicial %></span>
-                    <% } %>
-                    <div>
-                        <h3><%= hgAvNombreCompleto %></h3>
-                        <div class="hg-modal-cuenta__roles">
-                            <% if (hgAvRoles != null) { for (String hgAvRol : hgAvRoles) { %>
-                            <span class="hg-panel-topbar__role" style="position:static;"><%= hgAvRol %></span>
-                            <% } } %>
-                        </div>
-                    </div>
-                </div>
-
-                <dl class="hg-modal-cuenta__datos">
-                    <dt><i class="bi bi-envelope"></i> Correo</dt>
-                    <dd><%= hgAvCorreo != null ? hgAvCorreo : "-" %></dd>
-                    <dt><i class="bi bi-telephone"></i> Telefono</dt>
-                    <dd><%= (hgAvTelefono != null && !hgAvTelefono.isEmpty()) ? hgAvTelefono : "Sin registrar" %></dd>
-                </dl>
-
-                <div class="hg-modal-cuenta__acciones">
-                    <a class="hg-btn hg-btn--primary" href="<%= hgAvPanel %>"><i class="bi bi-speedometer2"></i> Mi panel</a>
-                    <% if (hgAvRoles != null && hgAvRoles.contains("Cliente")) { %>
-                    <a class="hg-btn hg-btn--ghost" href="<%= request.getContextPath() %>/cliente/perfil.jsp"><i class="bi bi-pencil-square"></i> Editar perfil</a>
-                    <% } %>
-                    <a class="hg-btn hg-btn--ghost" href="<%= request.getContextPath() %>/logout.jsp"><i class="bi bi-box-arrow-right"></i> Cerrar sesion</a>
-                </div>
-            </div>
-        </div>
+<div class="hg-cuenta" id="hg-cuenta">
+    <button type="button" class="hg-avatar-trigger" id="hg-avatar-trigger" aria-haspopup="true" aria-expanded="false">
+        <span class="hg-avatar hg-avatar--inicial"><%= hgAvInicial %></span>
+        <span class="hg-avatar-trigger__nombre"><%= hgAvNombreCompleto %></span>
+        <i class="bi bi-chevron-down hg-avatar-trigger__caret"></i>
+    </button>
+    <div class="hg-cuenta-menu" role="menu">
+        <a role="menuitem" href="<%= hgAvPanel %>"><i class="bi bi-speedometer2"></i> Mi panel</a>
+        <a role="menuitem" href="<%= request.getContextPath() %>/logout.jsp"><i class="bi bi-box-arrow-right"></i> Cerrar sesion</a>
     </div>
 </div>

@@ -17,23 +17,33 @@
             <span>Hogaria</span>
         </a>
 
-        <button class="hg-navbar__toggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="hg-navmenu" id="hg-navbar-toggle">
-            <span></span><span></span><span></span>
-        </button>
-
         <nav class="hg-navmenu" id="hg-navmenu">
             <a href="<%= request.getContextPath() %>/catalogo.jsp">Propiedades</a>
             <a href="<%= request.getContextPath() %>/index.jsp#nosotros">Nosotros</a>
             <a href="<%= request.getContextPath() %>/index.jsp#contacto">Contacto</a>
 
+            <% if (idUsuarioSesion == null) { %>
             <div class="hg-navmenu__auth">
-                <% if (idUsuarioSesion != null) { %>
-                    <%@ include file="/jspf/avatar-cuenta.jspf" %>
-                <% } else { %>
-                    <a class="hg-btn hg-btn--ghost" href="<%= request.getContextPath() %>/login.jsp">Iniciar sesion</a>
-                    <a class="hg-btn hg-btn--solid" href="<%= request.getContextPath() %>/registro.jsp">Registrarse</a>
-                <% } %>
+                <a class="hg-btn hg-btn--ghost" href="<%= request.getContextPath() %>/login.jsp">Iniciar sesion</a>
+                <a class="hg-btn hg-btn--solid" href="<%= request.getContextPath() %>/registro.jsp">Registrarse</a>
             </div>
+            <% } %>
         </nav>
+
+        <!--
+            El avatar de cuenta vive FUERA del <nav> colapsable de arriba a
+            proposito: en movil, ese <nav> se oculta con overflow:hidden
+            cuando esta cerrado, y eso se comia (invisible pero "abierto")
+            cualquier menu propio que quedara dentro de el. Aqui siempre
+            queda visible, junto al boton de hamburguesa.
+        -->
+        <div class="hg-navbar__right">
+            <% if (idUsuarioSesion != null) { %>
+                <%@ include file="/jspf/avatar-cuenta.jspf" %>
+            <% } %>
+            <button class="hg-navbar__toggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="hg-navmenu" id="hg-navbar-toggle">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
     </div>
 </header>

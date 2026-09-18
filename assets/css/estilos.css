@@ -180,38 +180,51 @@ img { max-width: 100%; display: block; }
 .hg-navmenu__auth { display: flex; align-items: center; gap: 10px; }
 .hg-navmenu__user { font-size: .9rem; color: var(--hg-ink-muted); margin-right: 4px; }
 
-/* ---------- Avatar de cuenta + modal ---------- */
+/* ---------- Barra derecha del navbar publico (avatar + hamburguesa) ---------- */
+.hg-navbar__right { display: flex; align-items: center; gap: 10px; }
+
+/* ---------- Avatar de cuenta + menu propio (sin modal, sin backdrop) ---------- */
+.hg-cuenta { position: relative; }
 .hg-avatar-trigger {
     display: inline-flex; align-items: center; gap: 10px;
     background: none; border: none; cursor: pointer;
-    padding: 4px 12px 4px 4px; border-radius: 999px;
+    padding: 4px 10px 4px 4px; border-radius: 999px;
     transition: background-color .15s ease;
 }
 .hg-avatar-trigger:hover { background: var(--hg-primary-soft); }
-.hg-avatar-trigger__nombre { font-size: .9rem; font-weight: 600; color: var(--hg-ink); }
+.hg-avatar-trigger__nombre {
+    font-size: .9rem; font-weight: 600; color: var(--hg-ink);
+    max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.hg-avatar-trigger__caret { font-size: .68rem; color: var(--hg-ink-muted); transition: transform .15s ease; flex-shrink: 0; }
+.hg-cuenta.is-open .hg-avatar-trigger__caret { transform: rotate(180deg); }
 
 .hg-avatar {
-    width: 34px; height: 34px; border-radius: 50%; object-fit: cover; flex-shrink: 0;
+    width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
     display: flex; align-items: center; justify-content: center; overflow: hidden;
 }
 .hg-avatar--inicial {
     background: var(--hg-primary); color: #fff;
     font-family: 'Fraunces', serif; font-weight: 700; font-size: 1rem;
 }
-.hg-avatar--lg { width: 64px; height: 64px; font-size: 1.7rem; }
 
-.hg-modal-cuenta .modal-body { padding: 30px; position: relative; }
-.hg-modal-cuenta .btn-close { position: absolute; top: 18px; right: 18px; }
-.hg-modal-cuenta__header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; padding-right: 30px; }
-.hg-modal-cuenta__header h3 { font-size: 1.15rem; margin-bottom: 6px; }
-.hg-modal-cuenta__roles { display: flex; gap: 6px; flex-wrap: wrap; }
-.hg-modal-cuenta__datos {
-    display: grid; grid-template-columns: auto 1fr; gap: 8px 14px; margin: 0 0 24px;
-    padding-top: 18px; border-top: 1px dashed var(--hg-border);
+.hg-cuenta-menu {
+    position: absolute; top: calc(100% + 8px); right: 0; z-index: 60;
+    min-width: 190px; background: var(--hg-surface); border: 1px solid var(--hg-border);
+    border-radius: var(--hg-radius-sm); box-shadow: var(--hg-shadow-md);
+    padding: 6px; display: none; flex-direction: column; gap: 2px;
 }
-.hg-modal-cuenta__datos dt { color: var(--hg-ink-muted); font-size: .82rem; display: flex; align-items: center; gap: 6px; }
-.hg-modal-cuenta__datos dd { margin: 0; font-size: .92rem; }
-.hg-modal-cuenta__acciones { display: flex; gap: 10px; flex-wrap: wrap; }
+.hg-cuenta.is-open .hg-cuenta-menu { display: flex; }
+.hg-cuenta-menu a {
+    display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: var(--hg-radius-sm);
+    font-size: .9rem; color: var(--hg-ink); text-decoration: none; transition: background-color .15s ease;
+}
+.hg-cuenta-menu a:hover { background: var(--hg-bg); }
+
+@media (max-width: 680px) {
+    .hg-cuenta-menu { right: 0; left: auto; }
+    .hg-avatar-trigger__nombre { max-width: 88px; }
+}
 
 /* ---------- Nav del panel interno, con iconos ---------- */
 .hg-panel-nav { display: flex; align-items: center; gap: 2px; flex-wrap: wrap; flex: 1; justify-content: center; }
