@@ -1,12 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ page import="java.sql.PreparedStatement, java.sql.ResultSet, java.sql.SQLException, java.sql.Statement, java.sql.Types" %>
 <%@ page import="java.math.BigDecimal" %>
-<%@ page import="java.util.ArrayList, java.util.List, java.util.Map, java.util.LinkedHashMap, java.util.HashSet, java.util.Set" %>
+<%@ page import="java.util.ArrayList, java.util.List, java.util.Map, java.util.LinkedHashMap, java.util.HashSet, java.util.Set, java.util.Arrays" %>
 <%
     String[] rolesPermitidos = { "Inmobiliaria" };
 %>
 <%@ include file="/jspf/seguridad.jspf" %>
 <%@ include file="/jspf/conexion.jspf" %>
+<%@ include file="/jspf/subida-archivos.jspf" %>
 <%
     // =========================================================================
     // Alta y edicion de propiedades. Sin "id" en la query string se crea una
@@ -183,6 +184,54 @@
             try { parqNum = parqueaderos.isEmpty() ? 0 : Integer.valueOf(parqueaderos); if (parqNum < 0) throw new NumberFormatException(); }
             catch (Exception e) { errores.add("El numero de parqueaderos no es valido."); }
 
+            // Galeria de imagenes (solo aplica al publicar una propiedad nueva;
+            // en edicion las fotos se administran aparte en propiedad-galeria.jsp).
+            // El formulario combina archivos subidos y URL pegadas en un solo
+            // orden; "ordenTipos" (ej. "file,url,file") le dice al servidor en
+            // que secuencia intercalar los archivos guardados y las URL.
+            List<String> urlsImagenesFinal = new ArrayList<>();
+            int indicePrincipalFinal = -1;
+
+            if (errores.isEmpty() && !esEdicion) {
+                String ordenTiposParam = request.getParameter("ordenTipos");
+                if (ordenTiposParam != null && !ordenTiposParam.trim().isEmpty()) {
+                    String[] urlImagenesParam = request.getParameterValues("urlImagenes");
+                    List<String> archivosGuardados = null;
+                    try {
+                        archivosGuardados = hgGuardarArchivosMultiples(request, "imagenes", "propiedades",
+                                new HashSet<>(Arrays.asList("jpg", "jpeg", "png", "webp")), 5L * 1024 * 1024);
+                    } catch (IllegalArgumentException iae) {
+                        errores.add(iae.getMessage());
+                    }
+
+                    int idxArchivo = 0, idxUrl = 0;
+                    for (String tipo : ordenTiposParam.split(",")) {
+                        if ("file".equals(tipo)) {
+                            if (archivosGuardados != null && idxArchivo < archivosGuardados.size()) {
+                                urlsImagenesFinal.add(archivosGuardados.get(idxArchivo));
+                            }
+                            idxArchivo++;
+                        } else if ("url".equals(tipo)) {
+                            String urlImg = (urlImagenesParam != null && idxUrl < urlImagenesParam.length)
+                                    ? urlImagenesParam[idxUrl].trim() : "";
+                            idxUrl++;
+                            if (urlImg.matches("^https?://.+")) {
+                                urlsImagenesFinal.add(urlImg);
+                            } else {
+                                errores.add("Una de las URL de imagen ingresadas no es valida.");
+                            }
+                        }
+                    }
+
+                    try {
+                        indicePrincipalFinal = Integer.parseInt(request.getParameter("indicePrincipal"));
+                    } catch (Exception ignored) { indicePrincipalFinal = -1; }
+                    if (indicePrincipalFinal < 0 || indicePrincipalFinal >= urlsImagenesFinal.size()) {
+                        indicePrincipalFinal = urlsImagenesFinal.isEmpty() ? -1 : 0;
+                    }
+                }
+            }
+
             if (errores.isEmpty()) {
                 try {
                     conexion.setAutoCommit(false);
@@ -253,12 +302,28 @@
                         if (!caracteristicasSeleccionadas.isEmpty()) ps.executeBatch();
                     }
 
+                    if (!esEdicion && !urlsImagenesFinal.isEmpty()) {
+                        try (PreparedStatement ps = conexion.prepareStatement(
+                                "INSERT INTO imagen_propiedad (id_propiedad, url_imagen, orden, es_principal) VALUES (?, ?, ?, ?)")) {
+                            for (int i = 0; i < urlsImagenesFinal.size(); i++) {
+                                ps.setInt(1, idPropiedadFinal);
+                                ps.setString(2, urlsImagenesFinal.get(i));
+                                ps.setInt(3, i + 1);
+                                ps.setBoolean(4, i == indicePrincipalFinal);
+                                ps.addBatch();
+                            }
+                            ps.executeBatch();
+                        }
+                    }
+
                     conexion.commit();
                     guardadoExitoso = true;
 
                     try { conexion.close(); } catch (Exception ignored) { }
                     if (esEdicion) {
                         response.sendRedirect(request.getContextPath() + "/inmobiliaria/mis-propiedades.jsp?actualizado=1");
+                    } else if (!urlsImagenesFinal.isEmpty()) {
+                        response.sendRedirect(request.getContextPath() + "/inmobiliaria/mis-propiedades.jsp?creado=1");
                     } else {
                         response.sendRedirect(request.getContextPath() + "/inmobiliaria/propiedad-galeria.jsp?id=" + idPropiedadFinal + "&nuevo=1");
                     }
@@ -305,7 +370,7 @@
     <% } %>
 
     <div class="hg-panel-card">
-        <form method="post" action="<%= request.getContextPath() %>/inmobiliaria/propiedad-form.jsp<%= esEdicion ? "?id=" + idPropiedadEdicion : "" %>">
+        <form method="post" enctype="multipart/form-data" action="<%= request.getContextPath() %>/inmobiliaria/propiedad-form.jsp<%= esEdicion ? "?id=" + idPropiedadEdicion : "" %>">
             <div class="hg-auth__grid" style="margin-bottom:16px;">
                 <div class="hg-field">
                     <label for="matricula">Matricula inmobiliaria</label>
@@ -394,11 +459,220 @@
                 <% } %>
             </div>
 
+            <% if (!esEdicion) { %>
+            <label style="display:block; margin-bottom:8px; font-weight:600; font-size:.9rem;">Galeria de imagenes</label>
+            <p style="color:var(--hg-ink-muted); font-size:.85rem; margin-top:-4px; margin-bottom:12px;">Sube fotos desde tu equipo o pega enlaces de imagenes; puedes combinar ambas formas. La primera que agregues queda como portada, pero puedes cambiarla.</p>
+
+            <div class="hg-o-alternativa" style="margin-bottom:14px;">
+                <div class="hg-field">
+                    <label for="inputArchivos"><i class="bi bi-upload"></i> Subir desde el equipo (JPG, PNG o WEBP, max. 5MB c/u)</label>
+                    <input class="form-control" type="file" id="inputArchivos" name="imagenes" accept=".jpg,.jpeg,.png,.webp" multiple>
+                </div>
+                <span class="hg-o-alternativa__o">o</span>
+                <div class="hg-field">
+                    <label for="urlImagenNueva"><i class="bi bi-link-45deg"></i> URL de la imagen</label>
+                    <div style="display:flex; gap:8px;">
+                        <input class="form-control" type="url" id="urlImagenNueva" placeholder="https://images.unsplash.com/...">
+                        <button type="button" id="btnAgregarLink" class="hg-btn hg-btn--ghost hg-btn--sm"><i class="bi bi-plus-lg"></i> Agregar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="galeriaError" class="hg-alert hg-alert--error" style="display:none; margin-bottom:14px;"></div>
+
+            <div id="galeriaVacio" class="hg-panel-empty" style="margin-bottom:24px;">
+                <div class="hg-panel-empty__icon"><i class="bi bi-images"></i></div>
+                <p>Aun no has agregado imagenes. Puedes publicar sin fotos y agregarlas despues.</p>
+            </div>
+            <div id="galeriaPreview" class="hg-galeria-grid" style="display:none;"></div>
+
+            <div id="urlImagenesOcultos"></div>
+            <input type="hidden" id="ordenTiposOculto" name="ordenTipos" value="">
+            <input type="hidden" id="indicePrincipalOculto" name="indicePrincipal" value="">
+            <% } %>
+
             <button class="hg-btn hg-btn--primary" type="submit"><i class="bi bi-check-lg"></i> <%= esEdicion ? "Guardar cambios" : "Publicar propiedad" %></button>
         </form>
     </div>
 </div>
 <%@ include file="/jspf/scripts-panel.jspf" %>
+<% if (!esEdicion) { %>
+<script>
+(function () {
+    var LIMITE_IMAGENES = 10;
+    var EXTENSIONES_VALIDAS = ['jpg', 'jpeg', 'png', 'webp'];
+    var TAMANO_MAXIMO = 5 * 1024 * 1024;
+
+    var galeria = [];
+    var principalId = null;
+    var contadorId = 0;
+
+    var inputArchivos = document.getElementById('inputArchivos');
+    var inputUrlNueva = document.getElementById('urlImagenNueva');
+    var btnAgregarLink = document.getElementById('btnAgregarLink');
+    var contenedorPreview = document.getElementById('galeriaPreview');
+    var contenedorVacio = document.getElementById('galeriaVacio');
+    var cajaError = document.getElementById('galeriaError');
+    var contenedorUrlsOcultos = document.getElementById('urlImagenesOcultos');
+    var campoOrdenTipos = document.getElementById('ordenTiposOculto');
+    var campoIndicePrincipal = document.getElementById('indicePrincipalOculto');
+
+    function mostrarError(msg) {
+        cajaError.textContent = msg;
+        cajaError.style.display = 'block';
+    }
+    function limpiarError() {
+        cajaError.style.display = 'none';
+        cajaError.textContent = '';
+    }
+    function extensionValida(nombre) {
+        var idx = nombre.lastIndexOf('.');
+        if (idx < 0) return false;
+        return EXTENSIONES_VALIDAS.indexOf(nombre.substring(idx + 1).toLowerCase()) !== -1;
+    }
+
+    inputArchivos.addEventListener('change', function () {
+        limpiarError();
+        var archivos = Array.prototype.slice.call(inputArchivos.files);
+        for (var i = 0; i < archivos.length; i++) {
+            if (galeria.length >= LIMITE_IMAGENES) {
+                mostrarError('Solo puedes agregar hasta ' + LIMITE_IMAGENES + ' imagenes.');
+                break;
+            }
+            var f = archivos[i];
+            if (!extensionValida(f.name)) {
+                mostrarError('"' + f.name + '" no es un formato valido (solo JPG, PNG o WEBP).');
+                continue;
+            }
+            if (f.size > TAMANO_MAXIMO) {
+                mostrarError('"' + f.name + '" supera el tamano maximo de 5MB.');
+                continue;
+            }
+            var item = { id: contadorId++, tipo: 'file', file: f, previewUrl: URL.createObjectURL(f) };
+            if (galeria.length === 0) principalId = item.id;
+            galeria.push(item);
+        }
+        renderGaleria();
+    });
+
+    btnAgregarLink.addEventListener('click', function () {
+        limpiarError();
+        var url = inputUrlNueva.value.trim();
+        if (!/^https?:\/\/.+/i.test(url)) {
+            mostrarError('Ingresa una URL valida (debe iniciar con http:// o https://).');
+            return;
+        }
+        if (galeria.length >= LIMITE_IMAGENES) {
+            mostrarError('Solo puedes agregar hasta ' + LIMITE_IMAGENES + ' imagenes.');
+            return;
+        }
+        var item = { id: contadorId++, tipo: 'url', url: url, previewUrl: url };
+        if (galeria.length === 0) principalId = item.id;
+        galeria.push(item);
+        inputUrlNueva.value = '';
+        renderGaleria();
+    });
+
+    contenedorPreview.addEventListener('click', function (e) {
+        var btn = e.target.closest('button[data-accion]');
+        if (!btn) return;
+        var tarjeta = btn.closest('[data-id]');
+        var id = Number(tarjeta.getAttribute('data-id'));
+        if (btn.getAttribute('data-accion') === 'principal') {
+            principalId = id;
+        } else if (btn.getAttribute('data-accion') === 'quitar') {
+            for (var i = 0; i < galeria.length; i++) {
+                if (galeria[i].id === id) {
+                    if (galeria[i].tipo === 'file') URL.revokeObjectURL(galeria[i].previewUrl);
+                    galeria.splice(i, 1);
+                    break;
+                }
+            }
+            if (principalId === id) {
+                principalId = galeria.length ? galeria[0].id : null;
+            }
+        }
+        renderGaleria();
+    });
+
+    function renderGaleria() {
+        contenedorVacio.style.display = galeria.length === 0 ? 'block' : 'none';
+        contenedorPreview.style.display = galeria.length === 0 ? 'none' : 'grid';
+        contenedorPreview.innerHTML = '';
+        galeria.forEach(function (item) {
+            var esPrincipal = item.id === principalId;
+
+            var tarjeta = document.createElement('div');
+            tarjeta.className = 'hg-galeria-item';
+            tarjeta.setAttribute('data-id', item.id);
+
+            if (esPrincipal) {
+                var badge = document.createElement('span');
+                badge.className = 'hg-galeria-item__principal';
+                badge.textContent = 'Principal';
+                tarjeta.appendChild(badge);
+            }
+
+            // Se asigna como propiedad (no via innerHTML) para que una URL con
+            // caracteres especiales nunca pueda inyectar markup en la pagina.
+            var img = document.createElement('img');
+            img.src = item.previewUrl;
+            img.alt = 'Vista previa';
+            tarjeta.appendChild(img);
+
+            var barra = document.createElement('div');
+            barra.className = 'hg-galeria-item__bar';
+
+            if (esPrincipal) {
+                barra.appendChild(document.createElement('span'));
+            } else {
+                var btnPrincipal = document.createElement('button');
+                btnPrincipal.type = 'button';
+                btnPrincipal.className = 'hg-btn hg-btn--ghost hg-btn--sm';
+                btnPrincipal.setAttribute('data-accion', 'principal');
+                btnPrincipal.innerHTML = '<i class="bi bi-star-fill"></i> Hacer principal';
+                barra.appendChild(btnPrincipal);
+            }
+
+            var btnQuitar = document.createElement('button');
+            btnQuitar.type = 'button';
+            btnQuitar.className = 'hg-btn hg-btn--ghost hg-btn--sm';
+            btnQuitar.style.color = 'var(--hg-off)';
+            btnQuitar.setAttribute('data-accion', 'quitar');
+            btnQuitar.innerHTML = '<i class="bi bi-trash3"></i> Quitar';
+            barra.appendChild(btnQuitar);
+
+            tarjeta.appendChild(barra);
+            contenedorPreview.appendChild(tarjeta);
+        });
+        actualizarCamposOcultos();
+    }
+
+    function actualizarCamposOcultos() {
+        var dt = new DataTransfer();
+        contenedorUrlsOcultos.innerHTML = '';
+        var tipos = [];
+        var indicePrincipal = -1;
+        galeria.forEach(function (item, i) {
+            tipos.push(item.tipo);
+            if (item.id === principalId) indicePrincipal = i;
+            if (item.tipo === 'file') {
+                dt.items.add(item.file);
+            } else {
+                var oculto = document.createElement('input');
+                oculto.type = 'hidden';
+                oculto.name = 'urlImagenes';
+                oculto.value = item.url;
+                contenedorUrlsOcultos.appendChild(oculto);
+            }
+        });
+        inputArchivos.files = dt.files;
+        campoOrdenTipos.value = tipos.join(',');
+        campoIndicePrincipal.value = indicePrincipal;
+    }
+})();
+</script>
+<% } %>
 </body>
 </html>
 <%!

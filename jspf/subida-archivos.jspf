@@ -3,10 +3,11 @@
 <%!
     // =========================================================================
     // Subida de archivos usando el soporte NATIVO de multipart de Servlet
-    // 3.0/Tomcat (HttpServletRequest.getPart), sin ninguna libreria externa
-    // (ni Commons FileUpload) y sin Servlets ni clases .java propias: la
-    // pagina que use este metodo solo necesita declarar <multipart-config>
-    // para su propia ruta en WEB-INF/web.xml (ver esa declaracion alli).
+    // 3.0/Tomcat (HttpServletRequest.getPart / getParts), sin ninguna
+    // libreria externa (ni Commons FileUpload) y sin Servlets ni clases
+    // .java propias: la pagina que use estos metodos solo necesita declarar
+    // <multipart-config> para su propia ruta en WEB-INF/web.xml (ver esa
+    // declaracion alli).
     //
     // Guarda el archivo en /uploads/<subcarpeta>/ con un nombre unico
     // (UUID) y devuelve la URL relativa al contexto para guardarla en la
@@ -14,31 +15,15 @@
     // para las imagenes externas, solo que ahora la URL apunta a un
     // archivo alojado localmente en vez de uno externo.
     //
-    // Devuelve null si el usuario no selecciono ningun archivo (para que
-    // la pagina pueda usar, en ese caso, el campo de URL como alternativa).
     // Lanza IllegalArgumentException con un mensaje legible si el archivo
     // no cumple la extension o el tamano permitido.
     // =========================================================================
-    private String hgGuardarArchivoSubido(javax.servlet.http.HttpServletRequest request, String nombreCampo,
+    private String hgGuardarPart(Part part, javax.servlet.ServletContext contexto, String contextPath,
             String subcarpeta, java.util.Set<String> extensionesPermitidas, long tamanoMaximoBytes) throws Exception {
 
-        Part part;
-        try {
-            part = request.getPart(nombreCampo);
-        } catch (Exception e) {
-            return null; // el request no era multipart o no traia ese campo
-        }
-        if (part == null || part.getSize() <= 0) {
-            return null;
-        }
-
         String nombreOriginal = part.getSubmittedFileName();
-        if (nombreOriginal == null || nombreOriginal.trim().isEmpty()) {
-            return null;
-        }
-
         String extension = "";
-        int puntoIdx = nombreOriginal.lastIndexOf('.');
+        int puntoIdx = nombreOriginal == null ? -1 : nombreOriginal.lastIndexOf('.');
         if (puntoIdx >= 0 && puntoIdx < nombreOriginal.length() - 1) {
             extension = nombreOriginal.substring(puntoIdx + 1).toLowerCase();
         }
@@ -53,7 +38,7 @@
         }
 
         String nombreUnico = java.util.UUID.randomUUID().toString() + "." + extension;
-        String carpetaFisica = request.getServletContext().getRealPath("/uploads/" + subcarpeta);
+        String carpetaFisica = contexto.getRealPath("/uploads/" + subcarpeta);
         java.io.File directorio = new java.io.File(carpetaFisica);
         if (!directorio.exists()) {
             directorio.mkdirs();
@@ -64,6 +49,52 @@
             java.nio.file.Files.copy(in, destino.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
         }
 
-        return request.getContextPath() + "/uploads/" + subcarpeta + "/" + nombreUnico;
+        return contextPath + "/uploads/" + subcarpeta + "/" + nombreUnico;
+    }
+
+    // Guarda UN solo archivo recibido en el campo "nombreCampo". Devuelve
+    // null si el usuario no selecciono ningun archivo (para que la pagina
+    // pueda usar, en ese caso, el campo de URL como alternativa).
+    private String hgGuardarArchivoSubido(javax.servlet.http.HttpServletRequest request, String nombreCampo,
+            String subcarpeta, java.util.Set<String> extensionesPermitidas, long tamanoMaximoBytes) throws Exception {
+
+        Part part;
+        try {
+            part = request.getPart(nombreCampo);
+        } catch (Exception e) {
+            return null; // el request no era multipart o no traia ese campo
+        }
+        if (part == null || part.getSize() <= 0 || part.getSubmittedFileName() == null
+                || part.getSubmittedFileName().trim().isEmpty()) {
+            return null;
+        }
+        return hgGuardarPart(part, request.getServletContext(), request.getContextPath(),
+                subcarpeta, extensionesPermitidas, tamanoMaximoBytes);
+    }
+
+    // Guarda VARIOS archivos recibidos en el mismo campo "nombreCampo"
+    // (input file con el atributo "multiple"). Devuelve la lista de URLs
+    // guardadas, en el mismo orden en que el navegador los envio; la lista
+    // queda vacia si no se selecciono ningun archivo.
+    private java.util.List<String> hgGuardarArchivosMultiples(javax.servlet.http.HttpServletRequest request,
+            String nombreCampo, String subcarpeta, java.util.Set<String> extensionesPermitidas,
+            long tamanoMaximoBytes) throws Exception {
+
+        java.util.List<String> urls = new java.util.ArrayList<>();
+        java.util.Collection<Part> partes;
+        try {
+            partes = request.getParts();
+        } catch (Exception e) {
+            return urls; // el request no era multipart
+        }
+        for (Part part : partes) {
+            if (!nombreCampo.equals(part.getName())) continue;
+            if (part.getSize() <= 0) continue;
+            String nombreOriginal = part.getSubmittedFileName();
+            if (nombreOriginal == null || nombreOriginal.trim().isEmpty()) continue;
+            urls.add(hgGuardarPart(part, request.getServletContext(), request.getContextPath(),
+                    subcarpeta, extensionesPermitidas, tamanoMaximoBytes));
+        }
+        return urls;
     }
 %>

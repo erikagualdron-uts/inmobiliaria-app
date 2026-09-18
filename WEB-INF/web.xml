@@ -64,4 +64,22 @@
         <url-pattern>/inmobiliaria/propiedad-galeria.jsp</url-pattern>
     </servlet-mapping>
 
+    <!--
+        Este formulario permite adjuntar varias imagenes en un solo envio
+        (galeria al publicar), por eso el limite de tamano por solicitud es
+        mayor que en los otros dos casos.
+    -->
+    <servlet>
+        <servlet-name>PropiedadFormUpload</servlet-name>
+        <jsp-file>/inmobiliaria/propiedad-form.jsp</jsp-file>
+        <multipart-config>
+            <max-file-size>5242880</max-file-size>
+            <max-request-size>52428800</max-request-size>
+        </multipart-config>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PropiedadFormUpload</servlet-name>
+        <url-pattern>/inmobiliaria/propiedad-form.jsp</url-pattern>
+    </servlet-mapping>
+
 </web-app>
