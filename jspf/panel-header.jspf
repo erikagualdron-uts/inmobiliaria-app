@@ -20,11 +20,13 @@
             <a href="<%= request.getContextPath() %>/inmobiliaria/mis-propiedades.jsp" style="font-size:.9rem; font-weight:600;">Mis propiedades</a>
             <a href="<%= request.getContextPath() %>/inmobiliaria/citas-recibidas.jsp" style="font-size:.9rem; font-weight:600;">Citas</a>
             <a href="<%= request.getContextPath() %>/inmobiliaria/solicitudes-recibidas.jsp" style="font-size:.9rem; font-weight:600;">Solicitudes</a>
+            <a href="<%= request.getContextPath() %>/inmobiliaria/reportes.jsp" style="font-size:.9rem; font-weight:600;">Reportes</a>
             <% } %>
             <% if (hgRolesPanel != null && hgRolesPanel.contains("Cliente")) { %>
             <a href="<%= request.getContextPath() %>/cliente/mis-citas.jsp" style="font-size:.9rem; font-weight:600;">Mis citas</a>
             <a href="<%= request.getContextPath() %>/cliente/mis-solicitudes.jsp" style="font-size:.9rem; font-weight:600;">Mis solicitudes</a>
             <a href="<%= request.getContextPath() %>/cliente/favoritos.jsp" style="font-size:.9rem; font-weight:600;">Favoritos</a>
+            <a href="<%= request.getContextPath() %>/cliente/perfil.jsp" style="font-size:.9rem; font-weight:600;">Mi perfil</a>
             <% } %>
             <% if (hgRolesPanel != null && hgRolesPanel.contains("Administrador")) { %>
             <a href="<%= request.getContextPath() %>/administrador/reportes.jsp" style="font-size:.9rem; font-weight:600;">Reportes</a>

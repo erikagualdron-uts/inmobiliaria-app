@@ -53,11 +53,9 @@
         <a class="hg-panel-stat" href="<%= request.getContextPath() %>/cliente/favoritos.jsp" style="display:block; text-decoration:none;"><strong><%= totalFavoritos %></strong><span>Propiedades favoritas</span></a>
     </div>
 
-    <div class="hg-panel-card">
-        <div class="hg-panel-empty">
-            <div class="hg-panel-empty__icon">🚧</div>
-            <p><strong>Proximamente:</strong> edicion de tu perfil directamente desde este panel.</p>
-        </div>
+    <div class="hg-panel-card" style="display:flex; gap:14px; flex-wrap:wrap;">
+        <a class="hg-btn hg-btn--ghost" href="<%= request.getContextPath() %>/cliente/perfil.jsp">👤 Editar mi perfil</a>
+        <a class="hg-btn hg-btn--ghost" href="<%= request.getContextPath() %>/catalogo.jsp">🔍 Explorar propiedades</a>
     </div>
 </div>
 </body>

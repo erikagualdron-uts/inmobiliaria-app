@@ -79,6 +79,10 @@
         <a class="hg-panel-stat" href="<%= request.getContextPath() %>/inmobiliaria/citas-recibidas.jsp" style="display:block; text-decoration:none;"><strong><%= citasPendientes %></strong><span>Citas pendientes por atender</span></a>
         <a class="hg-panel-stat" href="<%= request.getContextPath() %>/inmobiliaria/solicitudes-recibidas.jsp" style="display:block; text-decoration:none;"><strong><%= solicitudesPendientes %></strong><span>Solicitudes por revisar</span></a>
     </div>
+
+    <div class="hg-panel-card" style="display:flex; gap:14px; flex-wrap:wrap;">
+        <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/inmobiliaria/reportes.jsp">📊 Ver reportes de ventas y arriendos</a>
+    </div>
 </div>
 </body>
 </html>
