@@ -162,14 +162,49 @@
     </div>
     <% } %>
 
-    <div style="display:flex; flex-direction:column; gap:14px;">
+    <div class="hg-panel-card" style="margin-bottom:18px;">
+        <div class="hg-panel-grid" style="margin-bottom:0;">
+            <div class="hg-field">
+                <label for="filtroTexto"><i class="bi bi-search"></i> Buscar por nombre o correo</label>
+                <input class="form-control" type="text" id="filtroTexto" placeholder="Ej. Maria, agente@hogaria.com...">
+            </div>
+            <div class="hg-field">
+                <label for="filtroRol">Rol</label>
+                <select class="form-select" id="filtroRol">
+                    <option value="">Todos los roles</option>
+                    <% for (Map<String, Object> r : catalogoRoles) { %>
+                    <option value="<%= ((String) r.get("nombre")).toLowerCase() %>"><%= r.get("nombre") %></option>
+                    <% } %>
+                </select>
+            </div>
+            <div class="hg-field">
+                <label for="filtroEstado">Estado</label>
+                <select class="form-select" id="filtroEstado">
+                    <option value="">Todos los estados</option>
+                    <option value="activo">Activo</option>
+                    <option value="inactivo">Inactivo</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div id="listaUsuarios" style="display:flex; flex-direction:column; gap:14px;">
         <% for (Map<String, Object> u : usuarios) {
             String estadoU = (String) u.get("estado");
             @SuppressWarnings("unchecked")
             Set<String> rolesU = (Set<String>) u.get("roles");
             Object idInmU = u.get("idInmobiliaria");
+
+            String textoBusqueda = (((String) u.get("nombreCompleto")) + " " + u.get("correo")).toLowerCase();
+            StringBuilder rolesTexto = new StringBuilder();
+            for (Map<String, Object> r : catalogoRoles) {
+                if (rolesU.contains(String.valueOf(r.get("id")))) {
+                    if (rolesTexto.length() > 0) rolesTexto.append(' ');
+                    rolesTexto.append(((String) r.get("nombre")).toLowerCase());
+                }
+            }
         %>
-        <div class="hg-panel-card">
+        <div class="hg-panel-card" data-busqueda="<%= textoBusqueda %>" data-estado="<%= estadoU %>" data-roles="<%= rolesTexto %>">
             <details>
                 <summary style="cursor:pointer; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
                     <span>
@@ -226,7 +261,49 @@
         </div>
         <% } %>
     </div>
+
+    <div id="usuariosSinResultados" class="hg-panel-card" hidden>
+        <div class="hg-panel-empty">
+            <div class="hg-panel-empty__icon"><i class="bi bi-search"></i></div>
+            <p>No se encontraron usuarios con esos filtros.</p>
+        </div>
+    </div>
 </div>
 <%@ include file="/jspf/scripts-panel.jspf" %>
+<script>
+(function () {
+    // Filtrado 100% en el cliente sobre las tarjetas ya renderizadas por el
+    // JSP (cada una trae data-busqueda, data-estado y data-roles). Los tres
+    // filtros se combinan con AND y se evaluan en cada tecla/cambio, sin
+    // recargar la pagina.
+    var campoTexto = document.getElementById('filtroTexto');
+    var campoRol = document.getElementById('filtroRol');
+    var campoEstado = document.getElementById('filtroEstado');
+    var tarjetas = document.querySelectorAll('#listaUsuarios .hg-panel-card');
+    var sinResultados = document.getElementById('usuariosSinResultados');
+
+    function aplicarFiltros() {
+        var texto = campoTexto.value.trim().toLowerCase();
+        var rol = campoRol.value;
+        var estado = campoEstado.value;
+        var visibles = 0;
+
+        tarjetas.forEach(function (tarjeta) {
+            var coincideTexto = !texto || tarjeta.getAttribute('data-busqueda').indexOf(texto) !== -1;
+            var coincideRol = !rol || (' ' + tarjeta.getAttribute('data-roles') + ' ').indexOf(' ' + rol + ' ') !== -1;
+            var coincideEstado = !estado || tarjeta.getAttribute('data-estado') === estado;
+            var visible = coincideTexto && coincideRol && coincideEstado;
+            tarjeta.hidden = !visible;
+            if (visible) visibles++;
+        });
+
+        sinResultados.hidden = visibles !== 0 || tarjetas.length === 0;
+    }
+
+    campoTexto.addEventListener('input', aplicarFiltros);
+    campoRol.addEventListener('change', aplicarFiltros);
+    campoEstado.addEventListener('change', aplicarFiltros);
+})();
+</script>
 </body>
 </html>
