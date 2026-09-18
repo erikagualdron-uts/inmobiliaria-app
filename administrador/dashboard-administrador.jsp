@@ -42,19 +42,19 @@
     <div class="hg-panel-grid">
         <a class="hg-panel-stat" href="<%= request.getContextPath() %>/administrador/usuarios.jsp">
             <div class="hg-panel-stat__icon"><i class="bi bi-people-fill"></i></div>
-            <div><strong><%= totalUsuarios %></strong><span>Usuarios registrados</span></div>
+            <div class="hg-panel-stat__texto"><span>Usuarios registrados</span><strong><%= totalUsuarios %></strong></div>
         </a>
         <a class="hg-panel-stat" href="<%= request.getContextPath() %>/catalogo.jsp">
             <div class="hg-panel-stat__icon"><i class="bi bi-houses-fill"></i></div>
-            <div><strong><%= totalPropiedades %></strong><span>Propiedades activas</span></div>
+            <div class="hg-panel-stat__texto"><span>Propiedades activas</span><strong><%= totalPropiedades %></strong></div>
         </a>
         <a class="hg-panel-stat" href="<%= request.getContextPath() %>/administrador/reportes.jsp">
             <div class="hg-panel-stat__icon"><i class="bi bi-building-fill"></i></div>
-            <div><strong><%= totalInmobiliarias %></strong><span>Inmobiliarias aliadas</span></div>
+            <div class="hg-panel-stat__texto"><span>Inmobiliarias aliadas</span><strong><%= totalInmobiliarias %></strong></div>
         </a>
         <a class="hg-panel-stat" href="<%= request.getContextPath() %>/administrador/reportes.jsp">
             <div class="hg-panel-stat__icon"><i class="bi bi-clipboard-check-fill"></i></div>
-            <div><strong><%= solicitudesPendientes %></strong><span>Solicitudes por atender</span></div>
+            <div class="hg-panel-stat__texto"><span>Solicitudes por atender</span><strong><%= solicitudesPendientes %></strong></div>
         </a>
     </div>
 

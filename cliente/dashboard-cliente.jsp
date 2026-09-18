@@ -46,15 +46,15 @@
     <div class="hg-panel-grid">
         <a class="hg-panel-stat" href="<%= request.getContextPath() %>/cliente/mis-citas.jsp">
             <div class="hg-panel-stat__icon"><i class="bi bi-calendar-check-fill"></i></div>
-            <div><strong><%= totalCitas %></strong><span>Citas agendadas</span></div>
+            <div class="hg-panel-stat__texto"><span>Citas agendadas</span><strong><%= totalCitas %></strong></div>
         </a>
         <a class="hg-panel-stat" href="<%= request.getContextPath() %>/cliente/mis-solicitudes.jsp">
             <div class="hg-panel-stat__icon"><i class="bi bi-clipboard-check-fill"></i></div>
-            <div><strong><%= totalSolicitudes %></strong><span>Solicitudes radicadas</span></div>
+            <div class="hg-panel-stat__texto"><span>Solicitudes radicadas</span><strong><%= totalSolicitudes %></strong></div>
         </a>
         <a class="hg-panel-stat" href="<%= request.getContextPath() %>/cliente/favoritos.jsp">
             <div class="hg-panel-stat__icon"><i class="bi bi-heart-fill"></i></div>
-            <div><strong><%= totalFavoritos %></strong><span>Propiedades favoritas</span></div>
+            <div class="hg-panel-stat__texto"><span>Propiedades favoritas</span><strong><%= totalFavoritos %></strong></div>
         </a>
     </div>
 

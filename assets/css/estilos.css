@@ -559,8 +559,9 @@ a.hg-panel-stat:hover { transform: translateY(-2px); box-shadow: var(--hg-shadow
     background: var(--hg-primary-soft); color: var(--hg-primary);
     display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
 }
-.hg-panel-stat strong { display: block; font-family: 'Fraunces', serif; font-size: 1.7rem; color: var(--hg-primary-dark); font-variant-numeric: tabular-nums; }
-.hg-panel-stat span { font-size: .82rem; color: var(--hg-ink-muted); }
+.hg-panel-stat__texto { display: flex; flex-direction: column; gap: 3px; flex: 1 1 auto; min-width: 0; }
+.hg-panel-stat__texto span { font-size: .82rem; color: var(--hg-ink-muted); }
+.hg-panel-stat__texto strong { font-family: 'Fraunces', serif; font-size: 1.7rem; line-height: 1.15; color: var(--hg-primary-dark); font-variant-numeric: tabular-nums; }
 
 /* ---------- Acciones rapidas (dashboards) ---------- */
 .hg-panel-card__titulo { display: flex; align-items: center; gap: 8px; font-size: 1rem; margin-bottom: 16px; }

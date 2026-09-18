@@ -134,10 +134,10 @@
     <% } else { %>
 
     <div class="hg-panel-grid">
-        <div class="hg-panel-stat"><strong><%= totalVendidas %></strong><span>Propiedades vendidas</span></div>
-        <div class="hg-panel-stat"><strong><%= totalArrendadas %></strong><span>Propiedades arrendadas</span></div>
-        <div class="hg-panel-stat"><strong>$ <%= formatoCOP.format(valorVendidas) %></strong><span>Valor total en ventas</span></div>
-        <div class="hg-panel-stat"><strong>$ <%= formatoCOP.format(canonArrendadas) %></strong><span>Canon mensual en arriendos activos</span></div>
+        <div class="hg-panel-stat"><div class="hg-panel-stat__texto"><span>Propiedades vendidas</span><strong><%= totalVendidas %></strong></div></div>
+        <div class="hg-panel-stat"><div class="hg-panel-stat__texto"><span>Propiedades arrendadas</span><strong><%= totalArrendadas %></strong></div></div>
+        <div class="hg-panel-stat"><div class="hg-panel-stat__texto"><span>Valor total en ventas</span><strong>$ <%= formatoCOP.format(valorVendidas) %></strong></div></div>
+        <div class="hg-panel-stat"><div class="hg-panel-stat__texto"><span>Canon mensual en arriendos activos</span><strong>$ <%= formatoCOP.format(canonArrendadas) %></strong></div></div>
     </div>
 
     <div class="hg-reporte-grid">

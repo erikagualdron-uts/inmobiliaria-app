@@ -68,15 +68,15 @@
     <div class="hg-panel-grid">
         <a class="hg-panel-stat" href="<%= request.getContextPath() %>/inmobiliaria/mis-propiedades.jsp">
             <div class="hg-panel-stat__icon"><i class="bi bi-houses-fill"></i></div>
-            <div><strong><%= totalPropiedades %></strong><span>Propiedades activas</span></div>
+            <div class="hg-panel-stat__texto"><span>Propiedades activas</span><strong><%= totalPropiedades %></strong></div>
         </a>
         <a class="hg-panel-stat" href="<%= request.getContextPath() %>/inmobiliaria/citas-recibidas.jsp">
             <div class="hg-panel-stat__icon"><i class="bi bi-calendar-check-fill"></i></div>
-            <div><strong><%= citasPendientes %></strong><span>Citas pendientes por atender</span></div>
+            <div class="hg-panel-stat__texto"><span>Citas pendientes por atender</span><strong><%= citasPendientes %></strong></div>
         </a>
         <a class="hg-panel-stat" href="<%= request.getContextPath() %>/inmobiliaria/solicitudes-recibidas.jsp">
             <div class="hg-panel-stat__icon"><i class="bi bi-clipboard-check-fill"></i></div>
-            <div><strong><%= solicitudesPendientes %></strong><span>Solicitudes por revisar</span></div>
+            <div class="hg-panel-stat__texto"><span>Solicitudes por revisar</span><strong><%= solicitudesPendientes %></strong></div>
         </a>
     </div>
 
