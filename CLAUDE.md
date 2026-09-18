@@ -154,33 +154,40 @@ plano/aburrido. Debe sentirse innovador, con buena jerarquía visual y mucho
 cuidado en el detalle. Sigue estas pautas de forma consistente en TODA la
 aplicación (landing, dashboards, formularios, tablas, reportes):
 
-**Paleta de colores** (defínelos como variables CSS en un solo archivo, ej.
-`estilos/variables.css`, no los repitas hardcodeados en cada JSP):
-- Color primario (marca): naranja/coral cálido — `#FF6B4A` (normal),
-  `#E85D3D` (hover/estado activo), `#FFE8E0` (fondo suave para badges/estados).
-- Texto principal: gris carbón oscuro — `#1F2937` (no negro puro).
-- Texto secundario: gris medio — `#6B7280`.
-- Fondo general: blanco o gris muy claro — `#FFFFFF` / `#FAFAFA` (nada de
-  fondo crema/beige).
-- Estados semánticos: éxito `#22C55E`, advertencia `#F59E0B`, peligro
-  `#EF4444`, información `#3B82F6` — úsalos para badges de estado
-  (disponible, pendiente, aprobado, rechazado, etc.), manteniendo el fondo
-  suave + texto de color (como ya tienen los badges actuales, solo actualiza
-  la paleta).
+**Paleta de colores** (ya centralizada como variables CSS en un solo
+archivo, `assets/css/estilos.css`, dentro de `:root` — no la repitas
+hardcodeada en ningún JSP, usa siempre `var(--hg-*)`):
+- Color primario (marca): verde azulado — `#1F5C4F` (normal), `#163F37`
+  (hover/estado activo/texto sobre fondo suave), `#E4EFEC` (fondo suave
+  para badges/estados).
+- Color de acento: dorado cálido — `#D9A441` (normal), `#B9832A`
+  (hover/oscuro), `#FBF0DA` (fondo suave). Se usa para detalles puntuales
+  (eyebrows, botones "solid", iconos destacados), nunca como color primario.
+- Texto principal: `#1C2321` (casi negro, cálido). Texto secundario:
+  `#5B655F`.
+- Fondo general: crema muy claro `#FAF8F4`; superficies (tarjetas, inputs)
+  en blanco `#FFFFFF`; bordes `#E6E2D7`.
+- Estados semánticos: éxito `#2F7A4F` (fondo suave `#E4F2E8`), advertencia
+  `#B9832A` (fondo suave `#F7ECD8`), peligro `#8B4A3D` (fondo suave
+  `#F3E4DF`), información `#3B82F6` (fondo suave `#DBEAFE`) — úsalos para
+  badges de estado (disponible, pendiente, aprobado, rechazado, etc.),
+  manteniendo el patrón fondo suave + texto de color que ya tienen los
+  badges actuales.
 
-**Tipografía**: fuente sans-serif moderna (Inter, Poppins o Manrope, vía
-Google Fonts), nunca serif para el cuerpo de texto. Jerarquía clara: títulos
-grandes y en negrita, texto secundario más pequeño y en gris.
+**Tipografía**: **Inter** (vía Google Fonts, pesos 400 a 800) en toda la
+interfaz — títulos, cuerpo de texto y números —, nunca serif. Jerarquía
+clara: títulos grandes y en negrita (`font-weight: 700`), texto secundario
+más pequeño y en gris.
 
 **Componentes**:
 - Tarjetas con bordes redondeados generosos (12-16px), sombra suave
   (`box-shadow` ligera), y un pequeño efecto "lift" al pasar el cursor
   (sombra un poco más marcada + leve desplazamiento hacia arriba).
-- Botones primarios en el color de marca (coral), con esquinas redondeadas
-  (pill o 8-12px), texto en negrita, y un estado hover que oscurezca
-  ligeramente el color.
-- Inputs con bordes suaves, buen padding interno, y un estado de foco visible
-  (borde coral al hacer clic).
+- Botones primarios en el color de marca (verde azulado), con esquinas
+  redondeadas (pill o 8-12px), texto en negrita, y un estado hover que
+  oscurezca ligeramente el color.
+- Inputs con bordes suaves, buen padding interno, y un estado de foco
+  visible (borde del color de marca al hacer clic).
 - Iconografía consistente con Bootstrap Icons en toda la interfaz (botones,
   menús, tarjetas, tablas).
 
