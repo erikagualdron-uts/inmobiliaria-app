@@ -126,7 +126,7 @@
             <% if (porEstado.isEmpty()) { %>
             <p class="hg-panel-empty" style="padding:20px 0;">Sin datos para mostrar.</p>
             <% } else { %>
-            <canvas id="graficoPropiedadesEstado" role="img" aria-label="Propiedades por estado" height="220"></canvas>
+            <div class="hg-grafico-alto"><canvas id="graficoPropiedadesEstado" role="img" aria-label="Propiedades por estado"></canvas></div>
             <% } %>
         </div>
         <div class="hg-panel-card">
@@ -135,7 +135,7 @@
             <% if (solicitudesPorTipo.isEmpty()) { %>
             <p class="hg-panel-empty" style="padding:20px 0;">Sin datos para mostrar.</p>
             <% } else { %>
-            <canvas id="graficoSolicitudesTipo" role="img" aria-label="Solicitudes aprobadas por tipo" height="220"></canvas>
+            <div class="hg-grafico-alto"><canvas id="graficoSolicitudesTipo" role="img" aria-label="Solicitudes aprobadas por tipo"></canvas></div>
             <% } %>
         </div>
     </div>
@@ -180,7 +180,7 @@
                 labels: <%= hgArrayEtiquetasJs(porEstado, "etiqueta") %>,
                 datasets: [{ data: <%= hgArrayValoresJs(porEstado, "total") %>, backgroundColor: colores.serie, borderColor: colores.serie, borderWidth: 1 }]
             },
-            options: { plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, padding: 12 } } } }
+            options: { maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, padding: 12 } } } }
         });
     }
 
@@ -193,6 +193,7 @@
                 datasets: [{ data: <%= hgArrayValoresJs(solicitudesPorTipo, "total") %>, backgroundColor: [colores.primario, colores.acento], borderRadius: 6, maxBarThickness: 48 }]
             },
             options: {
+                maintainAspectRatio: false,
                 plugins: { legend: { display: false } },
                 scales: { y: { beginAtZero: true, ticks: { precision: 0 }, grid: { color: colores.borde } }, x: { grid: { display: false } } }
             }

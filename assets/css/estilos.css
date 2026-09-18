@@ -840,3 +840,7 @@ a.hg-panel-stat:hover { transform: translateY(-2px); box-shadow: var(--hg-shadow
 }
 .hg-mapa__nota { color: var(--hg-ink-muted); font-size: .8rem; margin-bottom: 24px; }
 .hg-mapa .leaflet-popup-content-wrapper { border-radius: var(--hg-radius-sm); }
+
+/* Contenedor de altura fija para graficos Chart.js con maintainAspectRatio:false,
+   para que no crezcan de mas en tarjetas anchas (ej. grillas de 2 columnas). */
+.hg-grafico-alto { position: relative; height: 220px; }
