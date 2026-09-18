@@ -33,7 +33,7 @@
     }
 
     if (idPropiedad == null || idInmobiliaria == null) {
-        response.sendRedirect(request.getContextPath() + "/mis-propiedades.jsp");
+        response.sendRedirect(request.getContextPath() + "/inmobiliaria/mis-propiedades.jsp");
         return;
     }
 
@@ -119,7 +119,7 @@
 
         if (errores.isEmpty()) {
             try { conexion.close(); } catch (Exception ignored) { }
-            response.sendRedirect(request.getContextPath() + "/propiedad-galeria.jsp?id=" + idPropiedad);
+            response.sendRedirect(request.getContextPath() + "/inmobiliaria/propiedad-galeria.jsp?id=" + idPropiedad);
             return;
         }
     }
@@ -161,7 +161,7 @@
     <div class="hg-panel-hero">
         <span class="hg-eyebrow">Panel de inmobiliaria</span>
         <h1>Galeria: <%= tituloPropiedad %></h1>
-        <p><a href="<%= request.getContextPath() %>/mis-propiedades.jsp">&larr; Volver a mis propiedades</a></p>
+        <p><a href="<%= request.getContextPath() %>/inmobiliaria/mis-propiedades.jsp">&larr; Volver a mis propiedades</a></p>
     </div>
 
     <% if (esNueva) { %>
@@ -191,13 +191,13 @@
             <img src="<%= img.get("url") %>" alt="Foto de <%= tituloPropiedad %>">
             <div class="hg-galeria-item__bar">
                 <% if (!principal) { %>
-                <form method="post" action="<%= request.getContextPath() %>/propiedad-galeria.jsp?id=<%= idPropiedad %>">
+                <form method="post" action="<%= request.getContextPath() %>/inmobiliaria/propiedad-galeria.jsp?id=<%= idPropiedad %>">
                     <input type="hidden" name="accion" value="marcarPrincipal">
                     <input type="hidden" name="idImagen" value="<%= img.get("id") %>">
                     <button class="hg-btn hg-btn--ghost hg-btn--sm" type="submit">Hacer principal</button>
                 </form>
                 <% } else { %><span></span><% } %>
-                <form method="post" action="<%= request.getContextPath() %>/propiedad-galeria.jsp?id=<%= idPropiedad %>">
+                <form method="post" action="<%= request.getContextPath() %>/inmobiliaria/propiedad-galeria.jsp?id=<%= idPropiedad %>">
                     <input type="hidden" name="accion" value="eliminar">
                     <input type="hidden" name="idImagen" value="<%= img.get("id") %>">
                     <button class="hg-btn hg-btn--ghost hg-btn--sm" type="submit" style="color:var(--hg-off);">Eliminar</button>
@@ -210,7 +210,7 @@
 
     <div class="hg-panel-card">
         <h3 style="margin-bottom:14px;">Agregar imagen</h3>
-        <form method="post" action="<%= request.getContextPath() %>/propiedad-galeria.jsp?id=<%= idPropiedad %>" style="display:flex; flex-direction:column; gap:14px;">
+        <form method="post" action="<%= request.getContextPath() %>/inmobiliaria/propiedad-galeria.jsp?id=<%= idPropiedad %>" style="display:flex; flex-direction:column; gap:14px;">
             <input type="hidden" name="accion" value="agregar">
             <div class="hg-field">
                 <label for="urlImagen">URL de la imagen (Unsplash, Pexels u otro banco libre)</label>

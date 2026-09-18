@@ -40,7 +40,7 @@
                 }
             } catch (Exception ignored) { }
             try { conexion.close(); } catch (Exception ignored) { }
-            response.sendRedirect(request.getContextPath() + "/mis-propiedades.jsp?actualizado=1");
+            response.sendRedirect(request.getContextPath() + "/inmobiliaria/mis-propiedades.jsp?actualizado=1");
             return;
         }
     }
@@ -100,7 +100,7 @@
             <h1>Mis propiedades</h1>
             <p>Publica, edita o da de baja los inmuebles de tu inmobiliaria.</p>
         </div>
-        <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/propiedad-form.jsp">+ Publicar propiedad</a>
+        <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/inmobiliaria/propiedad-form.jsp">+ Publicar propiedad</a>
     </div>
 
     <% if (idInmobiliaria == null) { %>
@@ -116,7 +116,7 @@
             <div class="hg-panel-empty">
                 <div class="hg-panel-empty__icon">🏠</div>
                 <p>Aun no has publicado ninguna propiedad.</p>
-                <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/propiedad-form.jsp">Publicar la primera</a>
+                <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/inmobiliaria/propiedad-form.jsp">Publicar la primera</a>
             </div>
         </div>
         <% } else { %>
@@ -156,9 +156,9 @@
                             <a href="<%= request.getContextPath() %>/detalle.jsp?id=<%= p.get("id") %>" target="_blank">Ver ficha</a>
                         </td>
                         <td class="hg-tabla__acciones">
-                            <a class="hg-btn hg-btn--ghost hg-btn--sm" href="<%= request.getContextPath() %>/propiedad-form.jsp?id=<%= p.get("id") %>">Editar</a>
-                            <a class="hg-btn hg-btn--ghost hg-btn--sm" href="<%= request.getContextPath() %>/propiedad-galeria.jsp?id=<%= p.get("id") %>">Galeria</a>
-                            <form method="post" action="<%= request.getContextPath() %>/mis-propiedades.jsp" style="display:inline;">
+                            <a class="hg-btn hg-btn--ghost hg-btn--sm" href="<%= request.getContextPath() %>/inmobiliaria/propiedad-form.jsp?id=<%= p.get("id") %>">Editar</a>
+                            <a class="hg-btn hg-btn--ghost hg-btn--sm" href="<%= request.getContextPath() %>/inmobiliaria/propiedad-galeria.jsp?id=<%= p.get("id") %>">Galeria</a>
+                            <form method="post" action="<%= request.getContextPath() %>/inmobiliaria/mis-propiedades.jsp" style="display:inline;">
                                 <input type="hidden" name="accion" value="toggleActivo">
                                 <input type="hidden" name="idPropiedad" value="<%= p.get("id") %>">
                                 <button class="hg-btn hg-btn--sm <%= activo ? "hg-btn--ghost" : "hg-btn--primary" %>" type="submit">

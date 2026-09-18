@@ -29,7 +29,7 @@
     }
 
     if (idInmobiliaria == null) {
-        response.sendRedirect(request.getContextPath() + "/mis-propiedades.jsp");
+        response.sendRedirect(request.getContextPath() + "/inmobiliaria/mis-propiedades.jsp");
         return;
     }
 
@@ -258,9 +258,9 @@
 
                     try { conexion.close(); } catch (Exception ignored) { }
                     if (esEdicion) {
-                        response.sendRedirect(request.getContextPath() + "/mis-propiedades.jsp?actualizado=1");
+                        response.sendRedirect(request.getContextPath() + "/inmobiliaria/mis-propiedades.jsp?actualizado=1");
                     } else {
-                        response.sendRedirect(request.getContextPath() + "/propiedad-galeria.jsp?id=" + idPropiedadFinal + "&nuevo=1");
+                        response.sendRedirect(request.getContextPath() + "/inmobiliaria/propiedad-galeria.jsp?id=" + idPropiedadFinal + "&nuevo=1");
                     }
                     return;
 
@@ -297,7 +297,7 @@
     <div class="hg-panel-hero">
         <span class="hg-eyebrow">Panel de inmobiliaria</span>
         <h1><%= esEdicion ? "Editar propiedad" : "Publicar nueva propiedad" %></h1>
-        <p><a href="<%= request.getContextPath() %>/mis-propiedades.jsp">&larr; Volver a mis propiedades</a></p>
+        <p><a href="<%= request.getContextPath() %>/inmobiliaria/mis-propiedades.jsp">&larr; Volver a mis propiedades</a></p>
     </div>
 
     <% if (!errores.isEmpty()) { %>
@@ -309,7 +309,7 @@
     <% } %>
 
     <div class="hg-panel-card">
-        <form method="post" action="<%= request.getContextPath() %>/propiedad-form.jsp<%= esEdicion ? "?id=" + idPropiedadEdicion : "" %>">
+        <form method="post" action="<%= request.getContextPath() %>/inmobiliaria/propiedad-form.jsp<%= esEdicion ? "?id=" + idPropiedadEdicion : "" %>">
             <div class="hg-auth__grid" style="margin-bottom:16px;">
                 <div class="hg-field">
                     <label for="matricula">Matricula inmobiliaria</label>

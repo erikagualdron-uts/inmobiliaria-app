@@ -45,7 +45,7 @@
 
         if (errores.isEmpty()) {
             try { conexion.close(); } catch (Exception ignored) { }
-            response.sendRedirect(request.getContextPath() + "/mis-solicitudes.jsp");
+            response.sendRedirect(request.getContextPath() + "/cliente/mis-solicitudes.jsp");
             return;
         }
     }
@@ -112,7 +112,7 @@
     <div class="hg-panel-hero">
         <span class="hg-eyebrow">Panel de cliente</span>
         <h1>Mis solicitudes</h1>
-        <p><a href="<%= request.getContextPath() %>/dashboard-cliente.jsp">&larr; Volver a mi panel</a></p>
+        <p><a href="<%= request.getContextPath() %>/cliente/dashboard-cliente.jsp">&larr; Volver a mi panel</a></p>
     </div>
 
     <% if (!errores.isEmpty()) { %>
@@ -158,7 +158,7 @@
 
             <details>
                 <summary style="cursor:pointer; color:var(--hg-primary); font-size:.9rem; font-weight:600;">+ Radicar documento</summary>
-                <form method="post" action="<%= request.getContextPath() %>/mis-solicitudes.jsp" style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+                <form method="post" action="<%= request.getContextPath() %>/cliente/mis-solicitudes.jsp" style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
                     <input type="hidden" name="accion" value="radicarDocumento">
                     <input type="hidden" name="idSolicitud" value="<%= s.get("id") %>">
                     <input class="form-control" type="text" name="nombreDocumento" placeholder="Ej. Cedula de ciudadania" style="flex:1; min-width:180px;" required>

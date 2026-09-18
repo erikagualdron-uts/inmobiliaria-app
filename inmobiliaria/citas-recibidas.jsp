@@ -40,7 +40,7 @@
                 }
             } catch (Exception ignored) { }
             try { conexion.close(); } catch (Exception ignored) { }
-            response.sendRedirect(request.getContextPath() + "/citas-recibidas.jsp");
+            response.sendRedirect(request.getContextPath() + "/inmobiliaria/citas-recibidas.jsp");
             return;
         }
     }
@@ -92,7 +92,7 @@
     <div class="hg-panel-hero">
         <span class="hg-eyebrow">Panel de inmobiliaria</span>
         <h1>Citas recibidas</h1>
-        <p><a href="<%= request.getContextPath() %>/dashboard-inmobiliaria.jsp">&larr; Volver a mi panel</a></p>
+        <p><a href="<%= request.getContextPath() %>/inmobiliaria/dashboard-inmobiliaria.jsp">&larr; Volver a mi panel</a></p>
     </div>
 
     <% if (idInmobiliaria == null) { %>
@@ -122,16 +122,16 @@
                     <td><span class="hg-badge--estado hg-badge--<%= estadoC %>" style="position:static; display:inline-block;"><%= estadoC.substring(0,1).toUpperCase() + estadoC.substring(1) %></span></td>
                     <td class="hg-tabla__acciones">
                         <% if ("pendiente".equals(estadoC)) { %>
-                        <form method="post" action="<%= request.getContextPath() %>/citas-recibidas.jsp">
+                        <form method="post" action="<%= request.getContextPath() %>/inmobiliaria/citas-recibidas.jsp">
                             <input type="hidden" name="accion" value="confirmar"><input type="hidden" name="idCita" value="<%= c.get("id") %>">
                             <button class="hg-btn hg-btn--primary hg-btn--sm" type="submit">Confirmar</button>
                         </form>
-                        <form method="post" action="<%= request.getContextPath() %>/citas-recibidas.jsp">
+                        <form method="post" action="<%= request.getContextPath() %>/inmobiliaria/citas-recibidas.jsp">
                             <input type="hidden" name="accion" value="rechazar"><input type="hidden" name="idCita" value="<%= c.get("id") %>">
                             <button class="hg-btn hg-btn--ghost hg-btn--sm" type="submit">Rechazar</button>
                         </form>
                         <% } else if ("confirmada".equals(estadoC)) { %>
-                        <form method="post" action="<%= request.getContextPath() %>/citas-recibidas.jsp">
+                        <form method="post" action="<%= request.getContextPath() %>/inmobiliaria/citas-recibidas.jsp">
                             <input type="hidden" name="accion" value="marcarRealizada"><input type="hidden" name="idCita" value="<%= c.get("id") %>">
                             <button class="hg-btn hg-btn--primary hg-btn--sm" type="submit">Marcar realizada</button>
                         </form>

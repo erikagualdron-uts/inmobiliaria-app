@@ -36,7 +36,7 @@
                 }
             } catch (Exception ignored) { }
             try { conexion.close(); } catch (Exception ignored) { }
-            response.sendRedirect(request.getContextPath() + "/solicitudes-recibidas.jsp");
+            response.sendRedirect(request.getContextPath() + "/inmobiliaria/solicitudes-recibidas.jsp");
             return;
         }
 
@@ -56,7 +56,7 @@
                 }
             } catch (Exception ignored) { }
             try { conexion.close(); } catch (Exception ignored) { }
-            response.sendRedirect(request.getContextPath() + "/solicitudes-recibidas.jsp");
+            response.sendRedirect(request.getContextPath() + "/inmobiliaria/solicitudes-recibidas.jsp");
             return;
         }
     }
@@ -126,7 +126,7 @@
     <div class="hg-panel-hero">
         <span class="hg-eyebrow">Panel de inmobiliaria</span>
         <h1>Solicitudes recibidas</h1>
-        <p><a href="<%= request.getContextPath() %>/dashboard-inmobiliaria.jsp">&larr; Volver a mi panel</a></p>
+        <p><a href="<%= request.getContextPath() %>/inmobiliaria/dashboard-inmobiliaria.jsp">&larr; Volver a mi panel</a></p>
     </div>
 
     <% if (idInmobiliaria == null) { %>
@@ -172,11 +172,11 @@
                     <div style="display:flex; align-items:center; gap:8px;">
                         <span class="hg-badge--estado hg-badge--<%= estadoDoc %>" style="position:static; display:inline-block;"><%= estadoDoc.substring(0,1).toUpperCase() + estadoDoc.substring(1) %></span>
                         <% if ("pendiente".equals(estadoDoc)) { %>
-                        <form method="post" action="<%= request.getContextPath() %>/solicitudes-recibidas.jsp" style="display:inline;">
+                        <form method="post" action="<%= request.getContextPath() %>/inmobiliaria/solicitudes-recibidas.jsp" style="display:inline;">
                             <input type="hidden" name="accion" value="aprobarDocumento"><input type="hidden" name="idDocumento" value="<%= d.get("id") %>">
                             <button class="hg-btn hg-btn--ghost hg-btn--sm" type="submit">Aprobar</button>
                         </form>
-                        <form method="post" action="<%= request.getContextPath() %>/solicitudes-recibidas.jsp" style="display:inline;">
+                        <form method="post" action="<%= request.getContextPath() %>/inmobiliaria/solicitudes-recibidas.jsp" style="display:inline;">
                             <input type="hidden" name="accion" value="rechazarDocumento"><input type="hidden" name="idDocumento" value="<%= d.get("id") %>">
                             <button class="hg-btn hg-btn--ghost hg-btn--sm" type="submit" style="color:var(--hg-off);">Rechazar</button>
                         </form>
@@ -190,16 +190,16 @@
             <% if ("pendiente".equals(estadoS) || "en_revision".equals(estadoS)) { %>
             <div class="hg-tabla__acciones">
                 <% if ("pendiente".equals(estadoS)) { %>
-                <form method="post" action="<%= request.getContextPath() %>/solicitudes-recibidas.jsp">
+                <form method="post" action="<%= request.getContextPath() %>/inmobiliaria/solicitudes-recibidas.jsp">
                     <input type="hidden" name="accion" value="revisar"><input type="hidden" name="idSolicitud" value="<%= s.get("id") %>">
                     <button class="hg-btn hg-btn--ghost hg-btn--sm" type="submit">Poner en revision</button>
                 </form>
                 <% } %>
-                <form method="post" action="<%= request.getContextPath() %>/solicitudes-recibidas.jsp">
+                <form method="post" action="<%= request.getContextPath() %>/inmobiliaria/solicitudes-recibidas.jsp">
                     <input type="hidden" name="accion" value="aprobar"><input type="hidden" name="idSolicitud" value="<%= s.get("id") %>">
                     <button class="hg-btn hg-btn--primary hg-btn--sm" type="submit">Aprobar solicitud</button>
                 </form>
-                <form method="post" action="<%= request.getContextPath() %>/solicitudes-recibidas.jsp">
+                <form method="post" action="<%= request.getContextPath() %>/inmobiliaria/solicitudes-recibidas.jsp">
                     <input type="hidden" name="accion" value="rechazar"><input type="hidden" name="idSolicitud" value="<%= s.get("id") %>">
                     <button class="hg-btn hg-btn--ghost hg-btn--sm" type="submit">Rechazar solicitud</button>
                 </form>

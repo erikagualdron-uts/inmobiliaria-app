@@ -44,17 +44,17 @@
     </div>
 
     <div class="hg-panel-grid">
-        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/usuarios.jsp" style="display:block; text-decoration:none;"><strong><%= totalUsuarios %></strong><span>Usuarios registrados</span></a>
+        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/administrador/usuarios.jsp" style="display:block; text-decoration:none;"><strong><%= totalUsuarios %></strong><span>Usuarios registrados</span></a>
         <a class="hg-panel-stat" href="<%= request.getContextPath() %>/catalogo.jsp" style="display:block; text-decoration:none;"><strong><%= totalPropiedades %></strong><span>Propiedades activas</span></a>
-        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/reportes.jsp" style="display:block; text-decoration:none;"><strong><%= totalInmobiliarias %></strong><span>Inmobiliarias aliadas</span></a>
-        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/reportes.jsp" style="display:block; text-decoration:none;"><strong><%= solicitudesPendientes %></strong><span>Solicitudes por atender</span></a>
+        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/administrador/reportes.jsp" style="display:block; text-decoration:none;"><strong><%= totalInmobiliarias %></strong><span>Inmobiliarias aliadas</span></a>
+        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/administrador/reportes.jsp" style="display:block; text-decoration:none;"><strong><%= solicitudesPendientes %></strong><span>Solicitudes por atender</span></a>
     </div>
 
     <div class="hg-panel-card" style="display:flex; gap:14px; flex-wrap:wrap;">
-        <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/reportes.jsp">📊 Ver reportes</a>
-        <a class="hg-btn hg-btn--ghost" href="<%= request.getContextPath() %>/usuarios.jsp">👤 Gestionar usuarios y roles</a>
-        <a class="hg-btn hg-btn--ghost" href="<%= request.getContextPath() %>/catalogos.jsp">🗂️ Parametrizar catalogos</a>
-        <a class="hg-btn hg-btn--ghost" href="<%= request.getContextPath() %>/auditoria.jsp">🗒️ Consultar auditoria</a>
+        <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/administrador/reportes.jsp">📊 Ver reportes</a>
+        <a class="hg-btn hg-btn--ghost" href="<%= request.getContextPath() %>/administrador/usuarios.jsp">👤 Gestionar usuarios y roles</a>
+        <a class="hg-btn hg-btn--ghost" href="<%= request.getContextPath() %>/administrador/catalogos.jsp">🗂️ Parametrizar catalogos</a>
+        <a class="hg-btn hg-btn--ghost" href="<%= request.getContextPath() %>/administrador/auditoria.jsp">🗒️ Consultar auditoria</a>
     </div>
 </div>
 </body>

@@ -70,14 +70,14 @@
             <p><% if (nombreInmobiliaria != null) { %>Agente de <strong><%= nombreInmobiliaria %></strong>.<% } else { %>Tu cuenta aun no esta asociada a ninguna inmobiliaria; contacta al administrador.<% } %></p>
         </div>
         <% if (nombreInmobiliaria != null) { %>
-        <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/mis-propiedades.jsp">Gestionar mis propiedades</a>
+        <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/inmobiliaria/mis-propiedades.jsp">Gestionar mis propiedades</a>
         <% } %>
     </div>
 
     <div class="hg-panel-grid">
-        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/mis-propiedades.jsp" style="display:block; text-decoration:none;"><strong><%= totalPropiedades %></strong><span>Propiedades activas</span></a>
-        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/citas-recibidas.jsp" style="display:block; text-decoration:none;"><strong><%= citasPendientes %></strong><span>Citas pendientes por atender</span></a>
-        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/solicitudes-recibidas.jsp" style="display:block; text-decoration:none;"><strong><%= solicitudesPendientes %></strong><span>Solicitudes por revisar</span></a>
+        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/inmobiliaria/mis-propiedades.jsp" style="display:block; text-decoration:none;"><strong><%= totalPropiedades %></strong><span>Propiedades activas</span></a>
+        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/inmobiliaria/citas-recibidas.jsp" style="display:block; text-decoration:none;"><strong><%= citasPendientes %></strong><span>Citas pendientes por atender</span></a>
+        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/inmobiliaria/solicitudes-recibidas.jsp" style="display:block; text-decoration:none;"><strong><%= solicitudesPendientes %></strong><span>Solicitudes por revisar</span></a>
     </div>
 </div>
 </body>

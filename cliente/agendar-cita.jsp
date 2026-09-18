@@ -112,7 +112,7 @@
         <div class="hg-panel-empty">
             <div class="hg-panel-empty__icon">✅</div>
             <p>Tu cita quedo registrada como <strong>pendiente</strong>. La inmobiliaria la confirmara pronto.</p>
-            <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/mis-citas.jsp">Ver mis citas</a>
+            <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/cliente/mis-citas.jsp">Ver mis citas</a>
         </div>
     </div>
     <% } else { %>
@@ -124,7 +124,7 @@
         <% } %>
 
         <div class="hg-panel-card">
-            <form method="post" action="<%= request.getContextPath() %>/agendar-cita.jsp?propiedad=<%= idPropiedad %>" style="display:flex; flex-direction:column; gap:16px;">
+            <form method="post" action="<%= request.getContextPath() %>/cliente/agendar-cita.jsp?propiedad=<%= idPropiedad %>" style="display:flex; flex-direction:column; gap:16px;">
                 <div class="hg-field">
                     <label for="fecha">Fecha</label>
                     <input class="form-control" type="date" id="fecha" name="fecha" value="<%= fecha %>" required>

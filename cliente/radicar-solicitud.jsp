@@ -95,7 +95,7 @@
         <div class="hg-panel-empty">
             <div class="hg-panel-empty__icon">📋</div>
             <p>Tu solicitud quedo <strong>pendiente</strong> de revision. Ahora puedes radicar los documentos requeridos.</p>
-            <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/mis-solicitudes.jsp">Ir a mis solicitudes</a>
+            <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/cliente/mis-solicitudes.jsp">Ir a mis solicitudes</a>
         </div>
     </div>
     <% } else { %>
@@ -107,7 +107,7 @@
         <% } %>
 
         <div class="hg-panel-card">
-            <form method="post" action="<%= request.getContextPath() %>/radicar-solicitud.jsp?propiedad=<%= idPropiedad %>" style="display:flex; flex-direction:column; gap:16px;">
+            <form method="post" action="<%= request.getContextPath() %>/cliente/radicar-solicitud.jsp?propiedad=<%= idPropiedad %>" style="display:flex; flex-direction:column; gap:16px;">
                 <div class="hg-field">
                     <label for="tipoSolicitud">Tipo de solicitud</label>
                     <select class="form-select" id="tipoSolicitud" name="tipoSolicitud">

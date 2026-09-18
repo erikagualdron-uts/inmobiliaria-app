@@ -99,7 +99,7 @@
 
         if (errores.isEmpty()) {
             try { conexion.close(); } catch (Exception ignored) { }
-            response.sendRedirect(request.getContextPath() + "/usuarios.jsp?actualizado=1");
+            response.sendRedirect(request.getContextPath() + "/administrador/usuarios.jsp?actualizado=1");
             return;
         }
     }
@@ -156,7 +156,7 @@
     <div class="hg-panel-hero">
         <span class="hg-eyebrow">Panel de administracion</span>
         <h1>Usuarios y roles</h1>
-        <p><a href="<%= request.getContextPath() %>/dashboard-administrador.jsp">&larr; Volver a mi panel</a></p>
+        <p><a href="<%= request.getContextPath() %>/administrador/dashboard-administrador.jsp">&larr; Volver a mi panel</a></p>
     </div>
 
     <% if (mensaje != null) { %><div class="hg-alert hg-alert--success" style="margin-bottom:20px;"><%= mensaje %></div><% } %>
@@ -188,7 +188,7 @@
                     </span>
                 </summary>
 
-                <form method="post" action="<%= request.getContextPath() %>/usuarios.jsp" style="margin-top:16px; display:flex; flex-direction:column; gap:14px;">
+                <form method="post" action="<%= request.getContextPath() %>/administrador/usuarios.jsp" style="margin-top:16px; display:flex; flex-direction:column; gap:14px;">
                     <input type="hidden" name="accion" value="actualizarUsuario">
                     <input type="hidden" name="idUsuario" value="<%= u.get("id") %>">
 

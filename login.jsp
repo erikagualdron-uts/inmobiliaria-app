@@ -69,11 +69,11 @@
                     session.setAttribute("nombreUsuario", nombreUsuario != null ? nombreUsuario : correo);
                     session.setAttribute("roles", roles);
 
-                    String destino = request.getContextPath() + "/dashboard-cliente.jsp";
+                    String destino = request.getContextPath() + "/cliente/dashboard-cliente.jsp";
                     if (roles.contains("Administrador")) {
-                        destino = request.getContextPath() + "/dashboard-administrador.jsp";
+                        destino = request.getContextPath() + "/administrador/dashboard-administrador.jsp";
                     } else if (roles.contains("Inmobiliaria")) {
-                        destino = request.getContextPath() + "/dashboard-inmobiliaria.jsp";
+                        destino = request.getContextPath() + "/inmobiliaria/dashboard-inmobiliaria.jsp";
                     }
 
                     try { conexion.close(); } catch (Exception ignored) { }

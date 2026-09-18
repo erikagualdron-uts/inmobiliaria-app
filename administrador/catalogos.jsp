@@ -84,7 +84,7 @@
 
         if (errores.isEmpty()) {
             try { conexion.close(); } catch (Exception ignored) { }
-            response.sendRedirect(request.getContextPath() + "/catalogos.jsp?actualizado=1");
+            response.sendRedirect(request.getContextPath() + "/administrador/catalogos.jsp?actualizado=1");
             return;
         }
     }
@@ -142,7 +142,7 @@
     <div class="hg-panel-hero">
         <span class="hg-eyebrow">Panel de administracion</span>
         <h1>Catalogos del sistema</h1>
-        <p><a href="<%= request.getContextPath() %>/dashboard-administrador.jsp">&larr; Volver a mi panel</a></p>
+        <p><a href="<%= request.getContextPath() %>/administrador/dashboard-administrador.jsp">&larr; Volver a mi panel</a></p>
     </div>
 
     <% if (mensaje != null) { %><div class="hg-alert hg-alert--success" style="margin-bottom:20px;"><%= mensaje %></div><% } %>
@@ -159,7 +159,7 @@
                 <% for (Map<String, Object> c : ciudades) { %>
                 <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px dashed var(--hg-border); font-size:.9rem;">
                     <span><%= c.get("nombre") %> <span style="color:var(--hg-ink-muted);">(<%= c.get("extra") %>)</span></span>
-                    <form method="post" action="<%= request.getContextPath() %>/catalogos.jsp">
+                    <form method="post" action="<%= request.getContextPath() %>/administrador/catalogos.jsp">
                         <input type="hidden" name="accion" value="eliminarCiudad">
                         <input type="hidden" name="id" value="<%= c.get("id") %>">
                         <button class="hg-btn hg-btn--ghost hg-btn--sm" type="submit" style="color:var(--hg-off);">Eliminar</button>
@@ -167,7 +167,7 @@
                 </div>
                 <% } %>
             </div>
-            <form method="post" action="<%= request.getContextPath() %>/catalogos.jsp" style="display:flex; flex-direction:column; gap:10px;">
+            <form method="post" action="<%= request.getContextPath() %>/administrador/catalogos.jsp" style="display:flex; flex-direction:column; gap:10px;">
                 <input type="hidden" name="accion" value="agregarCiudad">
                 <input class="form-control" type="text" name="nombre" placeholder="Nombre de la ciudad" maxlength="80" required>
                 <input class="form-control" type="text" name="departamento" placeholder="Departamento" maxlength="80" required>
@@ -181,7 +181,7 @@
                 <% for (Map<String, Object> t : tipos) { %>
                 <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px dashed var(--hg-border); font-size:.9rem;">
                     <span><%= t.get("nombre") %></span>
-                    <form method="post" action="<%= request.getContextPath() %>/catalogos.jsp">
+                    <form method="post" action="<%= request.getContextPath() %>/administrador/catalogos.jsp">
                         <input type="hidden" name="accion" value="eliminarTipo">
                         <input type="hidden" name="id" value="<%= t.get("id") %>">
                         <button class="hg-btn hg-btn--ghost hg-btn--sm" type="submit" style="color:var(--hg-off);">Eliminar</button>
@@ -189,7 +189,7 @@
                 </div>
                 <% } %>
             </div>
-            <form method="post" action="<%= request.getContextPath() %>/catalogos.jsp" style="display:flex; flex-direction:column; gap:10px;">
+            <form method="post" action="<%= request.getContextPath() %>/administrador/catalogos.jsp" style="display:flex; flex-direction:column; gap:10px;">
                 <input type="hidden" name="accion" value="agregarTipo">
                 <input class="form-control" type="text" name="nombre" placeholder="Nombre del tipo" maxlength="40" required>
                 <input class="form-control" type="text" name="descripcion" placeholder="Descripcion (opcional)" maxlength="150">
@@ -203,7 +203,7 @@
                 <% for (Map<String, Object> car : caracteristicas) { %>
                 <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px dashed var(--hg-border); font-size:.9rem;">
                     <span><%= car.get("nombre") %></span>
-                    <form method="post" action="<%= request.getContextPath() %>/catalogos.jsp">
+                    <form method="post" action="<%= request.getContextPath() %>/administrador/catalogos.jsp">
                         <input type="hidden" name="accion" value="eliminarCaracteristica">
                         <input type="hidden" name="id" value="<%= car.get("id") %>">
                         <button class="hg-btn hg-btn--ghost hg-btn--sm" type="submit" style="color:var(--hg-off);">Eliminar</button>
@@ -211,7 +211,7 @@
                 </div>
                 <% } %>
             </div>
-            <form method="post" action="<%= request.getContextPath() %>/catalogos.jsp" style="display:flex; flex-direction:column; gap:10px;">
+            <form method="post" action="<%= request.getContextPath() %>/administrador/catalogos.jsp" style="display:flex; flex-direction:column; gap:10px;">
                 <input type="hidden" name="accion" value="agregarCaracteristica">
                 <input class="form-control" type="text" name="nombre" placeholder="Nombre de la caracteristica" maxlength="50" required>
                 <input class="form-control" type="text" name="icono" placeholder="Icono (opcional, ej. bi-water)" maxlength="50">

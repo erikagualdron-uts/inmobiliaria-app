@@ -21,7 +21,7 @@
             }
         } catch (Exception ignored) { }
         try { conexion.close(); } catch (Exception ignored) { }
-        response.sendRedirect(request.getContextPath() + "/mis-citas.jsp");
+        response.sendRedirect(request.getContextPath() + "/cliente/mis-citas.jsp");
         return;
     }
 
@@ -70,7 +70,7 @@
     <div class="hg-panel-hero">
         <span class="hg-eyebrow">Panel de cliente</span>
         <h1>Mis citas</h1>
-        <p><a href="<%= request.getContextPath() %>/dashboard-cliente.jsp">&larr; Volver a mi panel</a></p>
+        <p><a href="<%= request.getContextPath() %>/cliente/dashboard-cliente.jsp">&larr; Volver a mi panel</a></p>
     </div>
 
     <% if (citas.isEmpty()) { %>
@@ -100,7 +100,7 @@
                     <td style="color:var(--hg-ink-muted); font-size:.88rem;"><%= c.get("observaciones") != null ? c.get("observaciones") : "-" %></td>
                     <td>
                         <% if (sePuedeCancelar) { %>
-                        <form method="post" action="<%= request.getContextPath() %>/mis-citas.jsp">
+                        <form method="post" action="<%= request.getContextPath() %>/cliente/mis-citas.jsp">
                             <input type="hidden" name="accion" value="cancelar">
                             <input type="hidden" name="idCita" value="<%= c.get("id") %>">
                             <button class="hg-btn hg-btn--ghost hg-btn--sm" type="submit">Cancelar</button>

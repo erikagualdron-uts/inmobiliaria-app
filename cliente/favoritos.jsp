@@ -60,7 +60,7 @@
     <div class="hg-panel-hero">
         <span class="hg-eyebrow">Panel de cliente</span>
         <h1>Mis favoritos</h1>
-        <p><a href="<%= request.getContextPath() %>/dashboard-cliente.jsp">&larr; Volver a mi panel</a></p>
+        <p><a href="<%= request.getContextPath() %>/cliente/dashboard-cliente.jsp">&larr; Volver a mi panel</a></p>
     </div>
 
     <% if (favoritos.isEmpty()) { %>

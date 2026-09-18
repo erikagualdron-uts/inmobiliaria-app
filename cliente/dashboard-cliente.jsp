@@ -48,9 +48,9 @@
     </div>
 
     <div class="hg-panel-grid">
-        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/mis-citas.jsp" style="display:block; text-decoration:none;"><strong><%= totalCitas %></strong><span>Citas agendadas</span></a>
-        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/mis-solicitudes.jsp" style="display:block; text-decoration:none;"><strong><%= totalSolicitudes %></strong><span>Solicitudes radicadas</span></a>
-        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/favoritos.jsp" style="display:block; text-decoration:none;"><strong><%= totalFavoritos %></strong><span>Propiedades favoritas</span></a>
+        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/cliente/mis-citas.jsp" style="display:block; text-decoration:none;"><strong><%= totalCitas %></strong><span>Citas agendadas</span></a>
+        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/cliente/mis-solicitudes.jsp" style="display:block; text-decoration:none;"><strong><%= totalSolicitudes %></strong><span>Solicitudes radicadas</span></a>
+        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/cliente/favoritos.jsp" style="display:block; text-decoration:none;"><strong><%= totalFavoritos %></strong><span>Propiedades favoritas</span></a>
     </div>
 
     <div class="hg-panel-card">
