@@ -15,7 +15,18 @@
     //
     // Recuerda cerrar "conexion" (y los ResultSet/PreparedStatement que abras)
     // en un bloque finally dentro de la pagina que la usa.
+    //
+    // IMPORTANTE: aqui tambien se fija la codificacion del request a UTF-8.
+    // Sin esto, Tomcat decodifica el cuerpo de los formularios POST con
+    // ISO-8859-1 por defecto sin importar el pageEncoding del JSP, y
+    // cualquier tilde o "n" enviada desde un formulario llega corrupta.
+    // Debe hacerse ANTES de leer el primer request.getParameter(...), por
+    // eso vive en el JSPF que se incluye de primero en cada pagina.
     // =========================================================================
+
+    try {
+        request.setCharacterEncoding("UTF-8");
+    } catch (java.io.UnsupportedEncodingException ignored) { }
 
     final String hogariaDbUrl =
         "jdbc:mysql://localhost:3306/hogaria_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=America/Bogota&characterEncoding=UTF-8";

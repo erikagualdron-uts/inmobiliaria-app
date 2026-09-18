@@ -9,11 +9,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Algo salio mal | Hogaria</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Work+Sans:wght@400;600&display=swap">
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/estilos.css">
+    <% String hgTitulo = "Algo salio mal"; %>
+    <%@ include file="/jspf/head-comun.jspf" %>
 </head>
 <body>
 <div class="hg-container" style="min-height:80vh; display:flex; align-items:center; justify-content:center; text-align:center;">

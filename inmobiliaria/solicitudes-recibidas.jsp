@@ -112,12 +112,8 @@
 %><!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solicitudes recibidas | Hogaria</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/estilos.css">
+    <% String hgTitulo = "Solicitudes recibidas"; %>
+    <%@ include file="/jspf/head-comun.jspf" %>
 </head>
 <body>
 <%@ include file="/jspf/panel-header.jspf" %>
