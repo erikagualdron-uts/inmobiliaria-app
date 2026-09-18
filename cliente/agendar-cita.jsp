@@ -138,5 +138,6 @@
         </div>
     <% } %>
 </div>
+<%@ include file="/jspf/scripts-panel.jspf" %>
 </body>
 </html>

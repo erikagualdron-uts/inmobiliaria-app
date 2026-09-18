@@ -110,18 +110,18 @@ INSERT INTO usuario_rol (id_usuario, id_rol, fecha_asignacion) VALUES
 -- =====================================================================
 -- 8. PERFIL  (1:1 con usuario)
 -- =====================================================================
-INSERT INTO perfil (id_usuario, nombres, apellidos, tipo_documento, numero_documento, telefono, direccion, foto_url) VALUES
-(1,  'Laura',     'Martinez Rojas',    'CC', '63489215',  '3001234567', 'Cra 27 #45-12, Bucaramanga',  'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80'),
-(2,  'Carlos',    'Pinzon Duarte',     'CC', '91234567',  '3012345678', 'Cl 56 #22-10, Bucaramanga',   'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&q=80'),
-(3,  'Valentina', 'Gomez Rueda',       'CC', '63512890',  '3023456789', 'Cra 33 #40-18, Floridablanca','https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&q=80'),
-(4,  'Andres',    'Castaneda Rios',    'CC', '71234567',  '3034567890', 'Cra 43A #10-20, Medellin',    'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&q=80'),
-(5,  'Daniela',   'Ortiz Marin',       'CC', '43598721',  '3045678901', 'Cl 5 #8-30, Cartagena',       'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&q=80'),
-(6,  'Juan',      'Perez Lopez',       'CC', '1098765432','3101234567', 'Cl 30 #12-40, Bucaramanga',   'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=200&q=80'),
-(7,  'Maria',     'Rodriguez Sanchez', 'CC', '1102345678','3112345678', 'Cra 10 #20-15, Floridablanca','https://images.unsplash.com/photo-1544723795-3fb6469f5b39?w=200&q=80'),
-(8,  'Santiago',  'Vargas Cortes',     'CC', '1099876543','3123456789', 'Cl 45 #9-22, Bucaramanga',    'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&q=80'),
-(9,  'Camila',    'Herrera Buitrago',  'CC', '1105678234','3134567890', 'Cra 15 #33-20, Bogota',       'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=200&q=80'),
-(10, 'Diego',     'Moreno Salazar',    'CC', '1096543210','3145678901', 'Cl 70 #52-30, Medellin',      'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&q=80'),
-(11, 'Isabella',  'Cardenas Nino',     'CC', '1101234987','3156789012', 'Cra 8 #12-40, Cartagena',     'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=200&q=80');
+INSERT INTO perfil (id_usuario, nombres, apellidos, tipo_documento, numero_documento, telefono, direccion) VALUES
+(1,  'Laura',     'Martinez Rojas',    'CC', '63489215',  '3001234567', 'Cra 27 #45-12, Bucaramanga'),
+(2,  'Carlos',    'Pinzon Duarte',     'CC', '91234567',  '3012345678', 'Cl 56 #22-10, Bucaramanga'),
+(3,  'Valentina', 'Gomez Rueda',       'CC', '63512890',  '3023456789', 'Cra 33 #40-18, Floridablanca'),
+(4,  'Andres',    'Castaneda Rios',    'CC', '71234567',  '3034567890', 'Cra 43A #10-20, Medellin'),
+(5,  'Daniela',   'Ortiz Marin',       'CC', '43598721',  '3045678901', 'Cl 5 #8-30, Cartagena'),
+(6,  'Juan',      'Perez Lopez',       'CC', '1098765432','3101234567', 'Cl 30 #12-40, Bucaramanga'),
+(7,  'Maria',     'Rodriguez Sanchez', 'CC', '1102345678','3112345678', 'Cra 10 #20-15, Floridablanca'),
+(8,  'Santiago',  'Vargas Cortes',     'CC', '1099876543','3123456789', 'Cl 45 #9-22, Bucaramanga'),
+(9,  'Camila',    'Herrera Buitrago',  'CC', '1105678234','3134567890', 'Cra 15 #33-20, Bogota'),
+(10, 'Diego',     'Moreno Salazar',    'CC', '1096543210','3145678901', 'Cl 70 #52-30, Medellin'),
+(11, 'Isabella',  'Cardenas Nino',     'CC', '1101234987','3156789012', 'Cra 8 #12-40, Cartagena');
 
 -- =====================================================================
 -- 9. PROPIEDAD  (id_propiedad 1..12)

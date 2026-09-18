@@ -1,0 +1,8 @@
+<%@ page pageEncoding="UTF-8" %>
+<%--
+    Script comun para las paginas internas del panel (protegidas por
+    seguridad.jspf). Carga el bundle de Bootstrap (incluye Popper), del que
+    depende el menu desplegable de la cuenta en avatar-cuenta.jspf. Se
+    incluye justo antes de "</body>" en cada pagina del panel.
+--%>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

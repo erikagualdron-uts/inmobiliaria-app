@@ -94,7 +94,6 @@ CREATE TABLE perfil (
     numero_documento  VARCHAR(20)  NOT NULL,
     telefono          VARCHAR(20)  NULL,
     direccion         VARCHAR(150) NULL,
-    foto_url          VARCHAR(255) NULL,
     CONSTRAINT uq_perfil_usuario UNIQUE (id_usuario),
     CONSTRAINT uq_perfil_documento UNIQUE (numero_documento),
     CONSTRAINT fk_perfil_usuario

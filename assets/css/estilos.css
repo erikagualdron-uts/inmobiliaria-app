@@ -183,8 +183,7 @@ img { max-width: 100%; display: block; }
 /* ---------- Barra derecha del navbar publico (avatar + hamburguesa) ---------- */
 .hg-navbar__right { display: flex; align-items: center; gap: 10px; }
 
-/* ---------- Avatar de cuenta + menu propio (sin modal, sin backdrop) ---------- */
-.hg-cuenta { position: relative; }
+/* ---------- Avatar de cuenta + menu desplegable (componente dropdown de Bootstrap) ---------- */
 .hg-avatar-trigger {
     display: inline-flex; align-items: center; gap: 10px;
     background: none; border: none; cursor: pointer;
@@ -192,12 +191,12 @@ img { max-width: 100%; display: block; }
     transition: background-color .15s ease;
 }
 .hg-avatar-trigger:hover { background: var(--hg-primary-soft); }
+.hg-avatar-trigger.dropdown-toggle::after { display: none; }
 .hg-avatar-trigger__nombre {
     font-size: .9rem; font-weight: 600; color: var(--hg-ink);
-    max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 .hg-avatar-trigger__caret { font-size: .68rem; color: var(--hg-ink-muted); transition: transform .15s ease; flex-shrink: 0; }
-.hg-cuenta.is-open .hg-avatar-trigger__caret { transform: rotate(180deg); }
+.hg-avatar-trigger.show .hg-avatar-trigger__caret { transform: rotate(180deg); }
 
 .hg-avatar {
     width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
@@ -209,22 +208,15 @@ img { max-width: 100%; display: block; }
 }
 
 .hg-cuenta-menu {
-    position: absolute; top: calc(100% + 8px); right: 0; z-index: 60;
     min-width: 190px; background: var(--hg-surface); border: 1px solid var(--hg-border);
     border-radius: var(--hg-radius-sm); box-shadow: var(--hg-shadow-md);
-    padding: 6px; display: none; flex-direction: column; gap: 2px;
+    padding: 6px;
 }
-.hg-cuenta.is-open .hg-cuenta-menu { display: flex; }
-.hg-cuenta-menu a {
+.hg-cuenta-menu .dropdown-item {
     display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: var(--hg-radius-sm);
-    font-size: .9rem; color: var(--hg-ink); text-decoration: none; transition: background-color .15s ease;
+    font-size: .9rem; color: var(--hg-ink);
 }
-.hg-cuenta-menu a:hover { background: var(--hg-bg); }
-
-@media (max-width: 680px) {
-    .hg-cuenta-menu { right: 0; left: auto; }
-    .hg-avatar-trigger__nombre { max-width: 88px; }
-}
+.hg-cuenta-menu .dropdown-item:hover, .hg-cuenta-menu .dropdown-item:focus { background: var(--hg-bg); color: var(--hg-ink); }
 
 /* ---------- Nav del panel interno, con iconos ---------- */
 .hg-panel-nav { display: flex; align-items: center; gap: 2px; flex-wrap: wrap; flex: 1; justify-content: center; }

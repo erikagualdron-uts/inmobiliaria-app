@@ -2,12 +2,10 @@
 <%
     // =========================================================================
     // Avatar de cuenta para un usuario con sesion iniciada: circulo con la
-    // inicial del nombre + nombre y apellido. Al hacer clic despliega un
-    // recuadro simple (NO un modal de Bootstrap) con "Mi panel" y "Cerrar
-    // sesion". Se implementa con JS propio (ver assets/js/main.js), sin
-    // backdrop ni libreria de modales, para evitar que quede atrapado
-    // dentro de contenedores con overflow:hidden (como el menu movil
-    // colapsable), que es lo que rompia la version anterior.
+    // inicial del primer nombre + primer nombre y primer apellido (nunca una
+    // foto). El desplegable usa el componente nativo de Bootstrap
+    // (data-bs-toggle="dropdown"), por lo que la pagina que incluye este
+    // JSPF debe cargar bootstrap.bundle.min.js (ver jspf/scripts-panel.jspf).
     //
     // Se apoya UNICAMENTE en atributos de sesion (nombreUsuario,
     // apellidosUsuario, roles), cacheados por login.jsp y refrescados por
@@ -19,10 +17,15 @@
     @SuppressWarnings("unchecked")
     java.util.List<String> hgAvRoles = (java.util.List<String>) session.getAttribute("roles");
 
-    String hgAvNombreCompleto = hgAvNombre != null
-            ? (hgAvApellidos != null && !hgAvApellidos.isEmpty() ? hgAvNombre + " " + hgAvApellidos : hgAvNombre)
+    String hgAvPrimerNombre = (hgAvNombre != null && !hgAvNombre.trim().isEmpty())
+            ? hgAvNombre.trim().split("\\s+")[0] : "";
+    String hgAvPrimerApellido = (hgAvApellidos != null && !hgAvApellidos.trim().isEmpty())
+            ? hgAvApellidos.trim().split("\\s+")[0] : "";
+
+    String hgAvNombreCorto = !hgAvPrimerNombre.isEmpty()
+            ? (!hgAvPrimerApellido.isEmpty() ? hgAvPrimerNombre + " " + hgAvPrimerApellido : hgAvPrimerNombre)
             : "Usuario";
-    String hgAvInicial = (hgAvNombre != null && !hgAvNombre.isEmpty()) ? hgAvNombre.substring(0, 1).toUpperCase() : "?";
+    String hgAvInicial = !hgAvPrimerNombre.isEmpty() ? hgAvPrimerNombre.substring(0, 1).toUpperCase() : "?";
 
     String hgAvPanel = request.getContextPath() + "/cliente/dashboard-cliente.jsp";
     if (hgAvRoles != null && hgAvRoles.contains("Administrador")) {
@@ -31,14 +34,15 @@
         hgAvPanel = request.getContextPath() + "/inmobiliaria/dashboard-inmobiliaria.jsp";
     }
 %>
-<div class="hg-cuenta" id="hg-cuenta">
-    <button type="button" class="hg-avatar-trigger" id="hg-avatar-trigger" aria-haspopup="true" aria-expanded="false">
+<div class="hg-cuenta dropdown" id="hg-cuenta">
+    <button type="button" class="hg-avatar-trigger dropdown-toggle" id="hg-avatar-trigger"
+            data-bs-toggle="dropdown" aria-expanded="false">
         <span class="hg-avatar hg-avatar--inicial"><%= hgAvInicial %></span>
-        <span class="hg-avatar-trigger__nombre"><%= hgAvNombreCompleto %></span>
+        <span class="hg-avatar-trigger__nombre"><%= hgAvNombreCorto %></span>
         <i class="bi bi-chevron-down hg-avatar-trigger__caret"></i>
     </button>
-    <div class="hg-cuenta-menu" role="menu">
-        <a role="menuitem" href="<%= hgAvPanel %>"><i class="bi bi-speedometer2"></i> Mi panel</a>
-        <a role="menuitem" href="<%= request.getContextPath() %>/logout.jsp"><i class="bi bi-box-arrow-right"></i> Cerrar sesion</a>
+    <div class="dropdown-menu dropdown-menu-end hg-cuenta-menu" aria-labelledby="hg-avatar-trigger">
+        <a class="dropdown-item" href="<%= hgAvPanel %>"><i class="bi bi-speedometer2"></i> Mi panel</a>
+        <a class="dropdown-item" href="<%= request.getContextPath() %>/logout.jsp"><i class="bi bi-box-arrow-right"></i> Cerrar sesion</a>
     </div>
 </div>

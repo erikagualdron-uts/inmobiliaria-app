@@ -19,7 +19,7 @@
 
     String correoCuenta = "";
     String nombres = "", apellidos = "", tipoDocumento = "CC", numeroDocumento = "",
-           telefono = "", direccion = "", fotoUrl = "";
+           telefono = "", direccion = "";
 
     if (conexion != null) {
         try (PreparedStatement ps = conexion.prepareStatement("SELECT correo FROM usuario WHERE id_usuario = ?")) {
@@ -29,7 +29,7 @@
 
         if (!"POST".equalsIgnoreCase(request.getMethod())) {
             try (PreparedStatement ps = conexion.prepareStatement(
-                    "SELECT nombres, apellidos, tipo_documento, numero_documento, telefono, direccion, foto_url " +
+                    "SELECT nombres, apellidos, tipo_documento, numero_documento, telefono, direccion " +
                     "FROM perfil WHERE id_usuario = ?")) {
                 ps.setInt(1, idUsuarioSesion);
                 try (ResultSet rs = ps.executeQuery()) {
@@ -40,7 +40,6 @@
                         numeroDocumento = rs.getString("numero_documento");
                         telefono = rs.getString("telefono") != null ? rs.getString("telefono") : "";
                         direccion = rs.getString("direccion") != null ? rs.getString("direccion") : "";
-                        fotoUrl = rs.getString("foto_url") != null ? rs.getString("foto_url") : "";
                     }
                 }
             } catch (Exception ignored) { }
@@ -53,7 +52,6 @@
             numeroDocumento = valor(request.getParameter("numeroDocumento"));
             telefono = valor(request.getParameter("telefono"));
             direccion = valor(request.getParameter("direccion"));
-            fotoUrl = valor(request.getParameter("fotoUrl"));
 
             if (nombres.isEmpty() || !nombres.matches("^[\\p{L} ]{2,80}$")) {
                 errores.add("Ingresa un nombre valido (solo letras, entre 2 y 80 caracteres).");
@@ -73,30 +71,25 @@
             if (direccion.length() > 150) {
                 errores.add("La direccion no puede superar 150 caracteres.");
             }
-            if (!fotoUrl.isEmpty() && !fotoUrl.matches("^https?://.+")) {
-                errores.add("La URL de la foto debe iniciar con http:// o https://.");
-            }
 
             if (errores.isEmpty() && conexion != null) {
                 try (PreparedStatement ps = conexion.prepareStatement(
                         "UPDATE perfil SET nombres=?, apellidos=?, tipo_documento=?, numero_documento=?, " +
-                        "telefono=?, direccion=?, foto_url=? WHERE id_usuario=?")) {
+                        "telefono=?, direccion=? WHERE id_usuario=?")) {
                     ps.setString(1, nombres);
                     ps.setString(2, apellidos);
                     ps.setString(3, tipoDocumento);
                     ps.setString(4, numeroDocumento);
                     if (telefono.isEmpty()) ps.setNull(5, java.sql.Types.VARCHAR); else ps.setString(5, telefono);
                     if (direccion.isEmpty()) ps.setNull(6, java.sql.Types.VARCHAR); else ps.setString(6, direccion);
-                    if (fotoUrl.isEmpty()) ps.setNull(7, java.sql.Types.VARCHAR); else ps.setString(7, fotoUrl);
-                    ps.setInt(8, idUsuarioSesion);
+                    ps.setInt(7, idUsuarioSesion);
                     ps.executeUpdate();
                     guardadoExitoso = true;
 
-                    // El avatar y el modal de cuenta leen estos datos de la sesion; se refrescan.
+                    // El avatar lee estos datos de la sesion; se refrescan.
                     session.setAttribute("nombreUsuario", nombres);
                     session.setAttribute("apellidosUsuario", apellidos);
                     session.setAttribute("telefonoUsuario", telefono.isEmpty() ? null : telefono);
-                    session.setAttribute("fotoUrlUsuario", fotoUrl.isEmpty() ? null : fotoUrl);
                 } catch (SQLException sqlEx) {
                     if ("23000".equals(sqlEx.getSQLState())) {
                         errores.add("Ese numero de documento ya esta registrado por otra cuenta.");
@@ -167,10 +160,6 @@
                     <label for="telefono">Telefono (opcional)</label>
                     <input class="form-control" type="tel" id="telefono" name="telefono" value="<%= telefono %>" maxlength="20">
                 </div>
-                <div class="hg-field">
-                    <label for="fotoUrl">URL de foto de perfil (opcional)</label>
-                    <input class="form-control" type="url" id="fotoUrl" name="fotoUrl" value="<%= fotoUrl %>" maxlength="255" placeholder="https://...">
-                </div>
                 <div class="hg-field hg-field--full">
                     <label for="direccion">Direccion (opcional)</label>
                     <input class="form-control" type="text" id="direccion" name="direccion" value="<%= direccion %>" maxlength="150">
@@ -180,5 +169,6 @@
         </form>
     </div>
 </div>
+<%@ include file="/jspf/scripts-panel.jspf" %>
 </body>
 </html>

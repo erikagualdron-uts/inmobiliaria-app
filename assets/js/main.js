@@ -45,31 +45,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Menu de la cuenta (avatar): recuadro propio simple, sin modal de
-    // Bootstrap ni backdrop. Se abre/cierra alternando una clase; se cierra
-    // al hacer clic afuera o al presionar Escape.
-    var cuenta = document.getElementById('hg-cuenta');
-    if (cuenta) {
-        var cuentaBtn = document.getElementById('hg-avatar-trigger');
-        cuentaBtn.addEventListener('click', function (evt) {
-            evt.stopPropagation();
-            var abierto = cuenta.classList.toggle('is-open');
-            cuentaBtn.setAttribute('aria-expanded', abierto ? 'true' : 'false');
-        });
-        document.addEventListener('click', function (evt) {
-            if (!cuenta.contains(evt.target)) {
-                cuenta.classList.remove('is-open');
-                cuentaBtn.setAttribute('aria-expanded', 'false');
-            }
-        });
-        document.addEventListener('keydown', function (evt) {
-            if (evt.key === 'Escape') {
-                cuenta.classList.remove('is-open');
-                cuentaBtn.setAttribute('aria-expanded', 'false');
-            }
-        });
-    }
-
     // El buscador exige al menos un criterio antes de enviar
     var searchForm = document.getElementById('hg-search-form');
     if (searchForm) {

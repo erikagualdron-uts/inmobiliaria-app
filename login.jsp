@@ -46,15 +46,14 @@
                 } else if ("inactivo".equals(estadoBd)) {
                     errores.add("Tu cuenta esta inactiva. Contacta al administrador.");
                 } else {
-                    String nombreUsuario = null, apellidosUsuario = null, fotoUrlUsuario = null, telefonoUsuario = null;
+                    String nombreUsuario = null, apellidosUsuario = null, telefonoUsuario = null;
                     try (PreparedStatement ps = conexion.prepareStatement(
-                            "SELECT nombres, apellidos, foto_url, telefono FROM perfil WHERE id_usuario = ?")) {
+                            "SELECT nombres, apellidos, telefono FROM perfil WHERE id_usuario = ?")) {
                         ps.setInt(1, idUsuarioBd);
                         try (ResultSet rs = ps.executeQuery()) {
                             if (rs.next()) {
                                 nombreUsuario = rs.getString("nombres");
                                 apellidosUsuario = rs.getString("apellidos");
-                                fotoUrlUsuario = rs.getString("foto_url");
                                 telefonoUsuario = rs.getString("telefono");
                             }
                         }
@@ -70,7 +69,7 @@
                         }
                     }
 
-                    // Se cachean en sesion los datos que muestra el avatar/modal de cuenta,
+                    // Se cachean en sesion los datos que muestra el avatar de cuenta,
                     // para no tener que volver a consultar la base de datos en cada
                     // header.jspf/panel-header.jspf. Se refrescan cuando el cliente edita
                     // su perfil (ver cliente/perfil.jsp).
@@ -78,7 +77,6 @@
                     session.setAttribute("nombreUsuario", nombreUsuario != null ? nombreUsuario : correo);
                     session.setAttribute("apellidosUsuario", apellidosUsuario);
                     session.setAttribute("correoUsuario", correo);
-                    session.setAttribute("fotoUrlUsuario", fotoUrlUsuario);
                     session.setAttribute("telefonoUsuario", telefonoUsuario);
                     session.setAttribute("roles", roles);
 
