@@ -18,6 +18,13 @@
         <div class="hg-panel-topbar__user">
             <% if (hgRolesPanel != null && hgRolesPanel.contains("Inmobiliaria")) { %>
             <a href="<%= request.getContextPath() %>/mis-propiedades.jsp" style="font-size:.9rem; font-weight:600;">Mis propiedades</a>
+            <a href="<%= request.getContextPath() %>/citas-recibidas.jsp" style="font-size:.9rem; font-weight:600;">Citas</a>
+            <a href="<%= request.getContextPath() %>/solicitudes-recibidas.jsp" style="font-size:.9rem; font-weight:600;">Solicitudes</a>
+            <% } %>
+            <% if (hgRolesPanel != null && hgRolesPanel.contains("Cliente")) { %>
+            <a href="<%= request.getContextPath() %>/mis-citas.jsp" style="font-size:.9rem; font-weight:600;">Mis citas</a>
+            <a href="<%= request.getContextPath() %>/mis-solicitudes.jsp" style="font-size:.9rem; font-weight:600;">Mis solicitudes</a>
+            <a href="<%= request.getContextPath() %>/favoritos.jsp" style="font-size:.9rem; font-weight:600;">Favoritos</a>
             <% } %>
             <span class="hg-panel-topbar__hello">Hola, <%= hgNombrePanel != null ? hgNombrePanel : "usuario" %></span>
             <% if (hgRolesPanel != null && !hgRolesPanel.isEmpty()) { %>

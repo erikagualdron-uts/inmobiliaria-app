@@ -48,15 +48,15 @@
     </div>
 
     <div class="hg-panel-grid">
-        <div class="hg-panel-stat"><strong><%= totalCitas %></strong><span>Citas agendadas</span></div>
-        <div class="hg-panel-stat"><strong><%= totalSolicitudes %></strong><span>Solicitudes radicadas</span></div>
-        <div class="hg-panel-stat"><strong><%= totalFavoritos %></strong><span>Propiedades favoritas</span></div>
+        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/mis-citas.jsp" style="display:block; text-decoration:none;"><strong><%= totalCitas %></strong><span>Citas agendadas</span></a>
+        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/mis-solicitudes.jsp" style="display:block; text-decoration:none;"><strong><%= totalSolicitudes %></strong><span>Solicitudes radicadas</span></a>
+        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/favoritos.jsp" style="display:block; text-decoration:none;"><strong><%= totalFavoritos %></strong><span>Propiedades favoritas</span></a>
     </div>
 
     <div class="hg-panel-card">
         <div class="hg-panel-empty">
             <div class="hg-panel-empty__icon">🚧</div>
-            <p><strong>Proximamente:</strong> catalogo con filtros, agendamiento de citas, radicacion de documentos y edicion de tu perfil directamente desde este panel.</p>
+            <p><strong>Proximamente:</strong> edicion de tu perfil directamente desde este panel.</p>
         </div>
     </div>
 </div>

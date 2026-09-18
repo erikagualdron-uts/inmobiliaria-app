@@ -294,6 +294,11 @@ img { max-width: 100%; display: block; }
 .hg-badge--reservado { background: var(--hg-warn-soft); color: var(--hg-warn); }
 .hg-badge--vendido, .hg-badge--arrendado { background: var(--hg-off-soft); color: var(--hg-off); }
 
+/* Estados de citas, solicitudes y documentos */
+.hg-badge--pendiente, .hg-badge--en_revision { background: var(--hg-warn-soft); color: var(--hg-warn); }
+.hg-badge--confirmada, .hg-badge--aprobada, .hg-badge--aprobado, .hg-badge--realizada { background: var(--hg-ok-soft); color: var(--hg-ok); }
+.hg-badge--rechazada, .hg-badge--rechazado, .hg-badge--cancelada { background: var(--hg-off-soft); color: var(--hg-off); }
+
 .hg-card__body { padding: 18px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
 .hg-card__price { font-family: 'Fraunces', serif; font-size: 1.28rem; color: var(--hg-primary-dark); font-variant-numeric: tabular-nums; }
 .hg-card__title { font-size: 1.02rem; font-weight: 600; }

@@ -222,6 +222,7 @@
                         </button>
                     </form>
                     <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/agendar-cita.jsp?propiedad=<%= idPropiedad %>">Agendar visita</a>
+                    <a class="hg-btn hg-btn--ghost" href="<%= request.getContextPath() %>/radicar-solicitud.jsp?propiedad=<%= idPropiedad %>">Solicitar <%= "venta".equals(operacion) ? "compra" : "arriendo" %></a>
                     <% } else { %>
                     <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/login.jsp">Inicia sesion para agendar una visita</a>
                     <% } %>

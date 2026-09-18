@@ -75,16 +75,9 @@
     </div>
 
     <div class="hg-panel-grid">
-        <div class="hg-panel-stat"><strong><%= totalPropiedades %></strong><span>Propiedades activas</span></div>
-        <div class="hg-panel-stat"><strong><%= citasPendientes %></strong><span>Citas pendientes por atender</span></div>
-        <div class="hg-panel-stat"><strong><%= solicitudesPendientes %></strong><span>Solicitudes por revisar</span></div>
-    </div>
-
-    <div class="hg-panel-card">
-        <div class="hg-panel-empty">
-            <div class="hg-panel-empty__icon">🚧</div>
-            <p><strong>Proximamente:</strong> atender citas y aprobar o rechazar documentacion de solicitudes.</p>
-        </div>
+        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/mis-propiedades.jsp" style="display:block; text-decoration:none;"><strong><%= totalPropiedades %></strong><span>Propiedades activas</span></a>
+        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/citas-recibidas.jsp" style="display:block; text-decoration:none;"><strong><%= citasPendientes %></strong><span>Citas pendientes por atender</span></a>
+        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/solicitudes-recibidas.jsp" style="display:block; text-decoration:none;"><strong><%= solicitudesPendientes %></strong><span>Solicitudes por revisar</span></a>
     </div>
 </div>
 </body>
