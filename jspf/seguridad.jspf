@@ -1,0 +1,37 @@
+<%
+    // =========================================================================
+    // JSPF de seguridad: protege rutas privadas por rol.
+    //
+    // La pagina que incluye este archivo debe declarar, justo ANTES de
+    // incluirlo, un arreglo local llamado "rolesPermitidos" con los nombres
+    // de rol autorizados para esa pagina, por ejemplo:
+    //
+    //     String[] rolesPermitidos = { "Administrador" };
+    //     (incluir este archivo aqui debajo con la directiva JSP "include")
+    //
+    // Si no hay sesion iniciada, o el usuario no tiene ninguno de esos
+    // roles, se le redirige a acceso-denegado.jsp SIN mostrar la pagina
+    // protegida. Esta validacion corre en el servidor: ocultar botones en
+    // la vista no reemplaza este control.
+    // =========================================================================
+
+    Object hgIdUsuarioSesion = session.getAttribute("idUsuario");
+
+    @SuppressWarnings("unchecked")
+    java.util.List<String> hgRolesSesion = (java.util.List<String>) session.getAttribute("roles");
+
+    boolean hgAccesoPermitido = false;
+    if (hgIdUsuarioSesion != null && hgRolesSesion != null) {
+        for (String hgRolRequerido : rolesPermitidos) {
+            if (hgRolesSesion.contains(hgRolRequerido)) {
+                hgAccesoPermitido = true;
+                break;
+            }
+        }
+    }
+
+    if (!hgAccesoPermitido) {
+        response.sendRedirect(request.getContextPath() + "/acceso-denegado.jsp");
+        return;
+    }
+%>

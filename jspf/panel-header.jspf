@@ -1,0 +1,26 @@
+<%
+    // Barra superior para paginas internas ya protegidas por seguridad.jspf.
+    String hgNombrePanel = (String) session.getAttribute("nombreUsuario");
+
+    @SuppressWarnings("unchecked")
+    java.util.List<String> hgRolesPanel = (java.util.List<String>) session.getAttribute("roles");
+%>
+<header class="hg-panel-topbar">
+    <div class="hg-panel-topbar__inner">
+        <a class="hg-brand" href="<%= request.getContextPath() %>/index.jsp">
+            <svg class="hg-brand__mark" width="26" height="26" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M4 15L16 5L28 15" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M7 13V26H25V13" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M13 26V19H19V26" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Hogaria</span>
+        </a>
+        <div class="hg-panel-topbar__user">
+            <span class="hg-panel-topbar__hello">Hola, <%= hgNombrePanel != null ? hgNombrePanel : "usuario" %></span>
+            <% if (hgRolesPanel != null && !hgRolesPanel.isEmpty()) { %>
+            <span class="hg-panel-topbar__role"><%= String.join(" / ", hgRolesPanel) %></span>
+            <% } %>
+            <a class="hg-btn hg-btn--ghost" href="<%= request.getContextPath() %>/logout.jsp">Cerrar sesion</a>
+        </div>
+    </div>
+</header>

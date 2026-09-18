@@ -1,0 +1,55 @@
+<%!
+    // =========================================================================
+    // Utilidades compartidas para los formularios de autenticacion.
+    // Se incluye con la directiva JSP "include" en registro.jsp y login.jsp.
+    // Al ser un include estatico, cada pagina que lo usa recibe su propia
+    // copia de estos metodos privados dentro de su propia clase generada
+    // (no es un DAO ni una clase .java independiente).
+    // =========================================================================
+
+    private static final java.security.SecureRandom HG_RANDOM = new java.security.SecureRandom();
+
+    /** Devuelve el parametro sin espacios sobrantes, o cadena vacia si es nulo. */
+    private static String valor(String s) {
+        return s == null ? "" : s.trim();
+    }
+
+    /** Genera una sal aleatoria de 16 caracteres hexadecimales (8 bytes). */
+    private static String generarSalt() {
+        byte[] bytes = new byte[8];
+        HG_RANDOM.nextBytes(bytes);
+        StringBuilder sb = new StringBuilder();
+        for (byte b : bytes) sb.append(String.format("%02x", b));
+        return sb.toString();
+    }
+
+    /** SHA-256 en hexadecimal minusculas (mismo formato que la funcion SHA2 de MySQL). */
+    private static String sha256Hex(String texto) {
+        try {
+            java.security.MessageDigest md = java.security.MessageDigest.getInstance("SHA-256");
+            byte[] digest = md.digest(texto.getBytes(java.nio.charset.StandardCharsets.UTF_8));
+            StringBuilder sb = new StringBuilder();
+            for (byte b : digest) sb.append(String.format("%02x", b));
+            return sb.toString();
+        } catch (java.security.NoSuchAlgorithmException e) {
+            throw new RuntimeException("SHA-256 no disponible en esta JVM", e);
+        }
+    }
+
+    /** Genera el valor que se guarda en usuario.contrasena_hash: "salt:hash". */
+    private static String generarHashClave(String claveTextoPlano) {
+        String salt = generarSalt();
+        return salt + ":" + sha256Hex(salt + claveTextoPlano);
+    }
+
+    /** Verifica una clave en texto plano contra el "salt:hash" guardado en la base de datos. */
+    private static boolean verificarClave(String claveTextoPlano, String hashAlmacenado) {
+        if (claveTextoPlano == null || hashAlmacenado == null || !hashAlmacenado.contains(":")) {
+            return false;
+        }
+        String[] partes = hashAlmacenado.split(":", 2);
+        String salt = partes[0];
+        String hashEsperado = partes[1];
+        return sha256Hex(salt + claveTextoPlano).equals(hashEsperado);
+    }
+%>
