@@ -133,7 +133,7 @@
         <div class="hg-auth__brand">
             <span class="hg-brand" style="color:var(--hg-primary-dark);">
                 <svg width="26" height="26" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <path d="M4 15L16 5L28 15" stroke="#D9A441" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M4 15L16 5L28 15" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M7 13V26H25V13" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M13 26V19H19V26" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
