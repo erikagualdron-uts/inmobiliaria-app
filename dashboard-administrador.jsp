@@ -44,17 +44,17 @@
     </div>
 
     <div class="hg-panel-grid">
-        <div class="hg-panel-stat"><strong><%= totalUsuarios %></strong><span>Usuarios registrados</span></div>
-        <div class="hg-panel-stat"><strong><%= totalPropiedades %></strong><span>Propiedades activas</span></div>
-        <div class="hg-panel-stat"><strong><%= totalInmobiliarias %></strong><span>Inmobiliarias aliadas</span></div>
-        <div class="hg-panel-stat"><strong><%= solicitudesPendientes %></strong><span>Solicitudes por atender</span></div>
+        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/usuarios.jsp" style="display:block; text-decoration:none;"><strong><%= totalUsuarios %></strong><span>Usuarios registrados</span></a>
+        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/catalogo.jsp" style="display:block; text-decoration:none;"><strong><%= totalPropiedades %></strong><span>Propiedades activas</span></a>
+        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/reportes.jsp" style="display:block; text-decoration:none;"><strong><%= totalInmobiliarias %></strong><span>Inmobiliarias aliadas</span></a>
+        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/reportes.jsp" style="display:block; text-decoration:none;"><strong><%= solicitudesPendientes %></strong><span>Solicitudes por atender</span></a>
     </div>
 
-    <div class="hg-panel-card">
-        <div class="hg-panel-empty">
-            <div class="hg-panel-empty__icon">🚧</div>
-            <p><strong>Proximamente:</strong> gestion de usuarios y roles, activacion/inactivacion de cuentas, parametrizacion de catalogos (ciudades, tipos, caracteristicas) y consulta de auditoria.</p>
-        </div>
+    <div class="hg-panel-card" style="display:flex; gap:14px; flex-wrap:wrap;">
+        <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/reportes.jsp">📊 Ver reportes</a>
+        <a class="hg-btn hg-btn--ghost" href="<%= request.getContextPath() %>/usuarios.jsp">👤 Gestionar usuarios y roles</a>
+        <a class="hg-btn hg-btn--ghost" href="<%= request.getContextPath() %>/catalogos.jsp">🗂️ Parametrizar catalogos</a>
+        <a class="hg-btn hg-btn--ghost" href="<%= request.getContextPath() %>/auditoria.jsp">🗒️ Consultar auditoria</a>
     </div>
 </div>
 </body>
