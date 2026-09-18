@@ -163,7 +163,7 @@
     <% } %>
 
     <div class="hg-panel-card" style="margin-bottom:18px;">
-        <div class="hg-panel-grid" style="margin-bottom:0;">
+        <div class="hg-panel-grid" style="margin-bottom:0; align-items:end;">
             <div class="hg-field">
                 <label for="filtroTexto"><i class="bi bi-search"></i> Buscar por nombre o correo</label>
                 <input class="form-control" type="text" id="filtroTexto" placeholder="Ej. Maria, agente@hogaria.com...">

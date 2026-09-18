@@ -68,7 +68,7 @@
     <% } else { %>
 
     <div class="hg-panel-card" style="margin-bottom:18px;">
-        <div class="hg-panel-grid" style="margin-bottom:0;">
+        <div class="hg-panel-grid" style="margin-bottom:0; align-items:end;">
             <div class="hg-field">
                 <label for="filtroUsuario"><i class="bi bi-search"></i> Buscar por usuario (correo o nombre)</label>
                 <input class="form-control" type="text" id="filtroUsuario" placeholder="Ej. Laura, admin@hogaria.com...">
