@@ -29,7 +29,7 @@
     } catch (java.io.UnsupportedEncodingException ignored) { }
 
     final String hogariaDbUrl =
-        "jdbc:mysql://localhost:3306/hogaria_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=America/Bogota&characterEncoding=UTF-8";
+        "jdbc:mysql://localhost:3306/hogaria_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=America/Bogota&useUnicode=true&characterEncoding=UTF-8";
     final String hogariaDbUsuario = "root";
     final String hogariaDbPassword = "";
 
