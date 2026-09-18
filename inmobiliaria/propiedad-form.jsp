@@ -370,7 +370,7 @@
     <% } %>
 
     <div class="hg-panel-card">
-        <form method="post" enctype="multipart/form-data" action="<%= request.getContextPath() %>/inmobiliaria/propiedad-form.jsp<%= esEdicion ? "?id=" + idPropiedadEdicion : "" %>">
+        <form method="post" enctype="multipart/form-data" action="<%= request.getContextPath() %>/inmobiliaria/propiedad-form.jsp<%= esEdicion ? "?id=" + idPropiedadEdicion : "" %>" class="js-form-cargando">
             <div class="hg-auth__grid" style="margin-bottom:16px;">
                 <div class="hg-field">
                     <label for="matricula">Matricula inmobiliaria</label>

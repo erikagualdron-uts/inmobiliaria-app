@@ -171,7 +171,8 @@
                     <div class="carousel-inner">
                         <% for (int i = 0; i < imagenes.size(); i++) { %>
                         <div class="carousel-item <%= i == 0 ? "active" : "" %>">
-                            <img src="<%= imagenes.get(i).get("url") %>" alt="<%= propiedad.get("titulo") %> - foto <%= i + 1 %>">
+                            <img src="<%= imagenes.get(i).get("url") %>" alt="<%= propiedad.get("titulo") %> - foto <%= i + 1 %>" class="js-abrir-lightbox" data-indice="<%= i %>">
+                            <span class="hg-carousel__zoom"><i class="bi bi-arrows-fullscreen"></i></span>
                         </div>
                         <% } %>
                     </div>
@@ -188,6 +189,36 @@
                         <% } %>
                     </div>
                     <% } %>
+                </div>
+
+                <div class="modal fade hg-lightbox" id="modalLightbox" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                            <div id="carruselLightbox" class="carousel slide" data-bs-ride="false">
+                                <div class="carousel-inner">
+                                    <% for (int i = 0; i < imagenes.size(); i++) { %>
+                                    <div class="carousel-item <%= i == 0 ? "active" : "" %>">
+                                        <img src="<%= imagenes.get(i).get("url") %>" alt="<%= propiedad.get("titulo") %> - foto <%= i + 1 %>">
+                                    </div>
+                                    <% } %>
+                                </div>
+                                <% if (imagenes.size() > 1) { %>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carruselLightbox" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carruselLightbox" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                </button>
+                                <div class="carousel-indicators">
+                                    <% for (int i = 0; i < imagenes.size(); i++) { %>
+                                    <button type="button" data-bs-target="#carruselLightbox" data-bs-slide-to="<%= i %>" class="<%= i == 0 ? "active" : "" %>"></button>
+                                    <% } %>
+                                </div>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <% } %>
             </div>
@@ -210,10 +241,11 @@
 
                 <div class="hg-detalle__acciones">
                     <% if (esClienteAutenticado) { %>
-                    <form method="post" action="<%= request.getContextPath() %>/detalle.jsp?id=<%= idPropiedad %>">
+                    <form method="post" action="<%= request.getContextPath() %>/detalle.jsp?id=<%= idPropiedad %>" id="formFavorito" data-id-propiedad="<%= idPropiedad %>">
                         <input type="hidden" name="accion" value="toggleFavorito">
-                        <button class="hg-btn <%= esFavorito ? "hg-btn--solid" : "hg-btn--ghost" %>" type="submit">
-                            <i class="bi <%= esFavorito ? "bi-heart-fill" : "bi-heart" %>"></i> <%= esFavorito ? "En tus favoritos" : "Guardar en favoritos" %>
+                        <button class="hg-btn <%= esFavorito ? "hg-btn--solid" : "hg-btn--ghost" %>" type="submit" id="btnFavorito" data-favorito="<%= esFavorito %>">
+                            <i class="bi <%= esFavorito ? "bi-heart-fill" : "bi-heart" %>" id="iconoFavorito"></i>
+                            <span id="textoFavorito"><%= esFavorito ? "En tus favoritos" : "Guardar en favoritos" %></span>
                         </button>
                     </form>
                     <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/cliente/agendar-cita.jsp?propiedad=<%= idPropiedad %>"><i class="bi bi-calendar-plus"></i> Agendar visita</a>
@@ -264,5 +296,64 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="<%= request.getContextPath() %>/assets/js/main.js"></script>
+<script>
+(function () {
+    // Favorito: interceptamos el envio del formulario y lo cambiamos por
+    // fetch() al endpoint favorito-toggle.jsp, para no recargar la pagina.
+    // Si el fetch falla (red caida, sesion vencida, etc.) hacemos submit()
+    // normal como respaldo -- el formulario sigue siendo 100% funcional.
+    var formFavorito = document.getElementById('formFavorito');
+    var botonFavorito = document.getElementById('btnFavorito');
+    var iconoFavorito = document.getElementById('iconoFavorito');
+    var textoFavorito = document.getElementById('textoFavorito');
+
+    if (formFavorito && botonFavorito) {
+        formFavorito.addEventListener('submit', function (evt) {
+            evt.preventDefault();
+            if (botonFavorito.disabled) return;
+            botonFavorito.disabled = true;
+
+            var idPropiedad = formFavorito.getAttribute('data-id-propiedad');
+            fetch('<%= request.getContextPath() %>/favorito-toggle.jsp', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'idPropiedad=' + encodeURIComponent(idPropiedad)
+            })
+                .then(function (resp) { if (!resp.ok) throw new Error('fallo'); return resp.json(); })
+                .then(function (datos) {
+                    var esFavorito = !!datos.favorito;
+                    botonFavorito.classList.toggle('hg-btn--solid', esFavorito);
+                    botonFavorito.classList.toggle('hg-btn--ghost', !esFavorito);
+                    botonFavorito.setAttribute('data-favorito', esFavorito);
+                    iconoFavorito.classList.toggle('bi-heart-fill', esFavorito);
+                    iconoFavorito.classList.toggle('bi-heart', !esFavorito);
+                    textoFavorito.textContent = esFavorito ? 'En tus favoritos' : 'Guardar en favoritos';
+                    iconoFavorito.classList.remove('hg-heart-animar');
+                    void iconoFavorito.offsetWidth;
+                    iconoFavorito.classList.add('hg-heart-animar');
+                })
+                .catch(function () { formFavorito.submit(); })
+                .finally(function () { botonFavorito.disabled = false; });
+        });
+    }
+
+    // Lightbox: clic en cualquier foto de la galeria abre el modal en esa
+    // misma diapositiva, con navegacion entre todas las fotos.
+    var modalLightboxEl = document.getElementById('modalLightbox');
+    if (modalLightboxEl && window.bootstrap) {
+        var modalLightbox = new bootstrap.Modal(modalLightboxEl);
+        var carruselLightboxEl = document.getElementById('carruselLightbox');
+        var carruselLightbox = carruselLightboxEl ? bootstrap.Carousel.getOrCreateInstance(carruselLightboxEl) : null;
+
+        document.querySelectorAll('.js-abrir-lightbox').forEach(function (img) {
+            img.addEventListener('click', function () {
+                var indice = parseInt(img.getAttribute('data-indice'), 10) || 0;
+                if (carruselLightbox) carruselLightbox.to(indice);
+                modalLightbox.show();
+            });
+        });
+    }
+})();
+</script>
 </body>
 </html>

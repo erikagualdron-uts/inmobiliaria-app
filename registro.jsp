@@ -160,7 +160,7 @@
             </div>
             <% } %>
 
-            <form method="post" action="<%= request.getContextPath() %>/registro.jsp" novalidate>
+            <form method="post" action="<%= request.getContextPath() %>/registro.jsp" novalidate class="js-form-cargando">
                 <div class="hg-auth__grid">
                     <div class="hg-field">
                         <label for="nombres">Nombres</label>

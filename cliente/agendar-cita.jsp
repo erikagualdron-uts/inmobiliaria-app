@@ -120,7 +120,7 @@
         <% } %>
 
         <div class="hg-panel-card">
-            <form method="post" action="<%= request.getContextPath() %>/cliente/agendar-cita.jsp?propiedad=<%= idPropiedad %>" style="display:flex; flex-direction:column; gap:16px;">
+            <form method="post" action="<%= request.getContextPath() %>/cliente/agendar-cita.jsp?propiedad=<%= idPropiedad %>" style="display:flex; flex-direction:column; gap:16px;" class="js-form-cargando">
                 <div class="hg-field">
                     <label for="fecha">Fecha</label>
                     <input class="form-control" type="date" id="fecha" name="fecha" value="<%= fecha %>" required>

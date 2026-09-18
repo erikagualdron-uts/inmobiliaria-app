@@ -138,7 +138,7 @@
         </div>
         <% } %>
 
-        <form method="post" action="<%= request.getContextPath() %>/login.jsp" novalidate>
+        <form method="post" action="<%= request.getContextPath() %>/login.jsp" novalidate class="js-form-cargando">
             <div class="hg-field">
                 <label for="correo">Correo electronico</label>
                 <input class="form-control" type="email" id="correo" name="correo" value="<%= correo %>" required>

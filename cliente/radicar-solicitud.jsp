@@ -103,7 +103,7 @@
         <% } %>
 
         <div class="hg-panel-card">
-            <form method="post" action="<%= request.getContextPath() %>/cliente/radicar-solicitud.jsp?propiedad=<%= idPropiedad %>" style="display:flex; flex-direction:column; gap:16px;">
+            <form method="post" action="<%= request.getContextPath() %>/cliente/radicar-solicitud.jsp?propiedad=<%= idPropiedad %>" style="display:flex; flex-direction:column; gap:16px;" class="js-form-cargando">
                 <div class="hg-field">
                     <label for="tipoSolicitud">Tipo de solicitud</label>
                     <select class="form-select" id="tipoSolicitud" name="tipoSolicitud">

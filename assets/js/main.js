@@ -60,4 +60,51 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
+
+    // Convierte el banner de exito ya renderizado (patron Post/Redirect/Get)
+    // en una notificacion flotante tipo toast que se autodescarta, en vez de
+    // quedar fijo arriba del contenido. Los banners de error con listas de
+    // validacion se dejan como estan: el usuario necesita verlos mientras
+    // corrige el formulario debajo, asi que no conviene que desaparezcan solos.
+    var alertaExito = document.querySelector('.hg-alert--success');
+    if (alertaExito) {
+        var contenedorToasts = document.createElement('div');
+        contenedorToasts.className = 'hg-toast-container';
+        document.body.appendChild(contenedorToasts);
+
+        var toast = document.createElement('div');
+        toast.className = 'hg-toast';
+        toast.setAttribute('role', 'status');
+        toast.innerHTML =
+            '<i class="bi bi-check-circle-fill hg-toast__icon"></i>' +
+            '<span class="hg-toast__texto"></span>' +
+            '<button type="button" class="hg-toast__cerrar" aria-label="Cerrar">&times;</button>';
+        toast.querySelector('.hg-toast__texto').textContent = alertaExito.textContent.trim();
+        contenedorToasts.appendChild(toast);
+        alertaExito.remove();
+
+        var cerrarToast = function () {
+            toast.classList.add('is-leaving');
+            toast.addEventListener('animationend', function () { toast.remove(); }, { once: true });
+        };
+        var temporizadorToast = setTimeout(cerrarToast, 4500);
+        toast.querySelector('.hg-toast__cerrar').addEventListener('click', function () {
+            clearTimeout(temporizadorToast);
+            cerrarToast();
+        });
+    }
+
+    // Botones con estado de carga: al enviar un formulario marcado con
+    // "js-form-cargando", su boton de submit se deshabilita y muestra un
+    // spinner mientras procesa, para evitar el doble envio. Se dispara en
+    // el evento "submit" real, que solo ocurre si ya paso la validacion
+    // HTML5 del formulario.
+    document.querySelectorAll('form.js-form-cargando').forEach(function (form) {
+        form.addEventListener('submit', function () {
+            var boton = form.querySelector('button[type="submit"]');
+            if (!boton || boton.disabled) return;
+            boton.disabled = true;
+            boton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Procesando...';
+        });
+    });
 });
