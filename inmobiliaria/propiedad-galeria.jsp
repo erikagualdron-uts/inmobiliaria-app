@@ -211,7 +211,7 @@
                     <button class="hg-btn hg-btn--ghost hg-btn--sm" type="submit"><i class="bi bi-star-fill"></i> Hacer principal</button>
                 </form>
                 <% } else { %><span></span><% } %>
-                <form method="post" action="<%= request.getContextPath() %>/inmobiliaria/propiedad-galeria.jsp?id=<%= idPropiedad %>">
+                <form method="post" action="<%= request.getContextPath() %>/inmobiliaria/propiedad-galeria.jsp?id=<%= idPropiedad %>" data-confirmar="¿Eliminar esta foto? No podrás deshacer esta acción.">
                     <input type="hidden" name="accion" value="eliminar">
                     <input type="hidden" name="idImagen" value="<%= img.get("id") %>">
                     <button class="hg-btn hg-btn--ghost hg-btn--sm" type="submit" style="color:var(--hg-off);"><i class="bi bi-trash3"></i> Eliminar</button>

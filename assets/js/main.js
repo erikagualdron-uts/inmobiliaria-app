@@ -1,4 +1,61 @@
 // Hogaria - interacciones ligeras del front-end (sin dependencias externas)
+
+// Modal de confirmacion generico (reemplaza confirm() del navegador) para
+// acciones irreversibles. Devuelve una promesa que resuelve true/false segun
+// lo que elija el usuario. Se expone en window por si alguna pagina necesita
+// llamarlo directamente ademas del cableado automatico de mas abajo.
+function hgConfirmar(mensaje) {
+    return new Promise(function (resolve) {
+        var backdrop = document.createElement('div');
+        backdrop.className = 'hg-modal-backdrop';
+
+        var modal = document.createElement('div');
+        modal.className = 'hg-modal';
+        modal.setAttribute('role', 'alertdialog');
+        modal.setAttribute('aria-modal', 'true');
+        modal.setAttribute('aria-labelledby', 'hgModalTitulo');
+        modal.innerHTML =
+            '<div class="hg-modal__icono"><i class="bi bi-exclamation-triangle-fill"></i></div>' +
+            '<h3 id="hgModalTitulo">Confirmar acción</h3>' +
+            '<p></p>' +
+            '<div class="hg-modal__acciones">' +
+            '<button type="button" class="hg-btn hg-btn--ghost" data-hg-cancelar>Cancelar</button>' +
+            '<button type="button" class="hg-btn hg-btn--peligro" data-hg-confirmar>Sí, continuar</button>' +
+            '</div>';
+        modal.querySelector('p').textContent = mensaje;
+        backdrop.appendChild(modal);
+        document.body.appendChild(backdrop);
+
+        var focoPrevio = document.activeElement;
+
+        function alEscape(evt) {
+            if (evt.key === 'Escape') cerrar(false);
+        }
+
+        function cerrar(resultado) {
+            document.removeEventListener('keydown', alEscape);
+            backdrop.classList.add('is-leaving');
+            backdrop.addEventListener('animationend', function () {
+                backdrop.remove();
+                if (focoPrevio && typeof focoPrevio.focus === 'function') focoPrevio.focus();
+            }, { once: true });
+            resolve(resultado);
+        }
+
+        backdrop.addEventListener('click', function (evt) {
+            if (evt.target === backdrop) cerrar(false);
+        });
+        modal.querySelector('[data-hg-cancelar]').addEventListener('click', function () { cerrar(false); });
+        modal.querySelector('[data-hg-confirmar]').addEventListener('click', function () { cerrar(true); });
+        document.addEventListener('keydown', alEscape);
+
+        // El foco por defecto queda en "Cancelar": si el usuario presiona
+        // Enter sin querer, no dispara la accion destructiva.
+        modal.querySelector('[data-hg-cancelar]').focus();
+    });
+}
+window.hgConfirmar = hgConfirmar;
+
 document.addEventListener('DOMContentLoaded', function () {
 
     // Sombra en el navbar al hacer scroll
@@ -105,6 +162,34 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!boton || boton.disabled) return;
             boton.disabled = true;
             boton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Procesando...';
+        });
+    });
+
+    // Confirmacion antes de acciones irreversibles: cualquier <form> con
+    // data-confirmar="mensaje" pausa su envio y muestra el modal; solo se
+    // envia de verdad si el usuario confirma. data-confirmar-si="campo:valor"
+    // es opcional y limita la confirmacion a cuando ese campo del formulario
+    // tiene ese valor exacto (ej. solo confirmar si el estado elegido es
+    // "bloqueado", pero no para los demas cambios del mismo formulario).
+    document.querySelectorAll('form[data-confirmar]').forEach(function (form) {
+        form.addEventListener('submit', function (evt) {
+            if (form.dataset.hgConfirmado === '1') { return; }
+
+            var condicion = form.getAttribute('data-confirmar-si');
+            if (condicion) {
+                var partes = condicion.split(':');
+                var campo = form.elements.namedItem(partes[0]);
+                var valorActual = campo ? campo.value : null;
+                if (valorActual !== partes[1]) { return; }
+            }
+
+            evt.preventDefault();
+            hgConfirmar(form.getAttribute('data-confirmar')).then(function (confirmado) {
+                if (confirmado) {
+                    form.dataset.hgConfirmado = '1';
+                    if (form.requestSubmit) form.requestSubmit(); else form.submit();
+                }
+            });
         });
     });
 });

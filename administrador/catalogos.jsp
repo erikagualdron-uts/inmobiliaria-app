@@ -155,7 +155,7 @@
                 <% for (Map<String, Object> c : ciudades) { %>
                 <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px dashed var(--hg-border); font-size:.9rem;">
                     <span><%= c.get("nombre") %> <span style="color:var(--hg-ink-muted);">(<%= c.get("extra") %>)</span></span>
-                    <form method="post" action="<%= request.getContextPath() %>/administrador/catalogos.jsp">
+                    <form method="post" action="<%= request.getContextPath() %>/administrador/catalogos.jsp" data-confirmar="¿Eliminar la ciudad &quot;<%= c.get("nombre") %>&quot;? Si hay propiedades en esa ciudad, no se podrá eliminar.">
                         <input type="hidden" name="accion" value="eliminarCiudad">
                         <input type="hidden" name="id" value="<%= c.get("id") %>">
                         <button class="hg-btn hg-btn--ghost hg-btn--sm" type="submit" style="color:var(--hg-off);"><i class="bi bi-trash3"></i> Eliminar</button>
@@ -177,7 +177,7 @@
                 <% for (Map<String, Object> t : tipos) { %>
                 <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px dashed var(--hg-border); font-size:.9rem;">
                     <span><%= t.get("nombre") %></span>
-                    <form method="post" action="<%= request.getContextPath() %>/administrador/catalogos.jsp">
+                    <form method="post" action="<%= request.getContextPath() %>/administrador/catalogos.jsp" data-confirmar="¿Eliminar el tipo &quot;<%= t.get("nombre") %>&quot;? Si hay propiedades de este tipo, no se podrá eliminar.">
                         <input type="hidden" name="accion" value="eliminarTipo">
                         <input type="hidden" name="id" value="<%= t.get("id") %>">
                         <button class="hg-btn hg-btn--ghost hg-btn--sm" type="submit" style="color:var(--hg-off);"><i class="bi bi-trash3"></i> Eliminar</button>
@@ -199,7 +199,7 @@
                 <% for (Map<String, Object> car : caracteristicas) { %>
                 <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px dashed var(--hg-border); font-size:.9rem;">
                     <span><%= car.get("nombre") %></span>
-                    <form method="post" action="<%= request.getContextPath() %>/administrador/catalogos.jsp">
+                    <form method="post" action="<%= request.getContextPath() %>/administrador/catalogos.jsp" data-confirmar="¿Eliminar la característica &quot;<%= car.get("nombre") %>&quot;? Si alguna propiedad la tiene asignada, no se podrá eliminar.">
                         <input type="hidden" name="accion" value="eliminarCaracteristica">
                         <input type="hidden" name="id" value="<%= car.get("id") %>">
                         <button class="hg-btn hg-btn--ghost hg-btn--sm" type="submit" style="color:var(--hg-off);"><i class="bi bi-trash3"></i> Eliminar</button>

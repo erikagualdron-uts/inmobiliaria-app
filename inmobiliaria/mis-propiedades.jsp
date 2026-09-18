@@ -162,7 +162,7 @@
                             <a class="hg-btn hg-btn--ghost hg-btn--sm" href="<%= request.getContextPath() %>/detalle.jsp?id=<%= p.get("id") %>" target="_blank"><i class="bi bi-eye"></i> Ver ficha</a>
                             <a class="hg-btn hg-btn--ghost hg-btn--sm" href="<%= request.getContextPath() %>/inmobiliaria/propiedad-form.jsp?id=<%= p.get("id") %>"><i class="bi bi-pencil"></i> Editar</a>
                             <a class="hg-btn hg-btn--ghost hg-btn--sm" href="<%= request.getContextPath() %>/inmobiliaria/propiedad-galeria.jsp?id=<%= p.get("id") %>"><i class="bi bi-images"></i> Galería</a>
-                            <form method="post" action="<%= request.getContextPath() %>/inmobiliaria/mis-propiedades.jsp">
+                            <form method="post" action="<%= request.getContextPath() %>/inmobiliaria/mis-propiedades.jsp" <%= activo ? "data-confirmar=\"¿Dar de baja esta propiedad? Dejará de mostrarse en el catálogo público hasta que la reactives.\"" : "" %>>
                                 <input type="hidden" name="accion" value="toggleActivo">
                                 <input type="hidden" name="idPropiedad" value="<%= p.get("id") %>">
                                 <button class="hg-btn hg-btn--sm <%= activo ? "hg-btn--ghost" : "hg-btn--primary" %>" type="submit">

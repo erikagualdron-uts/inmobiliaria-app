@@ -799,3 +799,33 @@ a.hg-panel-stat:hover { transform: translateY(-2px); box-shadow: var(--hg-shadow
     60% { transform: scale(.92); }
     100% { transform: scale(1); }
 }
+
+/* =========================================================================
+   Modal de confirmacion (reemplaza confirm() del navegador para acciones
+   irreversibles: eliminar, rechazar, bloquear, dar de baja, cancelar)
+   ========================================================================= */
+.hg-modal-backdrop {
+    position: fixed; inset: 0; background: rgba(28, 35, 33, .55);
+    display: flex; align-items: center; justify-content: center; z-index: 3000; padding: 20px;
+    opacity: 0; animation: hg-modal-backdrop-in .15s ease forwards;
+}
+.hg-modal-backdrop.is-leaving { animation: hg-modal-backdrop-out .15s ease forwards; }
+.hg-modal {
+    background: var(--hg-surface); border-radius: var(--hg-radius); box-shadow: var(--hg-shadow-md);
+    padding: 28px; max-width: 420px; width: 100%;
+    transform: translateY(10px) scale(.98); opacity: 0;
+    animation: hg-modal-in .18s ease forwards;
+}
+.hg-modal__icono {
+    width: 46px; height: 46px; border-radius: 50%; margin-bottom: 14px;
+    background: var(--hg-off-soft); color: var(--hg-off);
+    display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
+}
+.hg-modal h3 { font-size: 1.1rem; margin-bottom: 8px; }
+.hg-modal p { color: var(--hg-ink-muted); font-size: .92rem; margin-bottom: 24px; }
+.hg-modal__acciones { display: flex; justify-content: flex-end; gap: 10px; flex-wrap: wrap; }
+.hg-btn--peligro { background: var(--hg-off); color: #fff; }
+.hg-btn--peligro:hover { filter: brightness(.92); transform: translateY(-1px); box-shadow: var(--hg-shadow-sm); }
+@keyframes hg-modal-backdrop-in { to { opacity: 1; } }
+@keyframes hg-modal-backdrop-out { to { opacity: 0; } }
+@keyframes hg-modal-in { to { transform: translateY(0) scale(1); opacity: 1; } }

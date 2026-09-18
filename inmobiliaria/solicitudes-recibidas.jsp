@@ -181,7 +181,7 @@
                             <input type="hidden" name="accion" value="aprobarDocumento"><input type="hidden" name="idDocumento" value="<%= d.get("id") %>">
                             <button class="hg-btn hg-btn--ghost hg-btn--sm" type="submit"><i class="bi bi-check-lg"></i> Aprobar</button>
                         </form>
-                        <form method="post" action="<%= request.getContextPath() %>/inmobiliaria/solicitudes-recibidas.jsp" style="display:inline;">
+                        <form method="post" action="<%= request.getContextPath() %>/inmobiliaria/solicitudes-recibidas.jsp" style="display:inline;" data-confirmar="¿Rechazar este documento? El cliente tendrá que volver a radicarlo.">
                             <input type="hidden" name="accion" value="rechazarDocumento"><input type="hidden" name="idDocumento" value="<%= d.get("id") %>">
                             <button class="hg-btn hg-btn--ghost hg-btn--sm" type="submit" style="color:var(--hg-off);"><i class="bi bi-x-lg"></i> Rechazar</button>
                         </form>
@@ -204,7 +204,7 @@
                     <input type="hidden" name="accion" value="aprobar"><input type="hidden" name="idSolicitud" value="<%= s.get("id") %>">
                     <button class="hg-btn hg-btn--primary hg-btn--lg js-btn-aprobar-solicitud" type="submit" disabled title="Todos los documentos deben estar aprobados antes de aprobar la solicitud"><i class="bi bi-check-circle"></i> Aprobar solicitud</button>
                 </form>
-                <form method="post" action="<%= request.getContextPath() %>/inmobiliaria/solicitudes-recibidas.jsp">
+                <form method="post" action="<%= request.getContextPath() %>/inmobiliaria/solicitudes-recibidas.jsp" data-confirmar="¿Rechazar esta solicitud? El cliente será notificado y no podrás revertirlo desde aquí.">
                     <input type="hidden" name="accion" value="rechazar"><input type="hidden" name="idSolicitud" value="<%= s.get("id") %>">
                     <button class="hg-btn hg-btn--ghost hg-btn--lg" type="submit"><i class="bi bi-x-circle"></i> Rechazar solicitud</button>
                 </form>

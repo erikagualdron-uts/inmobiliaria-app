@@ -106,7 +106,7 @@
                 <div class="hg-mgmt-card__bottom">
                     <span></span>
                     <div class="hg-mgmt-card__acciones">
-                        <form method="post" action="<%= request.getContextPath() %>/cliente/mis-citas.jsp">
+                        <form method="post" action="<%= request.getContextPath() %>/cliente/mis-citas.jsp" data-confirmar="¿Cancelar esta cita? Tendrás que agendar una nueva si cambias de opinión.">
                             <input type="hidden" name="accion" value="cancelar">
                             <input type="hidden" name="idCita" value="<%= c.get("id") %>">
                             <button class="hg-btn hg-btn--ghost hg-btn--sm" type="submit"><i class="bi bi-x-circle"></i> Cancelar</button>

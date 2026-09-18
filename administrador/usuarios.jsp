@@ -231,7 +231,8 @@
                     </span>
                 </summary>
 
-                <form method="post" action="<%= request.getContextPath() %>/administrador/usuarios.jsp" style="margin-top:16px; display:flex; flex-direction:column; gap:14px;">
+                <form method="post" action="<%= request.getContextPath() %>/administrador/usuarios.jsp" style="margin-top:16px; display:flex; flex-direction:column; gap:14px;"
+                        data-confirmar="¿Bloquear esta cuenta? El usuario no podrá iniciar sesión hasta que la reactives." data-confirmar-si="estado:bloqueado">
                     <input type="hidden" name="accion" value="actualizarUsuario">
                     <input type="hidden" name="idUsuario" value="<%= u.get("id") %>">
 
