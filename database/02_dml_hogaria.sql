@@ -91,11 +91,10 @@ INSERT INTO usuario (correo, contrasena_hash, id_inmobiliaria, estado, intentos_
 ('cliente6@gmail.com',             CONCAT('1a7f4c9d2e806b38', ':', SHA2(CONCAT('1a7f4c9d2e806b38','Cliente#2026'),256)), NULL, 'inactivo', 2, '2025-02-06 12:50:00');
 
 -- =====================================================================
--- 7. USUARIO_ROL  (admin tiene 2 roles para evidenciar la relacion N:M)
+-- 7. USUARIO_ROL
 -- =====================================================================
 INSERT INTO usuario_rol (id_usuario, id_rol, fecha_asignacion) VALUES
 (1, 4, '2025-01-06 08:00:00'), -- admin -> Administrador
-(1, 2, '2025-01-06 08:00:00'), -- admin -> tambien Cliente
 (2, 3, '2025-01-07 09:00:00'),
 (3, 3, '2025-01-07 09:15:00'),
 (4, 3, '2025-01-08 09:30:00'),

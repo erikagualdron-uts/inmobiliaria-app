@@ -134,7 +134,7 @@
                     int pct = (int) Math.round(total * 100.0 / maxInmo);
             %>
             <div class="hg-barra">
-                <div class="hg-barra__etiqueta"><%= f.get("etiqueta") %></div>
+                <div class="hg-barra__etiqueta" title="<%= f.get("etiqueta") %>"><%= f.get("etiqueta") %></div>
                 <div class="hg-barra__pista"><div class="hg-barra__relleno" style="width:<%= pct %>%;"></div></div>
                 <div class="hg-barra__valor"><%= total %></div>
             </div>

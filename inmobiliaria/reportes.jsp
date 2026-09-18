@@ -36,6 +36,7 @@
     List<Map<String, Object>> porEstado = new ArrayList<>();
     List<Map<String, Object>> solicitudesPorTipo = new ArrayList<>();
     List<Map<String, Object>> cerradas = new ArrayList<>();
+    List<Map<String, Object>> sinCitas = new ArrayList<>();
 
     if (conexion != null && idInmobiliaria != null) {
         try (PreparedStatement ps = conexion.prepareStatement(
@@ -105,6 +106,26 @@
                     f.put("ciudad", rs.getString("nombre_ciudad"));
                     f.put("tipo", rs.getString("nombre_tipo"));
                     cerradas.add(f);
+                }
+            }
+        } catch (Exception ignored) { }
+
+        try (PreparedStatement ps = conexion.prepareStatement(
+                "SELECT p.titulo, c.nombre_ciudad, t.nombre_tipo " +
+                "FROM propiedad p " +
+                "LEFT JOIN cita ci ON ci.id_propiedad = p.id_propiedad " +
+                "INNER JOIN ciudad c ON c.id_ciudad = p.id_ciudad " +
+                "INNER JOIN tipo_propiedad t ON t.id_tipo = p.id_tipo " +
+                "WHERE p.id_inmobiliaria = ? AND ci.id_cita IS NULL " +
+                "ORDER BY p.titulo")) {
+            ps.setInt(1, idInmobiliaria);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Map<String, Object> f = new LinkedHashMap<>();
+                    f.put("titulo", rs.getString("titulo"));
+                    f.put("ciudad", rs.getString("nombre_ciudad"));
+                    f.put("tipo", rs.getString("nombre_tipo"));
+                    sinCitas.add(f);
                 }
             }
         } catch (Exception ignored) { }
@@ -180,6 +201,23 @@
                 <div class="hg-barra__valor"><%= total %></div>
             </div>
             <% } } %>
+        </div>
+
+        <div class="hg-panel-card">
+            <h3>Propiedades sin citas agendadas</h3>
+            <p class="hg-reporte-nota">LEFT JOIN sobre propiedad &middot; cita</p>
+            <% if (sinCitas.isEmpty()) { %>
+            <p class="hg-panel-empty" style="padding:20px 0;">Todas tus propiedades tienen al menos una cita agendada.</p>
+            <% } else { %>
+            <div style="max-height:220px; overflow-y:auto;">
+                <% for (Map<String, Object> f : sinCitas) { %>
+                <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; padding:8px 0; border-bottom:1px dashed var(--hg-border); font-size:.86rem;">
+                    <span><%= f.get("titulo") %></span>
+                    <span style="color:var(--hg-ink-muted); font-size:.8rem; white-space:nowrap;"><%= f.get("ciudad") %> &middot; <%= f.get("tipo") %></span>
+                </div>
+                <% } %>
+            </div>
+            <% } %>
         </div>
     </div>
 
