@@ -63,10 +63,15 @@
 <%@ include file="/jspf/panel-header.jspf" %>
 
 <div class="hg-panel-body">
-    <div class="hg-panel-hero">
-        <span class="hg-eyebrow">Panel de inmobiliaria</span>
-        <h1>Hola, <%= session.getAttribute("nombreUsuario") %></h1>
-        <p><% if (nombreInmobiliaria != null) { %>Agente de <strong><%= nombreInmobiliaria %></strong>.<% } else { %>Tu cuenta aun no esta asociada a ninguna inmobiliaria; contacta al administrador.<% } %></p>
+    <div class="hg-panel-hero" style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:16px;">
+        <div>
+            <span class="hg-eyebrow">Panel de inmobiliaria</span>
+            <h1>Hola, <%= session.getAttribute("nombreUsuario") %></h1>
+            <p><% if (nombreInmobiliaria != null) { %>Agente de <strong><%= nombreInmobiliaria %></strong>.<% } else { %>Tu cuenta aun no esta asociada a ninguna inmobiliaria; contacta al administrador.<% } %></p>
+        </div>
+        <% if (nombreInmobiliaria != null) { %>
+        <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/mis-propiedades.jsp">Gestionar mis propiedades</a>
+        <% } %>
     </div>
 
     <div class="hg-panel-grid">
@@ -78,7 +83,7 @@
     <div class="hg-panel-card">
         <div class="hg-panel-empty">
             <div class="hg-panel-empty__icon">🚧</div>
-            <p><strong>Proximamente:</strong> publicar y editar propiedades, administrar la galeria de imagenes y caracteristicas, atender citas y aprobar o rechazar documentacion.</p>
+            <p><strong>Proximamente:</strong> atender citas y aprobar o rechazar documentacion de solicitudes.</p>
         </div>
     </div>
 </div>

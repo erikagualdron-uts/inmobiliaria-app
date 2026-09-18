@@ -531,3 +531,28 @@ img { max-width: 100%; display: block; }
 @media (max-width: 900px) {
     .hg-detalle, .hg-detalle__cuerpo { grid-template-columns: 1fr; }
 }
+
+/* =========================================================================
+   CRUD de propiedades (panel de inmobiliaria)
+   ========================================================================= */
+.hg-btn--sm { padding: 6px 14px; font-size: .82rem; }
+
+.hg-tabla { width: 100%; border-collapse: collapse; font-size: .92rem; }
+.hg-tabla th, .hg-tabla td { padding: 14px 16px; text-align: left; border-bottom: 1px solid var(--hg-border); vertical-align: middle; }
+.hg-tabla th { font-size: .7rem; text-transform: uppercase; letter-spacing: .05em; color: var(--hg-ink-muted); background: var(--hg-bg); white-space: nowrap; }
+.hg-tabla tr:last-child td { border-bottom: none; }
+.hg-tabla__acciones { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+
+.hg-checkbox {
+    display: inline-flex; align-items: center; gap: 7px; font-size: .88rem;
+    background: var(--hg-bg); border: 1px solid var(--hg-border);
+    padding: 8px 14px; border-radius: 999px; margin: 0 8px 8px 0; cursor: pointer;
+}
+.hg-checkbox input { accent-color: var(--hg-primary); }
+
+.hg-galeria-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.hg-galeria-item { position: relative; border-radius: var(--hg-radius-sm); overflow: hidden; border: 1px solid var(--hg-border); background: var(--hg-surface); }
+.hg-galeria-item img { width: 100%; aspect-ratio: 4/3; object-fit: cover; }
+.hg-galeria-item__bar { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; gap: 6px; }
+.hg-galeria-item__principal { position: absolute; top: 8px; left: 8px; background: var(--hg-accent); color: var(--hg-primary-dark); font-size: .68rem; font-weight: 700; padding: 3px 8px; border-radius: 999px; text-transform: uppercase; }
+.hg-galeria-item form { display: inline-flex; margin: 0; }

@@ -16,6 +16,9 @@
             <span>Hogaria</span>
         </a>
         <div class="hg-panel-topbar__user">
+            <% if (hgRolesPanel != null && hgRolesPanel.contains("Inmobiliaria")) { %>
+            <a href="<%= request.getContextPath() %>/mis-propiedades.jsp" style="font-size:.9rem; font-weight:600;">Mis propiedades</a>
+            <% } %>
             <span class="hg-panel-topbar__hello">Hola, <%= hgNombrePanel != null ? hgNombrePanel : "usuario" %></span>
             <% if (hgRolesPanel != null && !hgRolesPanel.isEmpty()) { %>
             <span class="hg-panel-topbar__role"><%= String.join(" / ", hgRolesPanel) %></span>

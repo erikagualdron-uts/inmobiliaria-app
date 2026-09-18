@@ -1,0 +1,411 @@
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
+<%@ page import="java.sql.PreparedStatement, java.sql.ResultSet, java.sql.SQLException, java.sql.Statement, java.sql.Types" %>
+<%@ page import="java.math.BigDecimal" %>
+<%@ page import="java.util.ArrayList, java.util.List, java.util.Map, java.util.LinkedHashMap, java.util.HashSet, java.util.Set" %>
+<%
+    String[] rolesPermitidos = { "Inmobiliaria" };
+%>
+<%@ include file="/jspf/seguridad.jspf" %>
+<%@ include file="/jspf/conexion.jspf" %>
+<%
+    // =========================================================================
+    // Alta y edicion de propiedades. Sin "id" en la query string se crea una
+    // propiedad nueva; con "id" se edita, siempre que pertenezca a la
+    // inmobiliaria del agente en sesion.
+    // =========================================================================
+    int idUsuarioSesion = (Integer) session.getAttribute("idUsuario");
+    Integer idInmobiliaria = null;
+
+    if (conexion != null) {
+        try (PreparedStatement ps = conexion.prepareStatement("SELECT id_inmobiliaria FROM usuario WHERE id_usuario = ?")) {
+            ps.setInt(1, idUsuarioSesion);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    int idIn = rs.getInt(1);
+                    if (!rs.wasNull()) idInmobiliaria = idIn;
+                }
+            }
+        } catch (Exception ignored) { }
+    }
+
+    if (idInmobiliaria == null) {
+        response.sendRedirect(request.getContextPath() + "/mis-propiedades.jsp");
+        return;
+    }
+
+    Integer idPropiedadEdicion = null;
+    try {
+        String idParam = request.getParameter("id");
+        if (idParam != null && !idParam.trim().isEmpty()) idPropiedadEdicion = Integer.valueOf(idParam.trim());
+    } catch (NumberFormatException ignored) { }
+    boolean esEdicion = idPropiedadEdicion != null;
+
+    // Si es edicion, confirmar que la propiedad pertenece a esta inmobiliaria
+    if (esEdicion && conexion != null) {
+        boolean pertenece = false;
+        try (PreparedStatement ps = conexion.prepareStatement(
+                "SELECT 1 FROM propiedad WHERE id_propiedad = ? AND id_inmobiliaria = ?")) {
+            ps.setInt(1, idPropiedadEdicion);
+            ps.setInt(2, idInmobiliaria);
+            try (ResultSet rs = ps.executeQuery()) { pertenece = rs.next(); }
+        } catch (Exception ignored) { }
+        if (!pertenece) {
+            response.sendRedirect(request.getContextPath() + "/acceso-denegado.jsp");
+            return;
+        }
+    }
+
+    List<Map<String, Object>> ciudades = new ArrayList<>();
+    List<Map<String, Object>> tipos = new ArrayList<>();
+    List<Map<String, Object>> caracteristicasCatalogo = new ArrayList<>();
+
+    List<String> errores = new ArrayList<>();
+    boolean guardadoExitoso = false;
+
+    // Valores del formulario (para repoblar si hay errores, o precargar en edicion)
+    String matricula = "", titulo = "", descripcion = "", direccion = "", idCiudad = "", idTipo = "",
+           precio = "", area = "", habitaciones = "", banos = "", parqueaderos = "", operacion = "venta", estado = "disponible";
+    Set<String> caracteristicasSeleccionadas = new HashSet<>();
+
+    if (conexion != null) {
+        try (PreparedStatement ps = conexion.prepareStatement("SELECT id_ciudad, nombre_ciudad FROM ciudad ORDER BY nombre_ciudad");
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Map<String, Object> f = new LinkedHashMap<>();
+                f.put("id", rs.getInt("id_ciudad")); f.put("nombre", rs.getString("nombre_ciudad"));
+                ciudades.add(f);
+            }
+        } catch (Exception ignored) { }
+
+        try (PreparedStatement ps = conexion.prepareStatement("SELECT id_tipo, nombre_tipo FROM tipo_propiedad ORDER BY nombre_tipo");
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Map<String, Object> f = new LinkedHashMap<>();
+                f.put("id", rs.getInt("id_tipo")); f.put("nombre", rs.getString("nombre_tipo"));
+                tipos.add(f);
+            }
+        } catch (Exception ignored) { }
+
+        try (PreparedStatement ps = conexion.prepareStatement("SELECT id_caracteristica, nombre_caracteristica FROM caracteristica ORDER BY nombre_caracteristica");
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Map<String, Object> f = new LinkedHashMap<>();
+                f.put("id", rs.getInt("id_caracteristica")); f.put("nombre", rs.getString("nombre_caracteristica"));
+                caracteristicasCatalogo.add(f);
+            }
+        } catch (Exception ignored) { }
+
+        if (esEdicion && !"POST".equalsIgnoreCase(request.getMethod())) {
+            try (PreparedStatement ps = conexion.prepareStatement(
+                    "SELECT matricula_inmobiliaria, titulo, descripcion, direccion, id_ciudad, id_tipo, precio, area_m2, " +
+                    "       num_habitaciones, num_banos, num_parqueaderos, operacion, estado " +
+                    "FROM propiedad WHERE id_propiedad = ?")) {
+                ps.setInt(1, idPropiedadEdicion);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        matricula = rs.getString("matricula_inmobiliaria");
+                        titulo = rs.getString("titulo");
+                        descripcion = rs.getString("descripcion") != null ? rs.getString("descripcion") : "";
+                        direccion = rs.getString("direccion");
+                        idCiudad = String.valueOf(rs.getInt("id_ciudad"));
+                        idTipo = String.valueOf(rs.getInt("id_tipo"));
+                        precio = rs.getBigDecimal("precio").toPlainString();
+                        area = rs.getBigDecimal("area_m2").toPlainString();
+                        Object hab = rs.getObject("num_habitaciones"); habitaciones = hab != null ? hab.toString() : "";
+                        Object bn = rs.getObject("num_banos"); banos = bn != null ? bn.toString() : "";
+                        Object pq = rs.getObject("num_parqueaderos"); parqueaderos = pq != null ? pq.toString() : "0";
+                        operacion = rs.getString("operacion");
+                        estado = rs.getString("estado");
+                    }
+                }
+            } catch (Exception ignored) { }
+
+            try (PreparedStatement ps = conexion.prepareStatement(
+                    "SELECT id_caracteristica FROM propiedad_caracteristica WHERE id_propiedad = ?")) {
+                ps.setInt(1, idPropiedadEdicion);
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) caracteristicasSeleccionadas.add(String.valueOf(rs.getInt(1)));
+                }
+            } catch (Exception ignored) { }
+        }
+
+        if ("POST".equalsIgnoreCase(request.getMethod())) {
+            matricula = valorSeguro(request.getParameter("matricula"));
+            titulo = valorSeguro(request.getParameter("titulo"));
+            descripcion = valorSeguro(request.getParameter("descripcion"));
+            direccion = valorSeguro(request.getParameter("direccion"));
+            idCiudad = valorSeguro(request.getParameter("idCiudad"));
+            idTipo = valorSeguro(request.getParameter("idTipo"));
+            precio = valorSeguro(request.getParameter("precio"));
+            area = valorSeguro(request.getParameter("area"));
+            habitaciones = valorSeguro(request.getParameter("habitaciones"));
+            banos = valorSeguro(request.getParameter("banos"));
+            parqueaderos = valorSeguro(request.getParameter("parqueaderos"));
+            operacion = valorSeguro(request.getParameter("operacion"));
+            estado = esEdicion ? valorSeguro(request.getParameter("estado")) : "disponible";
+            String[] caracteristicasParam = request.getParameterValues("caracteristicas");
+            caracteristicasSeleccionadas = new HashSet<>();
+            if (caracteristicasParam != null) {
+                for (String c : caracteristicasParam) caracteristicasSeleccionadas.add(c);
+            }
+
+            BigDecimal precioNum = null, areaNum = null;
+            Integer habNum = null, banosNum = null, parqNum = null;
+
+            if (matricula.isEmpty() || !matricula.matches("^[A-Za-z0-9-]{4,30}$")) {
+                errores.add("La matricula inmobiliaria debe tener entre 4 y 30 caracteres (letras, numeros y guiones).");
+            }
+            if (titulo.isEmpty() || titulo.length() < 5 || titulo.length() > 120) {
+                errores.add("El titulo debe tener entre 5 y 120 caracteres.");
+            }
+            if (direccion.isEmpty() || direccion.length() > 150) {
+                errores.add("Ingresa una direccion valida (maximo 150 caracteres).");
+            }
+            if (idCiudad.isEmpty()) errores.add("Selecciona una ciudad.");
+            if (idTipo.isEmpty()) errores.add("Selecciona un tipo de propiedad.");
+            if (!operacion.equals("venta") && !operacion.equals("arriendo")) errores.add("Selecciona una operacion valida.");
+            if (!estado.matches("^(disponible|reservado|vendido|arrendado)$")) errores.add("Selecciona un estado valido.");
+
+            try { precioNum = new BigDecimal(precio); if (precioNum.signum() <= 0) throw new NumberFormatException(); }
+            catch (Exception e) { errores.add("Ingresa un precio valido, mayor a cero."); }
+
+            try { areaNum = new BigDecimal(area); if (areaNum.signum() <= 0) throw new NumberFormatException(); }
+            catch (Exception e) { errores.add("Ingresa un area valida, mayor a cero."); }
+
+            if (!habitaciones.isEmpty()) {
+                try { habNum = Integer.valueOf(habitaciones); if (habNum < 0) throw new NumberFormatException(); }
+                catch (Exception e) { errores.add("El numero de habitaciones no es valido."); }
+            }
+            if (!banos.isEmpty()) {
+                try { banosNum = Integer.valueOf(banos); if (banosNum < 0) throw new NumberFormatException(); }
+                catch (Exception e) { errores.add("El numero de banos no es valido."); }
+            }
+            try { parqNum = parqueaderos.isEmpty() ? 0 : Integer.valueOf(parqueaderos); if (parqNum < 0) throw new NumberFormatException(); }
+            catch (Exception e) { errores.add("El numero de parqueaderos no es valido."); }
+
+            if (errores.isEmpty()) {
+                try {
+                    conexion.setAutoCommit(false);
+                    int idCiudadNum = Integer.parseInt(idCiudad);
+                    int idTipoNum = Integer.parseInt(idTipo);
+                    int idPropiedadFinal;
+
+                    if (esEdicion) {
+                        try (PreparedStatement ps = conexion.prepareStatement(
+                                "UPDATE propiedad SET matricula_inmobiliaria=?, titulo=?, descripcion=?, direccion=?, " +
+                                "id_ciudad=?, id_tipo=?, precio=?, area_m2=?, num_habitaciones=?, num_banos=?, " +
+                                "num_parqueaderos=?, operacion=?, estado=? WHERE id_propiedad=? AND id_inmobiliaria=?")) {
+                            ps.setString(1, matricula);
+                            ps.setString(2, titulo);
+                            if (descripcion.isEmpty()) ps.setNull(3, Types.LONGVARCHAR); else ps.setString(3, descripcion);
+                            ps.setString(4, direccion);
+                            ps.setInt(5, idCiudadNum);
+                            ps.setInt(6, idTipoNum);
+                            ps.setBigDecimal(7, precioNum);
+                            ps.setBigDecimal(8, areaNum);
+                            if (habNum == null) ps.setNull(9, Types.TINYINT); else ps.setInt(9, habNum);
+                            if (banosNum == null) ps.setNull(10, Types.TINYINT); else ps.setInt(10, banosNum);
+                            ps.setInt(11, parqNum);
+                            ps.setString(12, operacion);
+                            ps.setString(13, estado);
+                            ps.setInt(14, idPropiedadEdicion);
+                            ps.setInt(15, idInmobiliaria);
+                            ps.executeUpdate();
+                        }
+                        idPropiedadFinal = idPropiedadEdicion;
+
+                        try (PreparedStatement ps = conexion.prepareStatement(
+                                "DELETE FROM propiedad_caracteristica WHERE id_propiedad = ?")) {
+                            ps.setInt(1, idPropiedadFinal);
+                            ps.executeUpdate();
+                        }
+                    } else {
+                        try (PreparedStatement ps = conexion.prepareStatement(
+                                "INSERT INTO propiedad (id_inmobiliaria, id_ciudad, id_tipo, matricula_inmobiliaria, titulo, " +
+                                "descripcion, direccion, precio, area_m2, num_habitaciones, num_banos, num_parqueaderos, " +
+                                "operacion, estado, activo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'disponible', 1)",
+                                Statement.RETURN_GENERATED_KEYS)) {
+                            ps.setInt(1, idInmobiliaria);
+                            ps.setInt(2, idCiudadNum);
+                            ps.setInt(3, idTipoNum);
+                            ps.setString(4, matricula);
+                            ps.setString(5, titulo);
+                            if (descripcion.isEmpty()) ps.setNull(6, Types.LONGVARCHAR); else ps.setString(6, descripcion);
+                            ps.setString(7, direccion);
+                            ps.setBigDecimal(8, precioNum);
+                            ps.setBigDecimal(9, areaNum);
+                            if (habNum == null) ps.setNull(10, Types.TINYINT); else ps.setInt(10, habNum);
+                            if (banosNum == null) ps.setNull(11, Types.TINYINT); else ps.setInt(11, banosNum);
+                            ps.setInt(12, parqNum);
+                            ps.setString(13, operacion);
+                            ps.executeUpdate();
+                            try (ResultSet keys = ps.getGeneratedKeys()) { keys.next(); idPropiedadFinal = keys.getInt(1); }
+                        }
+                    }
+
+                    try (PreparedStatement ps = conexion.prepareStatement(
+                            "INSERT INTO propiedad_caracteristica (id_propiedad, id_caracteristica) VALUES (?, ?)")) {
+                        for (String idCarStr : caracteristicasSeleccionadas) {
+                            ps.setInt(1, idPropiedadFinal);
+                            ps.setInt(2, Integer.parseInt(idCarStr));
+                            ps.addBatch();
+                        }
+                        if (!caracteristicasSeleccionadas.isEmpty()) ps.executeBatch();
+                    }
+
+                    conexion.commit();
+                    guardadoExitoso = true;
+
+                    try { conexion.close(); } catch (Exception ignored) { }
+                    if (esEdicion) {
+                        response.sendRedirect(request.getContextPath() + "/mis-propiedades.jsp?actualizado=1");
+                    } else {
+                        response.sendRedirect(request.getContextPath() + "/propiedad-galeria.jsp?id=" + idPropiedadFinal + "&nuevo=1");
+                    }
+                    return;
+
+                } catch (SQLException sqlEx) {
+                    try { conexion.rollback(); } catch (SQLException ignored) { }
+                    String msg = sqlEx.getMessage() != null ? sqlEx.getMessage().toLowerCase() : "";
+                    if ("23000".equals(sqlEx.getSQLState()) && msg.contains("matricula")) {
+                        errores.add("Ya existe una propiedad publicada con esa matricula inmobiliaria.");
+                    } else {
+                        errores.add("No fue posible guardar la propiedad. Intenta nuevamente.");
+                    }
+                } finally {
+                    try { conexion.setAutoCommit(true); } catch (SQLException ignored) { }
+                }
+            }
+        }
+
+        try { if (conexion != null && !conexion.isClosed()) conexion.close(); } catch (Exception ignored) { }
+    }
+%><!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= esEdicion ? "Editar propiedad" : "Publicar propiedad" %> | Hogaria</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/estilos.css">
+</head>
+<body>
+<%@ include file="/jspf/panel-header.jspf" %>
+
+<div class="hg-panel-body" style="max-width:820px;">
+    <div class="hg-panel-hero">
+        <span class="hg-eyebrow">Panel de inmobiliaria</span>
+        <h1><%= esEdicion ? "Editar propiedad" : "Publicar nueva propiedad" %></h1>
+        <p><a href="<%= request.getContextPath() %>/mis-propiedades.jsp">&larr; Volver a mis propiedades</a></p>
+    </div>
+
+    <% if (!errores.isEmpty()) { %>
+    <div class="hg-alert hg-alert--error" style="margin-bottom:20px;">
+        <ul>
+            <% for (String err : errores) { %><li><%= err %></li><% } %>
+        </ul>
+    </div>
+    <% } %>
+
+    <div class="hg-panel-card">
+        <form method="post" action="<%= request.getContextPath() %>/propiedad-form.jsp<%= esEdicion ? "?id=" + idPropiedadEdicion : "" %>">
+            <div class="hg-auth__grid" style="margin-bottom:16px;">
+                <div class="hg-field">
+                    <label for="matricula">Matricula inmobiliaria</label>
+                    <input class="form-control" type="text" id="matricula" name="matricula" value="<%= matricula %>" maxlength="30" required>
+                </div>
+                <div class="hg-field">
+                    <label for="operacion">Operacion</label>
+                    <select class="form-select" id="operacion" name="operacion">
+                        <option value="venta" <%= "venta".equals(operacion) ? "selected" : "" %>>Venta</option>
+                        <option value="arriendo" <%= "arriendo".equals(operacion) ? "selected" : "" %>>Arriendo</option>
+                    </select>
+                </div>
+                <div class="hg-field hg-field--full">
+                    <label for="titulo">Titulo del anuncio</label>
+                    <input class="form-control" type="text" id="titulo" name="titulo" value="<%= titulo %>" maxlength="120" required>
+                </div>
+                <div class="hg-field hg-field--full">
+                    <label for="descripcion">Descripcion</label>
+                    <textarea class="form-control" id="descripcion" name="descripcion" rows="4"><%= descripcion %></textarea>
+                </div>
+                <div class="hg-field hg-field--full">
+                    <label for="direccion">Direccion</label>
+                    <input class="form-control" type="text" id="direccion" name="direccion" value="<%= direccion %>" maxlength="150" required>
+                </div>
+                <div class="hg-field">
+                    <label for="idCiudad">Ciudad</label>
+                    <select class="form-select" id="idCiudad" name="idCiudad" required>
+                        <option value="">Selecciona...</option>
+                        <% for (Map<String, Object> c : ciudades) { %>
+                        <option value="<%= c.get("id") %>" <%= String.valueOf(c.get("id")).equals(idCiudad) ? "selected" : "" %>><%= c.get("nombre") %></option>
+                        <% } %>
+                    </select>
+                </div>
+                <div class="hg-field">
+                    <label for="idTipo">Tipo de propiedad</label>
+                    <select class="form-select" id="idTipo" name="idTipo" required>
+                        <option value="">Selecciona...</option>
+                        <% for (Map<String, Object> t : tipos) { %>
+                        <option value="<%= t.get("id") %>" <%= String.valueOf(t.get("id")).equals(idTipo) ? "selected" : "" %>><%= t.get("nombre") %></option>
+                        <% } %>
+                    </select>
+                </div>
+                <div class="hg-field">
+                    <label for="precio">Precio (COP)</label>
+                    <input class="form-control" type="number" id="precio" name="precio" min="0" step="1000" value="<%= precio %>" required>
+                </div>
+                <div class="hg-field">
+                    <label for="area">Area (m²)</label>
+                    <input class="form-control" type="number" id="area" name="area" min="0" step="0.1" value="<%= area %>" required>
+                </div>
+                <div class="hg-field">
+                    <label for="habitaciones">Habitaciones</label>
+                    <input class="form-control" type="number" id="habitaciones" name="habitaciones" min="0" step="1" value="<%= habitaciones %>">
+                </div>
+                <div class="hg-field">
+                    <label for="banos">Banos</label>
+                    <input class="form-control" type="number" id="banos" name="banos" min="0" step="1" value="<%= banos %>">
+                </div>
+                <div class="hg-field">
+                    <label for="parqueaderos">Parqueaderos</label>
+                    <input class="form-control" type="number" id="parqueaderos" name="parqueaderos" min="0" step="1" value="<%= parqueaderos.isEmpty() ? "0" : parqueaderos %>">
+                </div>
+                <% if (esEdicion) { %>
+                <div class="hg-field">
+                    <label for="estado">Estado comercial</label>
+                    <select class="form-select" id="estado" name="estado">
+                        <option value="disponible" <%= "disponible".equals(estado) ? "selected" : "" %>>Disponible</option>
+                        <option value="reservado" <%= "reservado".equals(estado) ? "selected" : "" %>>Reservado</option>
+                        <option value="vendido" <%= "vendido".equals(estado) ? "selected" : "" %>>Vendido</option>
+                        <option value="arrendado" <%= "arrendado".equals(estado) ? "selected" : "" %>>Arrendado</option>
+                    </select>
+                </div>
+                <% } %>
+            </div>
+
+            <label style="display:block; margin-bottom:8px; font-weight:600; font-size:.9rem;">Caracteristicas</label>
+            <div class="hg-detalle__caracteristicas" style="margin-bottom:24px;">
+                <% for (Map<String, Object> car : caracteristicasCatalogo) {
+                    String idCarStr = String.valueOf(car.get("id"));
+                    boolean marcada = caracteristicasSeleccionadas.contains(idCarStr);
+                %>
+                <label class="hg-checkbox">
+                    <input type="checkbox" name="caracteristicas" value="<%= idCarStr %>" <%= marcada ? "checked" : "" %>>
+                    <%= car.get("nombre") %>
+                </label>
+                <% } %>
+            </div>
+
+            <button class="hg-btn hg-btn--primary" type="submit"><%= esEdicion ? "Guardar cambios" : "Publicar propiedad" %></button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+<%!
+    private String valorSeguro(String s) {
+        return s == null ? "" : s.trim();
+    }
+%>
