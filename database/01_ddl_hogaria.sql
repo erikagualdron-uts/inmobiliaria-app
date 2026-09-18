@@ -114,6 +114,8 @@ CREATE TABLE propiedad (
     titulo                  VARCHAR(120) NOT NULL,
     descripcion             TEXT NULL,
     direccion               VARCHAR(150) NOT NULL,
+    latitud                 DECIMAL(10,7) NULL, -- ubicacion en el mapa (aproximada si no hay direccion geocodificada real)
+    longitud                DECIMAL(10,7) NULL,
     precio                  DECIMAL(14,2) NOT NULL,
     area_m2                 DECIMAL(8,2)  NOT NULL,
     num_habitaciones        TINYINT UNSIGNED NULL,

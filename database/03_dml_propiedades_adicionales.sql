@@ -11,23 +11,23 @@
 USE hogaria_db;
 
 INSERT INTO propiedad
-(id_inmobiliaria, id_ciudad, id_tipo, matricula_inmobiliaria, titulo, descripcion, direccion, precio, area_m2, num_habitaciones, num_banos, num_parqueaderos, operacion, estado, activo, fecha_publicacion)
+(id_inmobiliaria, id_ciudad, id_tipo, matricula_inmobiliaria, titulo, descripcion, direccion, latitud, longitud, precio, area_m2, num_habitaciones, num_banos, num_parqueaderos, operacion, estado, activo, fecha_publicacion)
 VALUES
 (2, 7, 2, 'MI-CAL-0013', 'Apartamento moderno en Zona Norte',
    'Apartamento con acabados modernos, cerca a centros comerciales y parques.',
-   'Av 6N #28-15, Cali', 380000000.00, 88.00, 3, 2, 1, 'venta', 'disponible', 1, '2025-04-02 09:00:00'),
+   'Av 6N #28-15, Cali', 3.4665770, -76.5381214, 380000000.00, 88.00, 3, 2, 1, 'venta', 'disponible', 1, '2025-04-02 09:00:00'),
 
 (3, 9, 1, 'MI-CTG-0014', 'Casa colonial en el centro histórico',
    'Casa colonial restaurada, ideal para vivienda o negocio boutique.',
-   'Cl del Arsenal #6-40, Cartagena', 8500000.00, 180.00, 4, 3, 2, 'arriendo', 'disponible', 1, '2025-04-05 10:30:00'),
+   'Cl del Arsenal #6-40, Cartagena', 10.3946373, -75.5332299, 8500000.00, 180.00, 4, 3, 2, 'arriendo', 'disponible', 1, '2025-04-05 10:30:00'),
 
 (1, 1, 4, 'MI-BGA-0015', 'Oficina ejecutiva en Cabecera',
    'Oficina lista para operar, edificio con portería y parqueadero de visitantes.',
-   'Cra 33 #52-10, Bucaramanga', 2800000.00, 60.00, NULL, 1, 1, 'arriendo', 'disponible', 1, '2025-04-08 11:15:00'),
+   'Cra 33 #52-10, Bucaramanga', 7.1316122, -73.1138696, 2800000.00, 60.00, NULL, 1, 1, 'arriendo', 'disponible', 1, '2025-04-08 11:15:00'),
 
 (2, 6, 3, 'MI-MED-0016', 'Local comercial en Provenza',
    'Local esquinero de alto flujo peatonal, zona gastronómica y comercial.',
-   'Cra 37 #8A-20, Medellín', 650000000.00, 90.00, NULL, 1, 0, 'venta', 'disponible', 1, '2025-04-10 08:45:00');
+   'Cra 37 #8A-20, Medellín', 6.2745703, -75.5612161, 650000000.00, 90.00, NULL, 1, 0, 'venta', 'disponible', 1, '2025-04-10 08:45:00');
 
 -- Nota: se referencia cada propiedad por su matricula (UNIQUE) en vez del
 -- id_propiedad, porque el contador AUTO_INCREMENT puede no coincidir con

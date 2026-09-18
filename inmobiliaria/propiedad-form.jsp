@@ -9,6 +9,7 @@
 <%@ include file="/jspf/conexion.jspf" %>
 <%@ include file="/jspf/subida-archivos.jspf" %>
 <%@ include file="/jspf/auditoria.jspf" %>
+<%@ include file="/jspf/geo.jspf" %>
 <%
     // =========================================================================
     // Alta y edicion de propiedades. Sin "id" en la query string se crea una
@@ -270,10 +271,19 @@
                             ps.executeUpdate();
                         }
                     } else {
+                        // La ubicacion en el mapa se simula: se elige un punto aleatorio
+                        // dentro del area real de la ciudad seleccionada (ver jspf/geo.jspf),
+                        // ya que no se cuenta con una direccion geocodificada de verdad.
+                        String nombreCiudadNueva = null;
+                        for (Map<String, Object> c : ciudades) {
+                            if (String.valueOf(c.get("id")).equals(idCiudad)) { nombreCiudadNueva = (String) c.get("nombre"); break; }
+                        }
+                        double[] coordenada = hgCoordenadaAleatoriaCiudad(nombreCiudadNueva);
+
                         try (PreparedStatement ps = conexion.prepareStatement(
                                 "INSERT INTO propiedad (id_inmobiliaria, id_ciudad, id_tipo, matricula_inmobiliaria, titulo, " +
-                                "descripcion, direccion, precio, area_m2, num_habitaciones, num_banos, num_parqueaderos, " +
-                                "operacion, estado, activo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'disponible', 1)",
+                                "descripcion, direccion, latitud, longitud, precio, area_m2, num_habitaciones, num_banos, num_parqueaderos, " +
+                                "operacion, estado, activo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'disponible', 1)",
                                 Statement.RETURN_GENERATED_KEYS)) {
                             ps.setInt(1, idInmobiliaria);
                             ps.setInt(2, idCiudadNum);
@@ -282,12 +292,14 @@
                             ps.setString(5, titulo);
                             if (descripcion.isEmpty()) ps.setNull(6, Types.LONGVARCHAR); else ps.setString(6, descripcion);
                             ps.setString(7, direccion);
-                            ps.setBigDecimal(8, precioNum);
-                            ps.setBigDecimal(9, areaNum);
-                            if (habNum == null) ps.setNull(10, Types.TINYINT); else ps.setInt(10, habNum);
-                            if (banosNum == null) ps.setNull(11, Types.TINYINT); else ps.setInt(11, banosNum);
-                            ps.setInt(12, parqNum);
-                            ps.setString(13, operacion);
+                            ps.setBigDecimal(8, BigDecimal.valueOf(coordenada[0]));
+                            ps.setBigDecimal(9, BigDecimal.valueOf(coordenada[1]));
+                            ps.setBigDecimal(10, precioNum);
+                            ps.setBigDecimal(11, areaNum);
+                            if (habNum == null) ps.setNull(12, Types.TINYINT); else ps.setInt(12, habNum);
+                            if (banosNum == null) ps.setNull(13, Types.TINYINT); else ps.setInt(13, banosNum);
+                            ps.setInt(14, parqNum);
+                            ps.setString(15, operacion);
                             ps.executeUpdate();
                             try (ResultSet keys = ps.getGeneratedKeys()) { keys.next(); idPropiedadFinal = keys.getInt(1); }
                         }

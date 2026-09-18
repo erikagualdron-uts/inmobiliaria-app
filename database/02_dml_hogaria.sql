@@ -126,55 +126,55 @@ INSERT INTO perfil (id_usuario, nombres, apellidos, tipo_documento, numero_docum
 -- 9. PROPIEDAD  (id_propiedad 1..12)
 -- =====================================================================
 INSERT INTO propiedad
-(id_inmobiliaria, id_ciudad, id_tipo, matricula_inmobiliaria, titulo, descripcion, direccion, precio, area_m2, num_habitaciones, num_banos, num_parqueaderos, operacion, estado, activo, fecha_publicacion)
+(id_inmobiliaria, id_ciudad, id_tipo, matricula_inmobiliaria, titulo, descripcion, direccion, latitud, longitud, precio, area_m2, num_habitaciones, num_banos, num_parqueaderos, operacion, estado, activo, fecha_publicacion)
 VALUES
 (1, 1,  1, 'MI-BGA-0001', 'Casa campestre en Cañaveral',
    'Amplia casa campestre de dos plantas con zonas verdes, ideal para familias grandes.',
-   'Cra 27 #103-45, Bucaramanga', 480000000.00, 220.00, 4, 3, 2, 'venta', 'disponible', 1, '2025-03-01 09:00:00'),
+   'Cra 27 #103-45, Bucaramanga', 7.1201685, -73.1341246, 480000000.00, 220.00, 4, 3, 2, 'venta', 'disponible', 1, '2025-03-01 09:00:00'),
 
 (1, 2,  2, 'MI-FLB-0002', 'Apartamento moderno en Cañaveral Real',
    'Apartamento de acabados modernos, muy cerca a centros comerciales y colegios.',
-   'Cl 30 #12-08, Floridablanca', 350000000.00, 85.00, 3, 2, 1, 'venta', 'disponible', 1, '2025-03-03 10:00:00'),
+   'Cl 30 #12-08, Floridablanca', 7.0487515, -73.0960716, 350000000.00, 85.00, 3, 2, 1, 'venta', 'disponible', 1, '2025-03-03 10:00:00'),
 
 (1, 1,  3, 'MI-BGA-0003', 'Local comercial en el centro de Cabecera',
    'Local esquinero con excelente flujo peatonal, apto para comercio o servicios.',
-   'Cra 33 #45-20, Bucaramanga', 2500000.00, 60.00, NULL, 1, 0, 'arriendo', 'disponible', 0, '2025-03-05 11:00:00'),
+   'Cra 33 #45-20, Bucaramanga', 7.1255059, -73.1113155, 2500000.00, 60.00, NULL, 1, 0, 'arriendo', 'disponible', 0, '2025-03-05 11:00:00'),
 
 (1, 5,  2, 'MI-BOG-0004', 'Apartaestudio en Chapinero Central',
    'Apartaestudio funcional, ideal para estudiantes o profesionales solos.',
-   'Cra 13 #58-20, Bogotá', 1800000.00, 45.00, 1, 1, 0, 'arriendo', 'disponible', 1, '2025-03-06 12:00:00'),
+   'Cra 13 #58-20, Bogotá', 4.7684359, -74.1313061, 1800000.00, 45.00, 1, 1, 0, 'arriendo', 'disponible', 1, '2025-03-06 12:00:00'),
 
 (2, 6,  1, 'MI-MED-0005', 'Casa de lujo en El Poblado',
    'Casa con acabados de lujo, piscina privada y zona social amplia.',
-   'Cl 10 #35-40, Medellín', 950000000.00, 300.00, 5, 4, 3, 'venta', 'disponible', 1, '2025-03-08 09:30:00'),
+   'Cl 10 #35-40, Medellín', 6.2437537, -75.6032122, 950000000.00, 300.00, 5, 4, 3, 'venta', 'disponible', 1, '2025-03-08 09:30:00'),
 
 (2, 6,  2, 'MI-MED-0006', 'Apartamento con vista en Laureles',
    'Apartamento en piso alto con vista panorámica y excelente iluminación.',
-   'Cra 76 #34-10, Medellín', 420000000.00, 90.00, 3, 2, 1, 'venta', 'reservado', 1, '2025-03-10 10:30:00'),
+   'Cra 76 #34-10, Medellín', 6.2274910, -75.5746787, 420000000.00, 90.00, 3, 2, 1, 'venta', 'reservado', 1, '2025-03-10 10:30:00'),
 
 (2, 7,  4, 'MI-CAL-0007', 'Oficina ejecutiva Zona Norte',
    'Oficina lista para operar, con recepción y sala de juntas independiente.',
-   'Av 6N #23-50, Cali', 3200000.00, 70.00, NULL, 1, 1, 'arriendo', 'disponible', 1, '2025-03-11 14:00:00'),
+   'Av 6N #23-50, Cali', 3.3921229, -76.5470756, 3200000.00, 70.00, NULL, 1, 1, 'arriendo', 'disponible', 1, '2025-03-11 14:00:00'),
 
 (3, 8,  1, 'MI-BAQ-0008', 'Casa frente al mar en Puerto Colombia',
    'Casa de playa con acceso directo a la orilla y terraza con zona BBQ.',
-   'Vía al Mar Km 5, Barranquilla', 1200000000.00, 250.00, 4, 3, 2, 'venta', 'disponible', 1, '2025-03-12 08:45:00'),
+   'Vía al Mar Km 5, Barranquilla', 10.9854919, -74.7818541, 1200000000.00, 250.00, 4, 3, 2, 'venta', 'disponible', 1, '2025-03-12 08:45:00'),
 
 (3, 9,  2, 'MI-CTG-0009', 'Apartamento amoblado en Bocagrande',
    'Apartamento totalmente amoblado, a pasos de la playa y zona hotelera.',
-   'Cra 1 #8-45, Cartagena', 6500000.00, 75.00, 2, 2, 1, 'arriendo', 'disponible', 1, '2025-03-13 09:15:00'),
+   'Cra 1 #8-45, Cartagena', 10.4010220, -75.4987514, 6500000.00, 75.00, 2, 2, 1, 'arriendo', 'disponible', 1, '2025-03-13 09:15:00'),
 
 (3, 3,  5, 'MI-GIR-0010', 'Lote urbanizable en Girón',
    'Lote plano con servicios cercanos, ideal para proyecto de vivienda o inversión.',
-   'Vereda Chocoa, Girón', 180000000.00, 500.00, NULL, NULL, 0, 'venta', 'disponible', 1, '2025-03-14 10:00:00'),
+   'Vereda Chocoa, Girón', 7.0823772, -73.1848050, 180000000.00, 500.00, NULL, NULL, 0, 'venta', 'disponible', 1, '2025-03-14 10:00:00'),
 
 (1, 4,  1, 'MI-PIE-0011', 'Casa finca con vista a las montañas',
    'Casa finca con vista panorámica, árboles frutales y amplio jardín.',
-   'Vereda Sevilla, Piedecuesta', 620000000.00, 400.00, 4, 3, 4, 'venta', 'vendido', 1, '2025-03-15 11:20:00'),
+   'Vereda Sevilla, Piedecuesta', 7.0062619, -73.0435837, 620000000.00, 400.00, 4, 3, 4, 'venta', 'vendido', 1, '2025-03-15 11:20:00'),
 
 (1, 10, 3, 'MI-BEL-0012', 'Local esquinero en Niquía',
    'Local esquinero con buena visibilidad, cerca a la estación del metro.',
-   'Cl 50 #45-10, Bello', 1900000.00, 55.00, NULL, 1, 0, 'arriendo', 'arrendado', 1, '2025-03-16 13:40:00');
+   'Cl 50 #45-10, Bello', 6.3303113, -75.5745582, 1900000.00, 55.00, NULL, 1, 0, 'arriendo', 'arrendado', 1, '2025-03-16 13:40:00');
 
 -- =====================================================================
 -- 10. IMAGEN_PROPIEDAD  (2 imagenes por propiedad, sin repetir entre registros)

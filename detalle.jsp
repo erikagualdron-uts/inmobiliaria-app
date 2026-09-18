@@ -63,7 +63,7 @@
 
     if (conexion != null) {
         String sqlPropiedad =
-            "SELECT p.id_propiedad, p.titulo, p.descripcion, p.direccion, p.precio, p.operacion, p.estado, " +
+            "SELECT p.id_propiedad, p.titulo, p.descripcion, p.direccion, p.latitud, p.longitud, p.precio, p.operacion, p.estado, " +
             "       p.area_m2, p.num_habitaciones, p.num_banos, p.num_parqueaderos, p.matricula_inmobiliaria, " +
             "       c.nombre_ciudad, t.nombre_tipo, i.nombre_comercial, i.telefono, i.direccion AS direccion_inmobiliaria " +
             "FROM propiedad p " +
@@ -79,6 +79,8 @@
                     propiedad.put("titulo", rs.getString("titulo"));
                     propiedad.put("descripcion", rs.getString("descripcion"));
                     propiedad.put("direccion", rs.getString("direccion"));
+                    propiedad.put("latitud", rs.getBigDecimal("latitud"));
+                    propiedad.put("longitud", rs.getBigDecimal("longitud"));
                     propiedad.put("precio", rs.getBigDecimal("precio"));
                     propiedad.put("operacion", rs.getString("operacion"));
                     propiedad.put("estado", rs.getString("estado"));
@@ -154,6 +156,7 @@
 <head>
     <% String hgTitulo = (String) propiedad.get("titulo"); %>
     <%@ include file="/jspf/head-comun.jspf" %>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
 <body>
 <%@ include file="/jspf/header.jspf" %>
@@ -270,6 +273,15 @@
                     <% } %>
                 </div>
                 <% } %>
+
+                <% if (propiedad.get("latitud") != null && propiedad.get("longitud") != null) { %>
+                <h3>Ubicación</h3>
+                <div id="mapaPropiedad" class="hg-mapa"
+                     data-lat="<%= propiedad.get("latitud") %>"
+                     data-lng="<%= propiedad.get("longitud") %>"
+                     data-titulo="<%= propiedad.get("titulo") %>"></div>
+                <p class="hg-mapa__nota"><i class="bi bi-info-circle"></i> Ubicación aproximada dentro de <%= propiedad.get("ciudad") %>.</p>
+                <% } %>
             </div>
 
             <div class="hg-detalle__contacto">
@@ -296,6 +308,29 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="<%= request.getContextPath() %>/assets/js/main.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+(function () {
+    // Mapa de ubicacion (Leaflet + OpenStreetMap, sin API key). La
+    // coordenada puede ser simulada (ver jspf/geo.jspf) cuando no hay una
+    // direccion geocodificada real; por eso el texto bajo el mapa aclara
+    // que es aproximada.
+    var contenedorMapa = document.getElementById('mapaPropiedad');
+    if (contenedorMapa && window.L) {
+        var lat = parseFloat(contenedorMapa.getAttribute('data-lat'));
+        var lng = parseFloat(contenedorMapa.getAttribute('data-lng'));
+        var tituloMapa = contenedorMapa.getAttribute('data-titulo');
+        if (!isNaN(lat) && !isNaN(lng)) {
+            var mapa = L.map(contenedorMapa, { scrollWheelZoom: false }).setView([lat, lng], 15);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                maxZoom: 19
+            }).addTo(mapa);
+            L.marker([lat, lng]).addTo(mapa).bindPopup(tituloMapa);
+        }
+    }
+})();
+</script>
 <script>
 (function () {
     // Favorito: interceptamos el envio del formulario y lo cambiamos por

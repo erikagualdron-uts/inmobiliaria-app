@@ -829,3 +829,14 @@ a.hg-panel-stat:hover { transform: translateY(-2px); box-shadow: var(--hg-shadow
 @keyframes hg-modal-backdrop-in { to { opacity: 1; } }
 @keyframes hg-modal-backdrop-out { to { opacity: 0; } }
 @keyframes hg-modal-in { to { transform: translateY(0) scale(1); opacity: 1; } }
+
+/* =========================================================================
+   Mapa de ubicacion (Leaflet) en la ficha de detalle de una propiedad
+   ========================================================================= */
+.hg-mapa {
+    height: 280px; width: 100%; border-radius: var(--hg-radius); overflow: hidden;
+    border: 1px solid var(--hg-border); box-shadow: var(--hg-shadow-sm); margin-bottom: 8px;
+    background: var(--hg-bg); z-index: 0;
+}
+.hg-mapa__nota { color: var(--hg-ink-muted); font-size: .8rem; margin-bottom: 24px; }
+.hg-mapa .leaflet-popup-content-wrapper { border-radius: var(--hg-radius-sm); }
