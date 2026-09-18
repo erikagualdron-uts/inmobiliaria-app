@@ -148,15 +148,68 @@ lo incluimos antes de que generes el código.
 
 ## Diseño e interfaz
 
-Diseño visual agradable, moderno e innovador, no una plantilla genérica de
-Bootstrap por defecto:
+Estilo visual: **moderno/tech vibrante**, tipo app SaaS actual (piensa en
+Airbnb, Linear, Stripe), no la plantilla genérica de Bootstrap ni un estilo
+plano/aburrido. Debe sentirse innovador, con buena jerarquía visual y mucho
+cuidado en el detalle. Sigue estas pautas de forma consistente en TODA la
+aplicación (landing, dashboards, formularios, tablas, reportes):
 
-- Paleta de colores coherente y profesional, acorde a una inmobiliaria.
-- Tipografía y jerarquía visual claras, buen uso de espacios en blanco.
-- Landing page atractiva: hero section con buscador destacado, tarjetas visuales
-  de propiedades destacadas (imagen, precio, ubicación, características clave).
-- Detalles de interacción (hover states, transiciones suaves, iconografía
-  consistente) sin sobrecargar de animaciones.
-- Dashboards por rol bien organizados: tarjetas, indicadores, estados visuales
-  (badges de "disponible", "pendiente", "aprobado", etc.), no solo tablas planas.
-- Experiencia consistente y usable en móvil, tableta y escritorio.
+**Paleta de colores** (defínelos como variables CSS en un solo archivo, ej.
+`estilos/variables.css`, no los repitas hardcodeados en cada JSP):
+- Color primario (marca): naranja/coral cálido — `#FF6B4A` (normal),
+  `#E85D3D` (hover/estado activo), `#FFE8E0` (fondo suave para badges/estados).
+- Texto principal: gris carbón oscuro — `#1F2937` (no negro puro).
+- Texto secundario: gris medio — `#6B7280`.
+- Fondo general: blanco o gris muy claro — `#FFFFFF` / `#FAFAFA` (nada de
+  fondo crema/beige).
+- Estados semánticos: éxito `#22C55E`, advertencia `#F59E0B`, peligro
+  `#EF4444`, información `#3B82F6` — úsalos para badges de estado
+  (disponible, pendiente, aprobado, rechazado, etc.), manteniendo el fondo
+  suave + texto de color (como ya tienen los badges actuales, solo actualiza
+  la paleta).
+
+**Tipografía**: fuente sans-serif moderna (Inter, Poppins o Manrope, vía
+Google Fonts), nunca serif para el cuerpo de texto. Jerarquía clara: títulos
+grandes y en negrita, texto secundario más pequeño y en gris.
+
+**Componentes**:
+- Tarjetas con bordes redondeados generosos (12-16px), sombra suave
+  (`box-shadow` ligera), y un pequeño efecto "lift" al pasar el cursor
+  (sombra un poco más marcada + leve desplazamiento hacia arriba).
+- Botones primarios en el color de marca (coral), con esquinas redondeadas
+  (pill o 8-12px), texto en negrita, y un estado hover que oscurezca
+  ligeramente el color.
+- Inputs con bordes suaves, buen padding interno, y un estado de foco visible
+  (borde coral al hacer clic).
+- Iconografía consistente con Bootstrap Icons en toda la interfaz (botones,
+  menús, tarjetas, tablas).
+
+**Landing page**: hero section con buscador destacado, tarjetas visuales de
+propiedades (imagen, precio, ubicación, características clave), buen uso de
+espacio en blanco.
+
+**Dashboards por rol**: organizados con tarjetas e indicadores (no tablas
+planas donde no haga falta), badges de estado con la paleta semántica
+definida arriba.
+
+**Interacción**: transiciones suaves (200-300ms) en hovers y cambios de
+estado, sin sobrecargar de animaciones. Experiencia consistente y usable en
+móvil, tableta y escritorio.
+
+**Notificaciones**: usa notificaciones tipo "toast" (mensajes flotantes que
+aparecen y desaparecen solos, esquina superior derecha) para confirmar
+acciones (ej. "Propiedad publicada con éxito"), en vez de `alert()` del
+navegador.
+
+**Estados vacíos**: cuando una lista no tenga resultados (sin favoritos, sin
+citas, sin resultados de búsqueda, etc.), muestra un ícono grande (Bootstrap
+Icons) + un mensaje amigable y claro, nunca un espacio en blanco sin
+explicación.
+
+**Imágenes de propiedades**: en toda tarjeta que muestre una foto de
+propiedad, usa `object-fit: cover` con un tamaño/proporción consistente,
+para que el catálogo se vea uniforme sin importar el tamaño original de cada
+imagen.
+
+**Navbar con scroll**: en páginas largas (como la landing), agrega un efecto
+sutil al navbar al hacer scroll (sombra ligera o fondo semitransparente).
