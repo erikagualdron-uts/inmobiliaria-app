@@ -159,11 +159,11 @@
             <% if (documentos.isEmpty()) { %>
             <p style="color:var(--hg-ink-muted); font-size:.86rem; margin-bottom:12px;">El cliente aun no ha radicado documentos.</p>
             <% } else { %>
-            <div style="margin-bottom:12px;">
+            <div class="hg-doc-list" style="margin-bottom:12px;">
                 <% for (Map<String, Object> d : documentos) {
                     String estadoDoc = (String) d.get("estado");
                 %>
-                <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; padding:8px 0; border-bottom:1px dashed var(--hg-border); font-size:.9rem;">
+                <div class="hg-doc-row" data-estado-doc="<%= estadoDoc %>" style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; padding:8px 0; border-bottom:1px dashed var(--hg-border); font-size:.9rem;">
                     <a href="<%= d.get("url") %>" target="_blank"><%= d.get("nombre") %></a>
                     <div style="display:flex; align-items:center; gap:8px;">
                         <span class="hg-badge--estado hg-badge--<%= estadoDoc %>" style="position:static; display:inline-block;"><%= estadoDoc.substring(0,1).toUpperCase() + estadoDoc.substring(1) %></span>
@@ -193,11 +193,11 @@
                 <% } %>
                 <form method="post" action="<%= request.getContextPath() %>/inmobiliaria/solicitudes-recibidas.jsp">
                     <input type="hidden" name="accion" value="aprobar"><input type="hidden" name="idSolicitud" value="<%= s.get("id") %>">
-                    <button class="hg-btn hg-btn--primary hg-btn--sm" type="submit"><i class="bi bi-check-circle"></i> Aprobar solicitud</button>
+                    <button class="hg-btn hg-btn--primary hg-btn--lg js-btn-aprobar-solicitud" type="submit" disabled title="Todos los documentos deben estar aprobados antes de aprobar la solicitud"><i class="bi bi-check-circle"></i> Aprobar solicitud</button>
                 </form>
                 <form method="post" action="<%= request.getContextPath() %>/inmobiliaria/solicitudes-recibidas.jsp">
                     <input type="hidden" name="accion" value="rechazar"><input type="hidden" name="idSolicitud" value="<%= s.get("id") %>">
-                    <button class="hg-btn hg-btn--ghost hg-btn--sm" type="submit"><i class="bi bi-x-circle"></i> Rechazar solicitud</button>
+                    <button class="hg-btn hg-btn--ghost hg-btn--lg" type="submit"><i class="bi bi-x-circle"></i> Rechazar solicitud</button>
                 </form>
             </div>
             <% } %>
@@ -207,5 +207,28 @@
     <% } %>
 </div>
 <%@ include file="/jspf/scripts-panel.jspf" %>
+<script>
+(function () {
+    // El boton "Aprobar solicitud" arranca deshabilitado (ver el atributo
+    // "disabled" en el JSP) y solo se habilita aqui si, al evaluar los
+    // documentos ya renderizados en esa misma tarjeta, existe al menos uno
+    // y todos estan en estado "aprobado". "Rechazar solicitud" no se toca:
+    // el agente puede rechazar en cualquier momento.
+    document.querySelectorAll('.js-btn-aprobar-solicitud').forEach(function (boton) {
+        var tarjeta = boton.closest('.hg-panel-card');
+        var filasDocumentos = tarjeta ? tarjeta.querySelectorAll('.hg-doc-row') : [];
+        var todosAprobados = filasDocumentos.length > 0;
+        filasDocumentos.forEach(function (fila) {
+            if (fila.getAttribute('data-estado-doc') !== 'aprobado') {
+                todosAprobados = false;
+            }
+        });
+        boton.disabled = !todosAprobados;
+        boton.title = todosAprobados
+            ? ''
+            : 'Todos los documentos deben estar aprobados antes de aprobar la solicitud';
+    });
+})();
+</script>
 </body>
 </html>

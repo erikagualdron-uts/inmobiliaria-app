@@ -636,6 +636,18 @@ a.hg-panel-stat:hover { transform: translateY(-2px); box-shadow: var(--hg-shadow
    CRUD de propiedades (panel de inmobiliaria)
    ========================================================================= */
 .hg-btn--sm { padding: 6px 14px; font-size: .82rem; }
+.hg-btn--lg { padding: 15px 30px; font-size: 1.02rem; }
+
+.hg-btn:disabled,
+.hg-btn--primary:disabled,
+.hg-btn--primary:disabled:hover {
+    background: var(--hg-border);
+    color: var(--hg-ink-muted);
+    border-color: var(--hg-border);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
 
 .hg-tabla { width: 100%; border-collapse: collapse; font-size: .92rem; }
 .hg-tabla th, .hg-tabla td { padding: 14px 16px; text-align: left; border-bottom: 1px solid var(--hg-border); vertical-align: middle; }
