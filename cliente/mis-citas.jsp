@@ -72,41 +72,51 @@
     <% if (citas.isEmpty()) { %>
     <div class="hg-panel-card">
         <div class="hg-panel-empty">
-            <div class="hg-panel-empty__icon">📅</div>
+            <div class="hg-panel-empty__icon"><i class="bi bi-calendar3"></i></div>
             <p>Aun no has agendado ninguna visita.</p>
             <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/catalogo.jsp">Explorar propiedades</a>
         </div>
     </div>
     <% } else { %>
-    <div class="hg-panel-card" style="padding:0; overflow-x:auto;">
-        <table class="hg-tabla">
-            <thead>
-                <tr><th>Propiedad</th><th>Fecha y hora</th><th>Estado</th><th>Observaciones</th><th>Accion</th></tr>
-            </thead>
-            <tbody>
-                <% for (Map<String, Object> c : citas) {
-                    String estadoC = (String) c.get("estado");
-                    boolean sePuedeCancelar = "pendiente".equals(estadoC) || "confirmada".equals(estadoC);
-                    java.sql.Timestamp fh = (java.sql.Timestamp) c.get("fechaHora");
-                %>
-                <tr>
-                    <td><a href="<%= request.getContextPath() %>/detalle.jsp?id=<%= c.get("idPropiedad") %>"><%= c.get("titulo") %></a><br><span style="color:var(--hg-ink-muted); font-size:.82rem;"><%= c.get("ciudad") %></span></td>
-                    <td style="font-variant-numeric:tabular-nums;"><%= fh.toLocalDateTime().format(formatoFecha) %></td>
-                    <td><span class="hg-badge--estado hg-badge--<%= estadoC %>" style="position:static; display:inline-block;"><%= estadoC.substring(0,1).toUpperCase() + estadoC.substring(1) %></span></td>
-                    <td style="color:var(--hg-ink-muted); font-size:.88rem;"><%= c.get("observaciones") != null ? c.get("observaciones") : "-" %></td>
-                    <td>
-                        <% if (sePuedeCancelar) { %>
+    <div class="hg-mgmt-grid">
+        <% String[] hgMeses = {"ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DIC"};
+           for (Map<String, Object> c : citas) {
+            String estadoC = (String) c.get("estado");
+            boolean sePuedeCancelar = "pendiente".equals(estadoC) || "confirmada".equals(estadoC);
+            java.sql.Timestamp fh = (java.sql.Timestamp) c.get("fechaHora");
+            java.time.LocalDateTime ldt = fh.toLocalDateTime();
+        %>
+        <div class="hg-mgmt-card">
+            <div class="hg-cita-fecha">
+                <span class="hg-cita-fecha__dia"><%= ldt.getDayOfMonth() %></span>
+                <span class="hg-cita-fecha__mes"><%= hgMeses[ldt.getMonthValue() - 1] %></span>
+            </div>
+            <div class="hg-mgmt-card__body">
+                <div class="hg-mgmt-card__top">
+                    <div>
+                        <h4><a href="<%= request.getContextPath() %>/detalle.jsp?id=<%= c.get("idPropiedad") %>"><%= c.get("titulo") %></a></h4>
+                        <p><i class="bi bi-geo-alt"></i> <%= c.get("ciudad") %> &middot; <i class="bi bi-clock"></i> <%= ldt.format(formatoFecha) %></p>
+                    </div>
+                    <span class="hg-badge--estado hg-badge--<%= estadoC %>" style="position:static; display:inline-block; height:fit-content;"><%= estadoC.substring(0,1).toUpperCase() + estadoC.substring(1) %></span>
+                </div>
+                <% if (c.get("observaciones") != null) { %>
+                <p class="hg-mgmt-card__obs">"<%= c.get("observaciones") %>"</p>
+                <% } %>
+                <% if (sePuedeCancelar) { %>
+                <div class="hg-mgmt-card__bottom">
+                    <span></span>
+                    <div class="hg-mgmt-card__acciones">
                         <form method="post" action="<%= request.getContextPath() %>/cliente/mis-citas.jsp">
                             <input type="hidden" name="accion" value="cancelar">
                             <input type="hidden" name="idCita" value="<%= c.get("id") %>">
-                            <button class="hg-btn hg-btn--ghost hg-btn--sm" type="submit">Cancelar</button>
+                            <button class="hg-btn hg-btn--ghost hg-btn--sm" type="submit"><i class="bi bi-x-circle"></i> Cancelar</button>
                         </form>
-                        <% } else { %>&mdash;<% } %>
-                    </td>
-                </tr>
+                    </div>
+                </div>
                 <% } %>
-            </tbody>
-        </table>
+            </div>
+        </div>
+        <% } %>
     </div>
     <% } %>
 </div>

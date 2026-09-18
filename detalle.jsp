@@ -199,13 +199,13 @@
                 </div>
                 <h1 class="hg-detalle__precio"><%= precioTxt %></h1>
                 <h2 class="hg-detalle__titulo"><%= propiedad.get("titulo") %></h2>
-                <p class="hg-detalle__loc">📍 <%= propiedad.get("direccion") %>, <%= propiedad.get("ciudad") %> &middot; <%= propiedad.get("tipo") %></p>
+                <p class="hg-detalle__loc"><i class="bi bi-geo-alt"></i> <%= propiedad.get("direccion") %>, <%= propiedad.get("ciudad") %> &middot; <%= propiedad.get("tipo") %></p>
 
                 <div class="hg-detalle__specs">
-                    <% if (propiedad.get("habitaciones") != null) { %><span>🛏 <%= propiedad.get("habitaciones") %> habitaciones</span><% } %>
-                    <% if (propiedad.get("banos") != null) { %><span>🛁 <%= propiedad.get("banos") %> banos</span><% } %>
-                    <% if (propiedad.get("parqueaderos") != null && ((Number) propiedad.get("parqueaderos")).intValue() > 0) { %><span>🚗 <%= propiedad.get("parqueaderos") %> parqueaderos</span><% } %>
-                    <span>📐 <%= propiedad.get("area") %> m²</span>
+                    <% if (propiedad.get("habitaciones") != null) { %><span><i class="bi bi-door-open"></i> <%= propiedad.get("habitaciones") %> habitaciones</span><% } %>
+                    <% if (propiedad.get("banos") != null) { %><span><i class="bi bi-droplet"></i> <%= propiedad.get("banos") %> banos</span><% } %>
+                    <% if (propiedad.get("parqueaderos") != null && ((Number) propiedad.get("parqueaderos")).intValue() > 0) { %><span><i class="bi bi-car-front"></i> <%= propiedad.get("parqueaderos") %> parqueaderos</span><% } %>
+                    <span><i class="bi bi-rulers"></i> <%= propiedad.get("area") %> m²</span>
                 </div>
 
                 <div class="hg-detalle__acciones">
@@ -213,13 +213,13 @@
                     <form method="post" action="<%= request.getContextPath() %>/detalle.jsp?id=<%= idPropiedad %>">
                         <input type="hidden" name="accion" value="toggleFavorito">
                         <button class="hg-btn <%= esFavorito ? "hg-btn--solid" : "hg-btn--ghost" %>" type="submit">
-                            <%= esFavorito ? "♥ En tus favoritos" : "♡ Guardar en favoritos" %>
+                            <i class="bi <%= esFavorito ? "bi-heart-fill" : "bi-heart" %>"></i> <%= esFavorito ? "En tus favoritos" : "Guardar en favoritos" %>
                         </button>
                     </form>
-                    <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/cliente/agendar-cita.jsp?propiedad=<%= idPropiedad %>">Agendar visita</a>
-                    <a class="hg-btn hg-btn--ghost" href="<%= request.getContextPath() %>/cliente/radicar-solicitud.jsp?propiedad=<%= idPropiedad %>">Solicitar <%= "venta".equals(operacion) ? "compra" : "arriendo" %></a>
+                    <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/cliente/agendar-cita.jsp?propiedad=<%= idPropiedad %>"><i class="bi bi-calendar-plus"></i> Agendar visita</a>
+                    <a class="hg-btn hg-btn--ghost" href="<%= request.getContextPath() %>/cliente/radicar-solicitud.jsp?propiedad=<%= idPropiedad %>"><i class="bi bi-clipboard-check"></i> Solicitar <%= "venta".equals(operacion) ? "compra" : "arriendo" %></a>
                     <% } else { %>
-                    <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/login.jsp">Inicia sesion para agendar una visita</a>
+                    <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/login.jsp"><i class="bi bi-box-arrow-in-right"></i> Inicia sesion para agendar una visita</a>
                     <% } %>
                 </div>
             </div>

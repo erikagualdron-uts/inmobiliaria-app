@@ -48,7 +48,7 @@
     <% if (eventos.isEmpty()) { %>
     <div class="hg-panel-card">
         <div class="hg-panel-empty">
-            <div class="hg-panel-empty__icon">🗒️</div>
+            <div class="hg-panel-empty__icon"><i class="bi bi-journal-text"></i></div>
             <p>Aun no hay eventos de auditoria registrados.</p>
         </div>
     </div>

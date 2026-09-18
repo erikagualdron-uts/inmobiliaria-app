@@ -394,7 +394,7 @@
                 <% } %>
             </div>
 
-            <button class="hg-btn hg-btn--primary" type="submit"><%= esEdicion ? "Guardar cambios" : "Publicar propiedad" %></button>
+            <button class="hg-btn hg-btn--primary" type="submit"><i class="bi bi-check-lg"></i> <%= esEdicion ? "Guardar cambios" : "Publicar propiedad" %></button>
         </form>
     </div>
 </div>

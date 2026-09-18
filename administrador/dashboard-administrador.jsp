@@ -40,17 +40,44 @@
     </div>
 
     <div class="hg-panel-grid">
-        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/administrador/usuarios.jsp" style="display:block; text-decoration:none;"><strong><%= totalUsuarios %></strong><span>Usuarios registrados</span></a>
-        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/catalogo.jsp" style="display:block; text-decoration:none;"><strong><%= totalPropiedades %></strong><span>Propiedades activas</span></a>
-        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/administrador/reportes.jsp" style="display:block; text-decoration:none;"><strong><%= totalInmobiliarias %></strong><span>Inmobiliarias aliadas</span></a>
-        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/administrador/reportes.jsp" style="display:block; text-decoration:none;"><strong><%= solicitudesPendientes %></strong><span>Solicitudes por atender</span></a>
+        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/administrador/usuarios.jsp">
+            <div class="hg-panel-stat__icon"><i class="bi bi-people-fill"></i></div>
+            <div><strong><%= totalUsuarios %></strong><span>Usuarios registrados</span></div>
+        </a>
+        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/catalogo.jsp">
+            <div class="hg-panel-stat__icon"><i class="bi bi-houses-fill"></i></div>
+            <div><strong><%= totalPropiedades %></strong><span>Propiedades activas</span></div>
+        </a>
+        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/administrador/reportes.jsp">
+            <div class="hg-panel-stat__icon"><i class="bi bi-building-fill"></i></div>
+            <div><strong><%= totalInmobiliarias %></strong><span>Inmobiliarias aliadas</span></div>
+        </a>
+        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/administrador/reportes.jsp">
+            <div class="hg-panel-stat__icon"><i class="bi bi-clipboard-check-fill"></i></div>
+            <div><strong><%= solicitudesPendientes %></strong><span>Solicitudes por atender</span></div>
+        </a>
     </div>
 
-    <div class="hg-panel-card" style="display:flex; gap:14px; flex-wrap:wrap;">
-        <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/administrador/reportes.jsp">📊 Ver reportes</a>
-        <a class="hg-btn hg-btn--ghost" href="<%= request.getContextPath() %>/administrador/usuarios.jsp">👤 Gestionar usuarios y roles</a>
-        <a class="hg-btn hg-btn--ghost" href="<%= request.getContextPath() %>/administrador/catalogos.jsp">🗂️ Parametrizar catalogos</a>
-        <a class="hg-btn hg-btn--ghost" href="<%= request.getContextPath() %>/administrador/auditoria.jsp">🗒️ Consultar auditoria</a>
+    <div class="hg-panel-card">
+        <h3 class="hg-panel-card__titulo"><i class="bi bi-lightning-charge-fill"></i> Acciones rapidas</h3>
+        <div class="hg-quick-actions">
+            <a class="hg-quick-action" href="<%= request.getContextPath() %>/administrador/reportes.jsp">
+                <i class="bi bi-graph-up-arrow"></i>
+                <span>Ver reportes</span>
+            </a>
+            <a class="hg-quick-action" href="<%= request.getContextPath() %>/administrador/usuarios.jsp">
+                <i class="bi bi-people"></i>
+                <span>Usuarios y roles</span>
+            </a>
+            <a class="hg-quick-action" href="<%= request.getContextPath() %>/administrador/catalogos.jsp">
+                <i class="bi bi-tags"></i>
+                <span>Parametrizar catalogos</span>
+            </a>
+            <a class="hg-quick-action" href="<%= request.getContextPath() %>/administrador/auditoria.jsp">
+                <i class="bi bi-journal-text"></i>
+                <span>Consultar auditoria</span>
+            </a>
+        </div>
     </div>
 </div>
 </body>

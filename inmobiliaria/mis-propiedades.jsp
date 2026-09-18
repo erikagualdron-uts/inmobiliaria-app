@@ -52,10 +52,11 @@
     if (conexion != null && idInmobiliaria != null) {
         try (PreparedStatement ps = conexion.prepareStatement(
                 "SELECT p.id_propiedad, p.titulo, p.matricula_inmobiliaria, p.precio, p.operacion, p.estado, p.activo, " +
-                "       c.nombre_ciudad, t.nombre_tipo " +
+                "       c.nombre_ciudad, t.nombre_tipo, img.url_imagen " +
                 "FROM propiedad p " +
                 "INNER JOIN ciudad c ON c.id_ciudad = p.id_ciudad " +
                 "INNER JOIN tipo_propiedad t ON t.id_tipo = p.id_tipo " +
+                "LEFT JOIN imagen_propiedad img ON img.id_propiedad = p.id_propiedad AND img.es_principal = 1 " +
                 "WHERE p.id_inmobiliaria = ? " +
                 "ORDER BY p.fecha_publicacion DESC")) {
             ps.setInt(1, idInmobiliaria);
@@ -71,6 +72,7 @@
                     fila.put("activo", rs.getInt("activo") == 1);
                     fila.put("ciudad", rs.getString("nombre_ciudad"));
                     fila.put("tipo", rs.getString("nombre_tipo"));
+                    fila.put("imagen", rs.getString("url_imagen"));
                     propiedades.add(fila);
                 }
             }
@@ -96,7 +98,7 @@
             <h1>Mis propiedades</h1>
             <p>Publica, edita o da de baja los inmuebles de tu inmobiliaria.</p>
         </div>
-        <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/inmobiliaria/propiedad-form.jsp">+ Publicar propiedad</a>
+        <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/inmobiliaria/propiedad-form.jsp"><i class="bi bi-plus-lg"></i> Publicar propiedad</a>
     </div>
 
     <% if (idInmobiliaria == null) { %>
@@ -110,62 +112,55 @@
         <% if (propiedades.isEmpty()) { %>
         <div class="hg-panel-card">
             <div class="hg-panel-empty">
-                <div class="hg-panel-empty__icon">🏠</div>
+                <div class="hg-panel-empty__icon"><i class="bi bi-house"></i></div>
                 <p>Aun no has publicado ninguna propiedad.</p>
                 <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/inmobiliaria/propiedad-form.jsp">Publicar la primera</a>
             </div>
         </div>
         <% } else { %>
-        <div class="hg-panel-card" style="padding:0; overflow-x:auto;">
-            <table class="hg-tabla">
-                <thead>
-                    <tr>
-                        <th>Propiedad</th>
-                        <th>Ciudad / Tipo</th>
-                        <th>Precio</th>
-                        <th>Operacion</th>
-                        <th>Estado</th>
-                        <th>Publicacion</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% for (Map<String, Object> p : propiedades) {
-                        boolean activo = (Boolean) p.get("activo");
-                        String estadoP = (String) p.get("estado");
-                        String operacionP = (String) p.get("operacion");
-                        String precioTxt = "$ " + formatoCOP.format(p.get("precio")) + ("arriendo".equals(operacionP) ? " / mes" : "");
-                    %>
-                    <tr>
-                        <td>
-                            <strong><%= p.get("titulo") %></strong><br>
-                            <span style="color:var(--hg-ink-muted); font-size:.8rem;"><%= p.get("matricula") %></span>
-                        </td>
-                        <td><%= p.get("ciudad") %><br><span style="color:var(--hg-ink-muted); font-size:.85rem;"><%= p.get("tipo") %></span></td>
-                        <td style="font-variant-numeric:tabular-nums;"><%= precioTxt %></td>
-                        <td><%= "venta".equals(operacionP) ? "Venta" : "Arriendo" %></td>
-                        <td>
-                            <span class="hg-badge--estado hg-badge--<%= estadoP %>" style="position:static; display:inline-block;"><%= estadoP.substring(0,1).toUpperCase() + estadoP.substring(1) %></span><br>
-                            <span class="hg-badge--estado <%= activo ? "hg-badge--disponible" : "hg-badge--vendido" %>" style="position:static; display:inline-block; margin-top:4px;"><%= activo ? "Activa" : "Dada de baja" %></span>
-                        </td>
-                        <td>
-                            <a href="<%= request.getContextPath() %>/detalle.jsp?id=<%= p.get("id") %>" target="_blank">Ver ficha</a>
-                        </td>
-                        <td class="hg-tabla__acciones">
-                            <a class="hg-btn hg-btn--ghost hg-btn--sm" href="<%= request.getContextPath() %>/inmobiliaria/propiedad-form.jsp?id=<%= p.get("id") %>">Editar</a>
-                            <a class="hg-btn hg-btn--ghost hg-btn--sm" href="<%= request.getContextPath() %>/inmobiliaria/propiedad-galeria.jsp?id=<%= p.get("id") %>">Galeria</a>
-                            <form method="post" action="<%= request.getContextPath() %>/inmobiliaria/mis-propiedades.jsp" style="display:inline;">
+        <div class="hg-mgmt-grid">
+            <% for (Map<String, Object> p : propiedades) {
+                boolean activo = (Boolean) p.get("activo");
+                String estadoP = (String) p.get("estado");
+                String operacionP = (String) p.get("operacion");
+                String precioTxt = "$ " + formatoCOP.format(p.get("precio")) + ("arriendo".equals(operacionP) ? " / mes" : "");
+                Object imgP = p.get("imagen");
+            %>
+            <div class="hg-mgmt-card">
+                <div class="hg-mgmt-card__media">
+                    <% if (imgP != null) { %>
+                    <img src="<%= imgP %>" alt="<%= p.get("titulo") %>">
+                    <% } else { %><i class="bi bi-image"></i><% } %>
+                </div>
+                <div class="hg-mgmt-card__body">
+                    <div class="hg-mgmt-card__top">
+                        <div>
+                            <h4><%= p.get("titulo") %></h4>
+                            <p><i class="bi bi-upc-scan"></i> <%= p.get("matricula") %> &middot; <i class="bi bi-geo-alt"></i> <%= p.get("ciudad") %> &middot; <%= p.get("tipo") %></p>
+                        </div>
+                        <div class="hg-mgmt-card__badges">
+                            <span class="hg-badge--estado hg-badge--<%= estadoP %>" style="position:static; display:inline-block;"><%= estadoP.substring(0,1).toUpperCase() + estadoP.substring(1) %></span>
+                            <span class="hg-badge--estado <%= activo ? "hg-badge--disponible" : "hg-badge--vendido" %>" style="position:static; display:inline-block;"><%= activo ? "Activa" : "Dada de baja" %></span>
+                        </div>
+                    </div>
+                    <div class="hg-mgmt-card__bottom">
+                        <span class="hg-mgmt-card__precio"><%= precioTxt %> &middot; <%= "venta".equals(operacionP) ? "Venta" : "Arriendo" %></span>
+                        <div class="hg-mgmt-card__acciones">
+                            <a class="hg-btn hg-btn--ghost hg-btn--sm" href="<%= request.getContextPath() %>/detalle.jsp?id=<%= p.get("id") %>" target="_blank"><i class="bi bi-eye"></i> Ver ficha</a>
+                            <a class="hg-btn hg-btn--ghost hg-btn--sm" href="<%= request.getContextPath() %>/inmobiliaria/propiedad-form.jsp?id=<%= p.get("id") %>"><i class="bi bi-pencil"></i> Editar</a>
+                            <a class="hg-btn hg-btn--ghost hg-btn--sm" href="<%= request.getContextPath() %>/inmobiliaria/propiedad-galeria.jsp?id=<%= p.get("id") %>"><i class="bi bi-images"></i> Galeria</a>
+                            <form method="post" action="<%= request.getContextPath() %>/inmobiliaria/mis-propiedades.jsp">
                                 <input type="hidden" name="accion" value="toggleActivo">
                                 <input type="hidden" name="idPropiedad" value="<%= p.get("id") %>">
                                 <button class="hg-btn hg-btn--sm <%= activo ? "hg-btn--ghost" : "hg-btn--primary" %>" type="submit">
-                                    <%= activo ? "Dar de baja" : "Reactivar" %>
+                                    <i class="bi <%= activo ? "bi-slash-circle" : "bi-arrow-counterclockwise" %>"></i> <%= activo ? "Dar de baja" : "Reactivar" %>
                                 </button>
                             </form>
-                        </td>
-                    </tr>
-                    <% } %>
-                </tbody>
-            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% } %>
         </div>
         <% } %>
     <% } %>

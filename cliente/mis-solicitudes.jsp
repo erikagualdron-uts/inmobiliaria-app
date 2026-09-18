@@ -143,7 +143,7 @@
     <% if (solicitudes.isEmpty()) { %>
     <div class="hg-panel-card">
         <div class="hg-panel-empty">
-            <div class="hg-panel-empty__icon">📋</div>
+            <div class="hg-panel-empty__icon"><i class="bi bi-clipboard"></i></div>
             <p>Aun no has radicado ninguna solicitud de compra o arriendo.</p>
             <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/catalogo.jsp">Explorar propiedades</a>
         </div>

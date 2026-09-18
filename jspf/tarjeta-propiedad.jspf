@@ -29,11 +29,11 @@
         <div class="hg-card__body">
             <span class="hg-card__price"><%= hgPrecioTxt %></span>
             <span class="hg-card__title"><%= prop.get("titulo") %></span>
-            <span class="hg-card__loc">📍 <%= prop.get("ciudad") %> &middot; <%= prop.get("tipo") %></span>
+            <span class="hg-card__loc"><i class="bi bi-geo-alt"></i> <%= prop.get("ciudad") %> &middot; <%= prop.get("tipo") %></span>
             <div class="hg-card__feats">
-                <% if (hgHabTarjeta != null) { %><span>🛏 <%= hgHabTarjeta %></span><% } %>
-                <% if (hgBanosTarjeta != null) { %><span>🛁 <%= hgBanosTarjeta %></span><% } %>
-                <span>📐 <%= prop.get("area") %> m²</span>
+                <% if (hgHabTarjeta != null) { %><span><i class="bi bi-door-open"></i> <%= hgHabTarjeta %></span><% } %>
+                <% if (hgBanosTarjeta != null) { %><span><i class="bi bi-droplet"></i> <%= hgBanosTarjeta %></span><% } %>
+                <span><i class="bi bi-rulers"></i> <%= prop.get("area") %> m²</span>
             </div>
         </div>
     </a>

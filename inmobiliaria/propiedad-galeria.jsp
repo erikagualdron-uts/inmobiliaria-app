@@ -191,7 +191,7 @@
     <% if (imagenes.isEmpty()) { %>
     <div class="hg-panel-card" style="margin-bottom:24px;">
         <div class="hg-panel-empty">
-            <div class="hg-panel-empty__icon">🖼️</div>
+            <div class="hg-panel-empty__icon"><i class="bi bi-images"></i></div>
             <p>Esta propiedad todavia no tiene fotos.</p>
         </div>
     </div>
@@ -208,13 +208,13 @@
                 <form method="post" action="<%= request.getContextPath() %>/inmobiliaria/propiedad-galeria.jsp?id=<%= idPropiedad %>">
                     <input type="hidden" name="accion" value="marcarPrincipal">
                     <input type="hidden" name="idImagen" value="<%= img.get("id") %>">
-                    <button class="hg-btn hg-btn--ghost hg-btn--sm" type="submit">Hacer principal</button>
+                    <button class="hg-btn hg-btn--ghost hg-btn--sm" type="submit"><i class="bi bi-star-fill"></i> Hacer principal</button>
                 </form>
                 <% } else { %><span></span><% } %>
                 <form method="post" action="<%= request.getContextPath() %>/inmobiliaria/propiedad-galeria.jsp?id=<%= idPropiedad %>">
                     <input type="hidden" name="accion" value="eliminar">
                     <input type="hidden" name="idImagen" value="<%= img.get("id") %>">
-                    <button class="hg-btn hg-btn--ghost hg-btn--sm" type="submit" style="color:var(--hg-off);">Eliminar</button>
+                    <button class="hg-btn hg-btn--ghost hg-btn--sm" type="submit" style="color:var(--hg-off);"><i class="bi bi-trash3"></i> Eliminar</button>
                 </form>
             </div>
         </div>

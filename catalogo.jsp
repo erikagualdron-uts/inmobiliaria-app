@@ -173,7 +173,7 @@
 
         <% if (resultados.isEmpty()) { %>
         <div class="hg-panel-empty">
-            <div class="hg-panel-empty__icon">🔍</div>
+            <div class="hg-panel-empty__icon"><i class="bi bi-search"></i></div>
             <p>No encontramos propiedades con esos filtros. Intenta ampliar tu busqueda.</p>
         </div>
         <% } else { %>

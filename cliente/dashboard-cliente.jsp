@@ -44,14 +44,36 @@
     </div>
 
     <div class="hg-panel-grid">
-        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/cliente/mis-citas.jsp" style="display:block; text-decoration:none;"><strong><%= totalCitas %></strong><span>Citas agendadas</span></a>
-        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/cliente/mis-solicitudes.jsp" style="display:block; text-decoration:none;"><strong><%= totalSolicitudes %></strong><span>Solicitudes radicadas</span></a>
-        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/cliente/favoritos.jsp" style="display:block; text-decoration:none;"><strong><%= totalFavoritos %></strong><span>Propiedades favoritas</span></a>
+        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/cliente/mis-citas.jsp">
+            <div class="hg-panel-stat__icon"><i class="bi bi-calendar-check-fill"></i></div>
+            <div><strong><%= totalCitas %></strong><span>Citas agendadas</span></div>
+        </a>
+        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/cliente/mis-solicitudes.jsp">
+            <div class="hg-panel-stat__icon"><i class="bi bi-clipboard-check-fill"></i></div>
+            <div><strong><%= totalSolicitudes %></strong><span>Solicitudes radicadas</span></div>
+        </a>
+        <a class="hg-panel-stat" href="<%= request.getContextPath() %>/cliente/favoritos.jsp">
+            <div class="hg-panel-stat__icon"><i class="bi bi-heart-fill"></i></div>
+            <div><strong><%= totalFavoritos %></strong><span>Propiedades favoritas</span></div>
+        </a>
     </div>
 
-    <div class="hg-panel-card" style="display:flex; gap:14px; flex-wrap:wrap;">
-        <a class="hg-btn hg-btn--ghost" href="<%= request.getContextPath() %>/cliente/perfil.jsp">👤 Editar mi perfil</a>
-        <a class="hg-btn hg-btn--ghost" href="<%= request.getContextPath() %>/catalogo.jsp">🔍 Explorar propiedades</a>
+    <div class="hg-panel-card">
+        <h3 class="hg-panel-card__titulo"><i class="bi bi-lightning-charge-fill"></i> Acciones rapidas</h3>
+        <div class="hg-quick-actions">
+            <a class="hg-quick-action" href="<%= request.getContextPath() %>/catalogo.jsp">
+                <i class="bi bi-search"></i>
+                <span>Explorar propiedades</span>
+            </a>
+            <a class="hg-quick-action" href="<%= request.getContextPath() %>/cliente/perfil.jsp">
+                <i class="bi bi-person-gear"></i>
+                <span>Editar mi perfil</span>
+            </a>
+            <a class="hg-quick-action" href="<%= request.getContextPath() %>/cliente/favoritos.jsp">
+                <i class="bi bi-heart"></i>
+                <span>Mis favoritos</span>
+            </a>
+        </div>
     </div>
 </div>
 </body>

@@ -158,7 +158,7 @@
                     <form method="post" action="<%= request.getContextPath() %>/administrador/catalogos.jsp">
                         <input type="hidden" name="accion" value="eliminarCiudad">
                         <input type="hidden" name="id" value="<%= c.get("id") %>">
-                        <button class="hg-btn hg-btn--ghost hg-btn--sm" type="submit" style="color:var(--hg-off);">Eliminar</button>
+                        <button class="hg-btn hg-btn--ghost hg-btn--sm" type="submit" style="color:var(--hg-off);"><i class="bi bi-trash3"></i> Eliminar</button>
                     </form>
                 </div>
                 <% } %>
@@ -167,7 +167,7 @@
                 <input type="hidden" name="accion" value="agregarCiudad">
                 <input class="form-control" type="text" name="nombre" placeholder="Nombre de la ciudad" maxlength="80" required>
                 <input class="form-control" type="text" name="departamento" placeholder="Departamento" maxlength="80" required>
-                <button class="hg-btn hg-btn--primary hg-btn--sm" type="submit">Agregar ciudad</button>
+                <button class="hg-btn hg-btn--primary hg-btn--sm" type="submit"><i class="bi bi-plus-lg"></i> Agregar ciudad</button>
             </form>
         </div>
 
@@ -180,7 +180,7 @@
                     <form method="post" action="<%= request.getContextPath() %>/administrador/catalogos.jsp">
                         <input type="hidden" name="accion" value="eliminarTipo">
                         <input type="hidden" name="id" value="<%= t.get("id") %>">
-                        <button class="hg-btn hg-btn--ghost hg-btn--sm" type="submit" style="color:var(--hg-off);">Eliminar</button>
+                        <button class="hg-btn hg-btn--ghost hg-btn--sm" type="submit" style="color:var(--hg-off);"><i class="bi bi-trash3"></i> Eliminar</button>
                     </form>
                 </div>
                 <% } %>
@@ -189,7 +189,7 @@
                 <input type="hidden" name="accion" value="agregarTipo">
                 <input class="form-control" type="text" name="nombre" placeholder="Nombre del tipo" maxlength="40" required>
                 <input class="form-control" type="text" name="descripcion" placeholder="Descripcion (opcional)" maxlength="150">
-                <button class="hg-btn hg-btn--primary hg-btn--sm" type="submit">Agregar tipo</button>
+                <button class="hg-btn hg-btn--primary hg-btn--sm" type="submit"><i class="bi bi-plus-lg"></i> Agregar tipo</button>
             </form>
         </div>
 
@@ -202,7 +202,7 @@
                     <form method="post" action="<%= request.getContextPath() %>/administrador/catalogos.jsp">
                         <input type="hidden" name="accion" value="eliminarCaracteristica">
                         <input type="hidden" name="id" value="<%= car.get("id") %>">
-                        <button class="hg-btn hg-btn--ghost hg-btn--sm" type="submit" style="color:var(--hg-off);">Eliminar</button>
+                        <button class="hg-btn hg-btn--ghost hg-btn--sm" type="submit" style="color:var(--hg-off);"><i class="bi bi-trash3"></i> Eliminar</button>
                     </form>
                 </div>
                 <% } %>
@@ -211,7 +211,7 @@
                 <input type="hidden" name="accion" value="agregarCaracteristica">
                 <input class="form-control" type="text" name="nombre" placeholder="Nombre de la caracteristica" maxlength="50" required>
                 <input class="form-control" type="text" name="icono" placeholder="Icono (opcional, ej. bi-water)" maxlength="50">
-                <button class="hg-btn hg-btn--primary hg-btn--sm" type="submit">Agregar caracteristica</button>
+                <button class="hg-btn hg-btn--primary hg-btn--sm" type="submit"><i class="bi bi-plus-lg"></i> Agregar caracteristica</button>
             </form>
         </div>
     </div>

@@ -106,7 +106,7 @@
     <% if (agendadaExitosa) { %>
     <div class="hg-panel-card">
         <div class="hg-panel-empty">
-            <div class="hg-panel-empty__icon">✅</div>
+            <div class="hg-panel-empty__icon"><i class="bi bi-check-circle-fill"></i></div>
             <p>Tu cita quedo registrada como <strong>pendiente</strong>. La inmobiliaria la confirmara pronto.</p>
             <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/cliente/mis-citas.jsp">Ver mis citas</a>
         </div>

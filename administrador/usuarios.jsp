@@ -220,7 +220,7 @@
                         <% } %>
                     </div>
 
-                    <button class="hg-btn hg-btn--primary hg-btn--sm" type="submit" style="align-self:flex-start;">Guardar cambios</button>
+                    <button class="hg-btn hg-btn--primary hg-btn--sm" type="submit" style="align-self:flex-start;"><i class="bi bi-check-lg"></i> Guardar cambios</button>
                 </form>
             </details>
         </div>

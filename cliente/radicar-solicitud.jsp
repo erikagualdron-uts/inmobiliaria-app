@@ -89,7 +89,7 @@
     <% if (radicadaExitosa) { %>
     <div class="hg-panel-card">
         <div class="hg-panel-empty">
-            <div class="hg-panel-empty__icon">📋</div>
+            <div class="hg-panel-empty__icon"><i class="bi bi-clipboard"></i></div>
             <p>Tu solicitud quedo <strong>pendiente</strong> de revision. Ahora puedes radicar los documentos requeridos.</p>
             <a class="hg-btn hg-btn--primary" href="<%= request.getContextPath() %>/cliente/mis-solicitudes.jsp">Ir a mis solicitudes</a>
         </div>
