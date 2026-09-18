@@ -1,0 +1,27 @@
+<%@ page pageEncoding="UTF-8" %>
+<%@ page import="java.sql.PreparedStatement" %>
+<%!
+    // =========================================================================
+    // Registra un evento en la tabla auditoria, reutilizando la conexion ya
+    // abierta de la pagina que llama a este metodo (no abre una conexion
+    // nueva). JSP/JSPF puro, sin Servlet ni DAO.
+    //
+    // idUsuario puede ser null (auditoria.id_usuario acepta NULL). Si el
+    // INSERT falla por cualquier motivo, se ignora en silencio: registrar
+    // el evento nunca debe interrumpir la accion principal de la pagina
+    // (publicar, aprobar, iniciar sesion, etc.).
+    // =========================================================================
+    private void hgRegistrarAuditoria(java.sql.Connection conexion, javax.servlet.http.HttpServletRequest request,
+            Integer idUsuario, String accion, String tablaAfectada, String descripcion) {
+        if (conexion == null) return;
+        try (PreparedStatement ps = conexion.prepareStatement(
+                "INSERT INTO auditoria (id_usuario, accion, tabla_afectada, descripcion, ip_origen) VALUES (?, ?, ?, ?, ?)")) {
+            if (idUsuario == null) ps.setNull(1, java.sql.Types.INTEGER); else ps.setInt(1, idUsuario);
+            ps.setString(2, accion);
+            if (tablaAfectada == null) ps.setNull(3, java.sql.Types.VARCHAR); else ps.setString(3, tablaAfectada);
+            if (descripcion == null) ps.setNull(4, java.sql.Types.VARCHAR); else ps.setString(4, descripcion);
+            ps.setString(5, request.getRemoteAddr());
+            ps.executeUpdate();
+        } catch (Exception ignored) { }
+    }
+%>

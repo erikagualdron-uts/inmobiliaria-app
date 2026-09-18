@@ -3,6 +3,7 @@
 <%@ page import="java.util.ArrayList, java.util.List" %>
 <%@ include file="/jspf/conexion.jspf" %>
 <%@ include file="/jspf/utilidades.jspf" %>
+<%@ include file="/jspf/auditoria.jspf" %>
 <%
     if (session.getAttribute("idUsuario") != null) {
         response.sendRedirect(request.getContextPath() + "/index.jsp");
@@ -86,6 +87,8 @@
                     } else if (roles.contains("Inmobiliaria")) {
                         destino = request.getContextPath() + "/inmobiliaria/dashboard-inmobiliaria.jsp";
                     }
+
+                    hgRegistrarAuditoria(conexion, request, idUsuarioBd, "login", null, "Inicio de sesión exitoso.");
 
                     try { conexion.close(); } catch (Exception ignored) { }
                     response.sendRedirect(destino);

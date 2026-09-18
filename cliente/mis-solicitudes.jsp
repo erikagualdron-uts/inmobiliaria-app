@@ -7,6 +7,7 @@
 <%@ include file="/jspf/seguridad.jspf" %>
 <%@ include file="/jspf/conexion.jspf" %>
 <%@ include file="/jspf/subida-archivos.jspf" %>
+<%@ include file="/jspf/auditoria.jspf" %>
 <%
     int idUsuarioSesion = (Integer) session.getAttribute("idUsuario");
     List<String> errores = new ArrayList<>();
@@ -61,6 +62,8 @@
                     ps.setString(3, urlFinal);
                     ps.executeUpdate();
                 }
+                hgRegistrarAuditoria(conexion, request, idUsuarioSesion, "radicacion_documento", "documento_solicitud",
+                        "Cargó el documento " + nombreDocumento + ".");
             }
         } catch (Exception e) {
             if (errores.isEmpty()) errores.add("No fue posible radicar el documento. Intenta nuevamente.");

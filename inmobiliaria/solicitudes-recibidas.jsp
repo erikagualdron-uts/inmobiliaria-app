@@ -6,6 +6,7 @@
 %>
 <%@ include file="/jspf/seguridad.jspf" %>
 <%@ include file="/jspf/conexion.jspf" %>
+<%@ include file="/jspf/auditoria.jspf" %>
 <%
     int idUsuarioSesion = (Integer) session.getAttribute("idUsuario");
     Integer idInmobiliaria = null;
@@ -34,6 +35,11 @@
                     ps.setInt(3, idInmobiliaria);
                     ps.executeUpdate();
                 }
+                if ("aprobada".equals(nuevoEstado) || "rechazada".equals(nuevoEstado)) {
+                    hgRegistrarAuditoria(conexion, request, idUsuarioSesion,
+                            "aprobada".equals(nuevoEstado) ? "aprobacion_solicitud" : "rechazo_solicitud", "solicitud",
+                            ("aprobada".equals(nuevoEstado) ? "Aprobó" : "Rechazó") + " la solicitud #" + idSolicitud + ".");
+                }
             } catch (Exception ignored) { }
             try { conexion.close(); } catch (Exception ignored) { }
             response.sendRedirect(request.getContextPath() + "/inmobiliaria/solicitudes-recibidas.jsp");
@@ -54,6 +60,9 @@
                     ps.setInt(3, idInmobiliaria);
                     ps.executeUpdate();
                 }
+                hgRegistrarAuditoria(conexion, request, idUsuarioSesion,
+                        "aprobado".equals(nuevoEstadoDoc) ? "aprobacion_documento" : "rechazo_documento", "documento_solicitud",
+                        ("aprobado".equals(nuevoEstadoDoc) ? "Aprobó" : "Rechazó") + " el documento #" + idDocumento + ".");
             } catch (Exception ignored) { }
             try { conexion.close(); } catch (Exception ignored) { }
             response.sendRedirect(request.getContextPath() + "/inmobiliaria/solicitudes-recibidas.jsp");

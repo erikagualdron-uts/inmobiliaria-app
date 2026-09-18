@@ -3,6 +3,7 @@
 <%@ page import="java.util.ArrayList, java.util.List" %>
 <%@ include file="/jspf/conexion.jspf" %>
 <%@ include file="/jspf/utilidades.jspf" %>
+<%@ include file="/jspf/auditoria.jspf" %>
 <%
     // Si ya hay una sesion activa, no tiene sentido mostrar el registro
     if (session.getAttribute("idUsuario") != null) {
@@ -94,6 +95,8 @@
                         psRol.setInt(1, idUsuarioNuevo);
                         psRol.executeUpdate();
                     }
+
+                    hgRegistrarAuditoria(conexion, request, idUsuarioNuevo, "registro_usuario", "usuario", "Se registró como nuevo cliente.");
 
                     conexion.commit();
                     registroExitoso = true;

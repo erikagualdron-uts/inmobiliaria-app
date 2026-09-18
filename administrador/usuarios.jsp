@@ -6,6 +6,7 @@
 %>
 <%@ include file="/jspf/seguridad.jspf" %>
 <%@ include file="/jspf/conexion.jspf" %>
+<%@ include file="/jspf/auditoria.jspf" %>
 <%
     // =========================================================================
     // Gestion de usuarios: activar/inactivar cuentas, asignar/revocar roles
@@ -89,6 +90,17 @@
                     }
                     if (!nuevosRoles.isEmpty()) ps.executeBatch();
                 }
+
+                String correoEditado = null;
+                try (PreparedStatement ps = conexion.prepareStatement("SELECT correo FROM usuario WHERE id_usuario = ?")) {
+                    ps.setInt(1, idUsuarioEditar);
+                    try (ResultSet rs = ps.executeQuery()) { if (rs.next()) correoEditado = rs.getString(1); }
+                }
+                hgRegistrarAuditoria(conexion, request, idUsuarioSesion,
+                        "bloqueado".equals(nuevoEstado) ? "bloqueo_cuenta" : "asignacion_rol", "usuario",
+                        ("bloqueado".equals(nuevoEstado) ? "Bloqueó temporalmente la cuenta " : "Actualizó los roles y el estado de la cuenta ")
+                                + correoEditado + ".");
+
                 conexion.commit();
                 conexion.setAutoCommit(true);
             }

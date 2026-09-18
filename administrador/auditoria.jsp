@@ -7,10 +7,15 @@
 %>
 <%@ include file="/jspf/seguridad.jspf" %>
 <%@ include file="/jspf/conexion.jspf" %>
+<%@ include file="/jspf/auditoria.jspf" %>
 <%
+    Integer idUsuarioSesion = (Integer) session.getAttribute("idUsuario");
     List<Map<String, Object>> eventos = new ArrayList<>();
     List<String> accionesCatalogo = new ArrayList<>();
     if (conexion != null) {
+        hgRegistrarAuditoria(conexion, request, idUsuarioSesion, "consulta_auditoria", "auditoria",
+                "Consultó el reporte de auditoría del sistema.");
+
         try (PreparedStatement ps = conexion.prepareStatement(
                 "SELECT a.fecha_hora, a.accion, a.tabla_afectada, a.descripcion, a.ip_origen, " +
                 "       u.correo, per.nombres, per.apellidos " +
@@ -192,6 +197,8 @@
             case "bloqueo_cuenta": return "Bloqueo de cuenta";
             case "radicacion_documento": return "Radicación de documento";
             case "consulta_auditoria": return "Consulta de auditoría";
+            case "aprobacion_documento": return "Aprobación de documento";
+            case "rechazo_documento": return "Rechazo de documento";
             default: return accion.replace('_', ' ');
         }
     }
@@ -202,9 +209,11 @@
             case "creacion_propiedad":
             case "aprobacion_solicitud":
             case "registro_usuario":
+            case "aprobacion_documento":
                 return "ok";
             case "rechazo_solicitud":
             case "bloqueo_cuenta":
+            case "rechazo_documento":
                 return "off";
             case "radicacion_documento":
                 return "warn";

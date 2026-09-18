@@ -7,6 +7,7 @@
 %>
 <%@ include file="/jspf/seguridad.jspf" %>
 <%@ include file="/jspf/conexion.jspf" %>
+<%@ include file="/jspf/auditoria.jspf" %>
 <%
     // =========================================================================
     // Listado de propiedades de LA inmobiliaria del agente en sesion. Toda
@@ -37,6 +38,18 @@
                     ps.setInt(1, idPropiedadAccion);
                     ps.setInt(2, idInmobiliaria);
                     ps.executeUpdate();
+                }
+                try (PreparedStatement ps = conexion.prepareStatement(
+                        "SELECT matricula_inmobiliaria, activo FROM propiedad WHERE id_propiedad = ?")) {
+                    ps.setInt(1, idPropiedadAccion);
+                    try (ResultSet rs = ps.executeQuery()) {
+                        if (rs.next()) {
+                            String matriculaAccion = rs.getString("matricula_inmobiliaria");
+                            boolean quedaActiva = rs.getInt("activo") == 1;
+                            hgRegistrarAuditoria(conexion, request, idUsuarioSesion, "actualizacion_propiedad", "propiedad",
+                                    (quedaActiva ? "Reactivó" : "Dio de baja") + " la propiedad " + matriculaAccion + ".");
+                        }
+                    }
                 }
             } catch (Exception ignored) { }
             try { conexion.close(); } catch (Exception ignored) { }

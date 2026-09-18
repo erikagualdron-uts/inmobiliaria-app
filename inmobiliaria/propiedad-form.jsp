@@ -8,6 +8,7 @@
 <%@ include file="/jspf/seguridad.jspf" %>
 <%@ include file="/jspf/conexion.jspf" %>
 <%@ include file="/jspf/subida-archivos.jspf" %>
+<%@ include file="/jspf/auditoria.jspf" %>
 <%
     // =========================================================================
     // Alta y edicion de propiedades. Sin "id" en la query string se crea una
@@ -315,6 +316,10 @@
                             ps.executeBatch();
                         }
                     }
+
+                    hgRegistrarAuditoria(conexion, request, idUsuarioSesion,
+                            esEdicion ? "actualizacion_propiedad" : "creacion_propiedad", "propiedad",
+                            (esEdicion ? "Actualizó" : "Publicó") + " la propiedad " + matricula + ".");
 
                     conexion.commit();
                     guardadoExitoso = true;
