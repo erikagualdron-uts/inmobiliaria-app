@@ -1,0 +1,33 @@
+<%@ page pageEncoding="UTF-8" %>
+<%@ page import="java.util.List, java.util.Map" %>
+<%!
+    // =========================================================================
+    // Convierte una lista de filas (Map con una llave de texto y una de
+    // numero, como las que ya usan los reportes de barras) en literales de
+    // array JavaScript, para pasarle los datos a Chart.js sin depender de
+    // ninguna libreria de JSON (no hay Gson/Jackson en el classpath y no se
+    // van a agregar .jar nuevos). Escapa comillas y backslashes a mano.
+    // =========================================================================
+    private String hgEscaparJs(String s) {
+        if (s == null) return "";
+        return s.replace("\\", "\\\\").replace("'", "\\'");
+    }
+
+    private String hgArrayEtiquetasJs(List<Map<String, Object>> filas, String llave) {
+        StringBuilder sb = new StringBuilder("[");
+        for (int i = 0; i < filas.size(); i++) {
+            if (i > 0) sb.append(",");
+            sb.append("'").append(hgEscaparJs(String.valueOf(filas.get(i).get(llave)))).append("'");
+        }
+        return sb.append("]").toString();
+    }
+
+    private String hgArrayValoresJs(List<Map<String, Object>> filas, String llave) {
+        StringBuilder sb = new StringBuilder("[");
+        for (int i = 0; i < filas.size(); i++) {
+            if (i > 0) sb.append(",");
+            sb.append(filas.get(i).get(llave));
+        }
+        return sb.append("]").toString();
+    }
+%>

@@ -1,5 +1,27 @@
 // Hogaria - interacciones ligeras del front-end (sin dependencias externas)
 
+// Lee la paleta real de la app desde las variables CSS (nunca hardcodeada
+// aqui), para que los graficos de Chart.js usen siempre los mismos colores
+// que el resto de la interfaz. Devuelve tonos "solidos" para las barras/
+// segmentos y "suaves" a juego para fondos si se necesitan.
+function hgColoresGrafico() {
+    var estilo = getComputedStyle(document.documentElement);
+    function leer(variable) { return estilo.getPropertyValue(variable).trim(); }
+    return {
+        primario: leer('--hg-primary'),
+        acento: leer('--hg-accent'),
+        ok: leer('--hg-ok'),
+        warn: leer('--hg-warn'),
+        off: leer('--hg-off'),
+        info: leer('--hg-info'),
+        texto: leer('--hg-ink'),
+        textoSuave: leer('--hg-ink-muted'),
+        borde: leer('--hg-border'),
+        // Paleta ciclica para graficos con mas categorias que colores base
+        serie: [leer('--hg-primary'), leer('--hg-accent'), leer('--hg-ok'), leer('--hg-info'), leer('--hg-warn'), leer('--hg-off')]
+    };
+}
+
 // Modal de confirmacion generico (reemplaza confirm() del navegador) para
 // acciones irreversibles. Devuelve una promesa que resuelve true/false segun
 // lo que elija el usuario. Se expone en window por si alguna pagina necesita
