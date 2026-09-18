@@ -1,16 +1,19 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ page import="java.sql.PreparedStatement, java.sql.ResultSet" %>
-<%@ page import="java.util.ArrayList, java.util.List, java.util.Map, java.util.LinkedHashMap" %>
+<%@ page import="java.util.ArrayList, java.util.List, java.util.Map, java.util.LinkedHashMap, java.util.HashSet, java.util.Arrays" %>
 <%
     String[] rolesPermitidos = { "Inmobiliaria" };
 %>
 <%@ include file="/jspf/seguridad.jspf" %>
 <%@ include file="/jspf/conexion.jspf" %>
+<%@ include file="/jspf/subida-archivos.jspf" %>
 <%
     // =========================================================================
-    // Administracion de la galeria de imagenes (URLs, no archivos binarios)
-    // de una propiedad. Solo el agente de la inmobiliaria duena del inmueble
-    // puede administrarla.
+    // Administracion de la galeria de imagenes de una propiedad. Se puede
+    // subir un archivo desde el equipo o pegar una URL externa (Unsplash,
+    // Pexels, etc.); en ambos casos queda guardada como URL en la base de
+    // datos. Solo el agente de la inmobiliaria duena del inmueble puede
+    // administrarla.
     // =========================================================================
     int idUsuarioSesion = (Integer) session.getAttribute("idUsuario");
     Integer idInmobiliaria = null;
@@ -61,9 +64,24 @@
             String url = request.getParameter("urlImagen") != null ? request.getParameter("urlImagen").trim() : "";
             boolean esPrincipal = "1".equals(request.getParameter("esPrincipal"));
 
-            if (url.isEmpty() || !url.matches("^https?://.+")) {
-                errores.add("Ingresa una URL de imagen valida (debe iniciar con http:// o https://).");
-            } else {
+            String urlFinal = null;
+            try {
+                String urlSubida = hgGuardarArchivoSubido(request, "archivoImagen", "propiedades",
+                        new HashSet<>(Arrays.asList("jpg", "jpeg", "png", "webp")), 5L * 1024 * 1024);
+                if (urlSubida != null) {
+                    urlFinal = urlSubida;
+                } else if (!url.isEmpty() && url.matches("^https?://.+")) {
+                    urlFinal = url;
+                }
+            } catch (IllegalArgumentException iae) {
+                errores.add(iae.getMessage());
+            }
+
+            if (urlFinal == null && errores.isEmpty()) {
+                errores.add("Sube una imagen desde tu equipo o ingresa una URL valida (debe iniciar con http:// o https://).");
+            }
+
+            if (errores.isEmpty()) {
                 try {
                     if (esPrincipal) {
                         try (PreparedStatement ps = conexion.prepareStatement(
@@ -81,7 +99,7 @@
                     try (PreparedStatement ps = conexion.prepareStatement(
                             "INSERT INTO imagen_propiedad (id_propiedad, url_imagen, orden, es_principal) VALUES (?, ?, ?, ?)")) {
                         ps.setInt(1, idPropiedad);
-                        ps.setString(2, url);
+                        ps.setString(2, urlFinal);
                         ps.setInt(3, siguienteOrden);
                         ps.setBoolean(4, esPrincipal);
                         ps.executeUpdate();
@@ -205,18 +223,25 @@
     <% } %>
 
     <div class="hg-panel-card">
-        <h3 style="margin-bottom:14px;">Agregar imagen</h3>
-        <form method="post" action="<%= request.getContextPath() %>/inmobiliaria/propiedad-galeria.jsp?id=<%= idPropiedad %>" style="display:flex; flex-direction:column; gap:14px;">
+        <h3 style="margin-bottom:14px;"><i class="bi bi-image-fill"></i> Agregar imagen</h3>
+        <form method="post" action="<%= request.getContextPath() %>/inmobiliaria/propiedad-galeria.jsp?id=<%= idPropiedad %>" enctype="multipart/form-data" style="display:flex; flex-direction:column; gap:14px;">
             <input type="hidden" name="accion" value="agregar">
-            <div class="hg-field">
-                <label for="urlImagen">URL de la imagen (Unsplash, Pexels u otro banco libre)</label>
-                <input class="form-control" type="url" id="urlImagen" name="urlImagen" placeholder="https://images.unsplash.com/..." required>
+            <div class="hg-o-alternativa">
+                <div class="hg-field">
+                    <label for="archivoImagen"><i class="bi bi-upload"></i> Subir desde el equipo (JPG, PNG o WEBP, max. 5MB)</label>
+                    <input class="form-control" type="file" id="archivoImagen" name="archivoImagen" accept=".jpg,.jpeg,.png,.webp">
+                </div>
+                <span class="hg-o-alternativa__o">o</span>
+                <div class="hg-field">
+                    <label for="urlImagen"><i class="bi bi-link-45deg"></i> URL de la imagen (Unsplash, Pexels, etc.)</label>
+                    <input class="form-control" type="url" id="urlImagen" name="urlImagen" placeholder="https://images.unsplash.com/...">
+                </div>
             </div>
             <label class="hg-checkbox" style="align-self:flex-start;">
                 <input type="checkbox" name="esPrincipal" value="1" <%= imagenes.isEmpty() ? "checked" : "" %>>
                 Usar como foto principal
             </label>
-            <button class="hg-btn hg-btn--primary" type="submit" style="align-self:flex-start;">Agregar imagen</button>
+            <button class="hg-btn hg-btn--primary" type="submit" style="align-self:flex-start;"><i class="bi bi-plus-lg"></i> Agregar imagen</button>
         </form>
     </div>
 </div>

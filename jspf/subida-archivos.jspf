@@ -1,0 +1,69 @@
+<%@ page pageEncoding="UTF-8" %>
+<%@ page import="javax.servlet.http.Part" %>
+<%!
+    // =========================================================================
+    // Subida de archivos usando el soporte NATIVO de multipart de Servlet
+    // 3.0/Tomcat (HttpServletRequest.getPart), sin ninguna libreria externa
+    // (ni Commons FileUpload) y sin Servlets ni clases .java propias: la
+    // pagina que use este metodo solo necesita declarar <multipart-config>
+    // para su propia ruta en WEB-INF/web.xml (ver esa declaracion alli).
+    //
+    // Guarda el archivo en /uploads/<subcarpeta>/ con un nombre unico
+    // (UUID) y devuelve la URL relativa al contexto para guardarla en la
+    // base de datos -- el mismo patron de "guardar como URL" que ya se usa
+    // para las imagenes externas, solo que ahora la URL apunta a un
+    // archivo alojado localmente en vez de uno externo.
+    //
+    // Devuelve null si el usuario no selecciono ningun archivo (para que
+    // la pagina pueda usar, en ese caso, el campo de URL como alternativa).
+    // Lanza IllegalArgumentException con un mensaje legible si el archivo
+    // no cumple la extension o el tamano permitido.
+    // =========================================================================
+    private String hgGuardarArchivoSubido(javax.servlet.http.HttpServletRequest request, String nombreCampo,
+            String subcarpeta, java.util.Set<String> extensionesPermitidas, long tamanoMaximoBytes) throws Exception {
+
+        Part part;
+        try {
+            part = request.getPart(nombreCampo);
+        } catch (Exception e) {
+            return null; // el request no era multipart o no traia ese campo
+        }
+        if (part == null || part.getSize() <= 0) {
+            return null;
+        }
+
+        String nombreOriginal = part.getSubmittedFileName();
+        if (nombreOriginal == null || nombreOriginal.trim().isEmpty()) {
+            return null;
+        }
+
+        String extension = "";
+        int puntoIdx = nombreOriginal.lastIndexOf('.');
+        if (puntoIdx >= 0 && puntoIdx < nombreOriginal.length() - 1) {
+            extension = nombreOriginal.substring(puntoIdx + 1).toLowerCase();
+        }
+        if (!extensionesPermitidas.contains(extension)) {
+            throw new IllegalArgumentException(
+                "Tipo de archivo no permitido (" + (extension.isEmpty() ? "sin extension" : "." + extension) +
+                "). Se aceptan: " + String.join(", ", extensionesPermitidas) + ".");
+        }
+        if (part.getSize() > tamanoMaximoBytes) {
+            throw new IllegalArgumentException(
+                "El archivo supera el tamano maximo permitido (" + (tamanoMaximoBytes / (1024 * 1024)) + " MB).");
+        }
+
+        String nombreUnico = java.util.UUID.randomUUID().toString() + "." + extension;
+        String carpetaFisica = request.getServletContext().getRealPath("/uploads/" + subcarpeta);
+        java.io.File directorio = new java.io.File(carpetaFisica);
+        if (!directorio.exists()) {
+            directorio.mkdirs();
+        }
+
+        java.io.File destino = new java.io.File(directorio, nombreUnico);
+        try (java.io.InputStream in = part.getInputStream()) {
+            java.nio.file.Files.copy(in, destino.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+        }
+
+        return request.getContextPath() + "/uploads/" + subcarpeta + "/" + nombreUnico;
+    }
+%>

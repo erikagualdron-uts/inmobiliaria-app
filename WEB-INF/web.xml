@@ -28,4 +28,40 @@
         <session-timeout>30</session-timeout>
     </session-config>
 
+    <!--
+        Habilita la subida de archivos (multipart/form-data) para estos dos
+        JSP puntuales, usando el soporte NATIVO de Servlet 3.0 (Part /
+        request.getPart), sin Servlets propios ni librerias externas: se
+        declara el mismo archivo .jsp como "jsp-file" de un <servlet>, y se
+        le agrega <multipart-config>. Esta declaracion explicita de ruta
+        tiene prioridad sobre el mapeo generico "*.jsp", asi que estos dos
+        archivos siguen siendo JSP normales, compilados igual que siempre,
+        solo que ahora con el parser de multipart activado.
+    -->
+    <servlet>
+        <servlet-name>MisSolicitudesUpload</servlet-name>
+        <jsp-file>/cliente/mis-solicitudes.jsp</jsp-file>
+        <multipart-config>
+            <max-file-size>5242880</max-file-size>
+            <max-request-size>10485760</max-request-size>
+        </multipart-config>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MisSolicitudesUpload</servlet-name>
+        <url-pattern>/cliente/mis-solicitudes.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PropiedadGaleriaUpload</servlet-name>
+        <jsp-file>/inmobiliaria/propiedad-galeria.jsp</jsp-file>
+        <multipart-config>
+            <max-file-size>5242880</max-file-size>
+            <max-request-size>10485760</max-request-size>
+        </multipart-config>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PropiedadGaleriaUpload</servlet-name>
+        <url-pattern>/inmobiliaria/propiedad-galeria.jsp</url-pattern>
+    </servlet-mapping>
+
 </web-app>

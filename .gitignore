@@ -1,0 +1,4 @@
+# Archivos subidos por los usuarios en tiempo de ejecucion (documentos e
+# imagenes cargados desde el PC). No son codigo fuente ni datos de prueba;
+# se generan en el servidor y no deben versionarse.
+/uploads/

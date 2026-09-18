@@ -1,16 +1,18 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ page import="java.sql.PreparedStatement, java.sql.ResultSet" %>
-<%@ page import="java.util.ArrayList, java.util.List, java.util.Map, java.util.LinkedHashMap" %>
+<%@ page import="java.util.ArrayList, java.util.List, java.util.Map, java.util.LinkedHashMap, java.util.HashSet, java.util.Arrays" %>
 <%
     String[] rolesPermitidos = { "Cliente" };
 %>
 <%@ include file="/jspf/seguridad.jspf" %>
 <%@ include file="/jspf/conexion.jspf" %>
+<%@ include file="/jspf/subida-archivos.jspf" %>
 <%
     int idUsuarioSesion = (Integer) session.getAttribute("idUsuario");
     List<String> errores = new ArrayList<>();
 
-    // Radicar un nuevo documento sobre una solicitud propia (Post/Redirect/Get)
+    // Radicar un nuevo documento sobre una solicitud propia (Post/Redirect/Get).
+    // Acepta un archivo subido desde el PC o, alternativamente, una URL.
     if ("POST".equalsIgnoreCase(request.getMethod()) && "radicarDocumento".equals(request.getParameter("accion")) && conexion != null) {
         try {
             int idSolicitud = Integer.parseInt(request.getParameter("idSolicitud"));
@@ -29,19 +31,40 @@
                 response.sendRedirect(request.getContextPath() + "/acceso-denegado.jsp");
                 return;
             }
-            if (nombreDocumento.isEmpty() || urlDocumento.isEmpty() || !urlDocumento.matches("^https?://.+")) {
-                errores.add("Ingresa un nombre de documento y una URL valida (debe iniciar con http:// o https://).");
-            } else {
+
+            String urlFinal = null;
+            try {
+                String urlSubida = hgGuardarArchivoSubido(request, "archivoDocumento", "documentos",
+                        new HashSet<>(Arrays.asList("pdf", "jpg", "jpeg", "png", "doc", "docx")), 5L * 1024 * 1024);
+                if (urlSubida != null) {
+                    urlFinal = urlSubida;
+                } else if (!urlDocumento.isEmpty() && urlDocumento.matches("^https?://.+")) {
+                    urlFinal = urlDocumento;
+                }
+            } catch (IllegalArgumentException iae) {
+                errores.add(iae.getMessage());
+            }
+
+            if (nombreDocumento.isEmpty()) {
+                errores.add("Ingresa un nombre para el documento.");
+            }
+            if (urlFinal == null && errores.isEmpty()) {
+                errores.add("Sube un archivo desde tu equipo o ingresa una URL valida (debe iniciar con http:// o https://).");
+            }
+
+            if (errores.isEmpty()) {
                 try (PreparedStatement ps = conexion.prepareStatement(
                         "INSERT INTO documento_solicitud (id_solicitud, nombre_documento, url_documento, estado) " +
                         "VALUES (?, ?, ?, 'pendiente')")) {
                     ps.setInt(1, idSolicitud);
                     ps.setString(2, nombreDocumento);
-                    ps.setString(3, urlDocumento);
+                    ps.setString(3, urlFinal);
                     ps.executeUpdate();
                 }
             }
-        } catch (Exception ignored) { }
+        } catch (Exception e) {
+            if (errores.isEmpty()) errores.add("No fue posible radicar el documento. Intenta nuevamente.");
+        }
 
         if (errores.isEmpty()) {
             try { conexion.close(); } catch (Exception ignored) { }
@@ -153,13 +176,23 @@
             <% } %>
 
             <details>
-                <summary style="cursor:pointer; color:var(--hg-primary); font-size:.9rem; font-weight:600;">+ Radicar documento</summary>
-                <form method="post" action="<%= request.getContextPath() %>/cliente/mis-solicitudes.jsp" style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+                <summary style="cursor:pointer; color:var(--hg-primary); font-size:.9rem; font-weight:600;"><i class="bi bi-plus-circle"></i> Radicar documento</summary>
+                <form method="post" action="<%= request.getContextPath() %>/cliente/mis-solicitudes.jsp" enctype="multipart/form-data" style="display:flex; flex-direction:column; gap:10px; margin-top:12px;">
                     <input type="hidden" name="accion" value="radicarDocumento">
                     <input type="hidden" name="idSolicitud" value="<%= s.get("id") %>">
-                    <input class="form-control" type="text" name="nombreDocumento" placeholder="Ej. Cedula de ciudadania" style="flex:1; min-width:180px;" required>
-                    <input class="form-control" type="url" name="urlDocumento" placeholder="https://..." style="flex:2; min-width:220px;" required>
-                    <button class="hg-btn hg-btn--ghost hg-btn--sm" type="submit">Agregar</button>
+                    <input class="form-control" type="text" name="nombreDocumento" placeholder="Ej. Cedula de ciudadania" required>
+                    <div class="hg-o-alternativa">
+                        <div class="hg-field">
+                            <label><i class="bi bi-upload"></i> Subir archivo (PDF, JPG, PNG o Word, max. 5MB)</label>
+                            <input class="form-control" type="file" name="archivoDocumento" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
+                        </div>
+                        <span class="hg-o-alternativa__o">o</span>
+                        <div class="hg-field">
+                            <label><i class="bi bi-link-45deg"></i> Pega la URL del documento</label>
+                            <input class="form-control" type="url" name="urlDocumento" placeholder="https://...">
+                        </div>
+                    </div>
+                    <button class="hg-btn hg-btn--ghost hg-btn--sm" type="submit" style="align-self:flex-start;"><i class="bi bi-send"></i> Agregar</button>
                 </form>
             </details>
         </div>
