@@ -1,0 +1,40 @@
+<%
+    // Header incluido en las paginas publicas. Si ya existe sesion iniciada
+    // (la establecera el futuro modulo de login con session.setAttribute
+    // ("idUsuario", ...) y session.setAttribute("nombreUsuario", ...)),
+    // se muestra el nombre del usuario en vez de los botones de acceso.
+    Object idUsuarioSesion = session.getAttribute("idUsuario");
+    String nombreUsuarioSesion = (String) session.getAttribute("nombreUsuario");
+%>
+<header class="hg-navbar" id="hg-navbar">
+    <div class="hg-navbar__inner">
+        <a class="hg-brand" href="<%= request.getContextPath() %>/index.jsp">
+            <svg class="hg-brand__mark" width="30" height="30" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M4 15L16 5L28 15" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M7 13V26H25V13" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M13 26V19H19V26" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Hogaria</span>
+        </a>
+
+        <button class="hg-navbar__toggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="hg-navmenu" id="hg-navbar-toggle">
+            <span></span><span></span><span></span>
+        </button>
+
+        <nav class="hg-navmenu" id="hg-navmenu">
+            <a href="<%= request.getContextPath() %>/index.jsp#destacadas">Propiedades</a>
+            <a href="<%= request.getContextPath() %>/index.jsp#nosotros">Nosotros</a>
+            <a href="<%= request.getContextPath() %>/index.jsp#contacto">Contacto</a>
+
+            <div class="hg-navmenu__auth">
+                <% if (idUsuarioSesion != null) { %>
+                    <span class="hg-navmenu__user">Hola, <%= nombreUsuarioSesion != null ? nombreUsuarioSesion : "usuario" %></span>
+                    <a class="hg-btn hg-btn--ghost" href="<%= request.getContextPath() %>/logout.jsp">Cerrar sesion</a>
+                <% } else { %>
+                    <a class="hg-btn hg-btn--ghost" href="<%= request.getContextPath() %>/login.jsp">Iniciar sesion</a>
+                    <a class="hg-btn hg-btn--solid" href="<%= request.getContextPath() %>/registro.jsp">Registrarse</a>
+                <% } %>
+            </div>
+        </nav>
+    </div>
+</header>

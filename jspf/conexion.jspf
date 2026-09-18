@@ -1,0 +1,37 @@
+<%@ page import="java.sql.Connection, java.sql.DriverManager, java.sql.SQLException" %>
+<%
+    // =========================================================================
+    // Conexion centralizada a la base de datos de Hogaria.
+    // Este JSPF se incluye mediante la directiva JSP "include" al inicio de
+    // cada JSP que necesite acceso a datos. La cadena de conexion vive
+    // UNICAMENTE aqui: si cambian las credenciales o el motor, solo se edita
+    // este archivo.
+    //
+    // Al terminar, la pagina que incluye este JSPF queda con una variable
+    // local "conexion" (java.sql.Connection). Si la conexion fallo, queda en
+    // null y "errorConexion" tiene un mensaje legible para el usuario final
+    // (nunca se debe mostrar la excepcion cruda de Java).
+    //
+    // Recuerda cerrar "conexion" (y los ResultSet/PreparedStatement que abras)
+    // en un bloque finally dentro de la pagina que la usa.
+    // =========================================================================
+
+    final String hogariaDbUrl =
+        "jdbc:mysql://localhost:3306/hogaria_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=America/Bogota&characterEncoding=UTF-8";
+    final String hogariaDbUsuario = "root";
+    final String hogariaDbPassword = "";
+
+    Connection conexion = null;
+    String errorConexion = null;
+
+    try {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        conexion = DriverManager.getConnection(hogariaDbUrl, hogariaDbUsuario, hogariaDbPassword);
+    } catch (ClassNotFoundException driverEx) {
+        conexion = null;
+        errorConexion = "No se encontro el controlador de la base de datos. Contacta al administrador del sitio.";
+    } catch (SQLException sqlEx) {
+        conexion = null;
+        errorConexion = "No fue posible conectar con la base de datos en este momento. Intenta nuevamente en unos minutos.";
+    }
+%>
