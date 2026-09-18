@@ -29,6 +29,30 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Mostrar/ocultar contrasena
+    document.querySelectorAll('[data-toggle-password]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            var input = document.getElementById(btn.getAttribute('data-toggle-password'));
+            var icon = btn.querySelector('i');
+            if (!input) { return; }
+            var oculto = input.type === 'password';
+            input.type = oculto ? 'text' : 'password';
+            if (icon) {
+                icon.classList.toggle('bi-eye', !oculto);
+                icon.classList.toggle('bi-eye-slash', oculto);
+            }
+            btn.setAttribute('aria-label', oculto ? 'Ocultar contrasena' : 'Mostrar contrasena');
+        });
+    });
+
+    // Avatar de cuenta: abre el modal con la informacion del usuario
+    var avatarBtn = document.getElementById('hg-avatar-trigger');
+    var avatarModalEl = document.getElementById('hgModalCuenta');
+    if (avatarBtn && avatarModalEl && window.bootstrap) {
+        var avatarModal = new bootstrap.Modal(avatarModalEl);
+        avatarBtn.addEventListener('click', function () { avatarModal.show(); });
+    }
+
     // El buscador exige al menos un criterio antes de enviar
     var searchForm = document.getElementById('hg-search-form');
     if (searchForm) {

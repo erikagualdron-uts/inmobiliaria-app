@@ -1,11 +1,10 @@
 <%@ page pageEncoding="UTF-8" %>
 <%
-    // Header incluido en las paginas publicas. Si ya existe sesion iniciada
-    // (la establecera el futuro modulo de login con session.setAttribute
-    // ("idUsuario", ...) y session.setAttribute("nombreUsuario", ...)),
-    // se muestra el nombre del usuario en vez de los botones de acceso.
+    // Header incluido en las paginas publicas. Si hay sesion iniciada se
+    // muestra el avatar de la cuenta (con acceso directo a "Mi panel") en
+    // vez de los botones de acceso, para que nunca se sienta como una
+    // perdida de sesion el navegar a una pagina publica estando logueado.
     Object idUsuarioSesion = session.getAttribute("idUsuario");
-    String nombreUsuarioSesion = (String) session.getAttribute("nombreUsuario");
 %>
 <header class="hg-navbar" id="hg-navbar">
     <div class="hg-navbar__inner">
@@ -29,8 +28,7 @@
 
             <div class="hg-navmenu__auth">
                 <% if (idUsuarioSesion != null) { %>
-                    <span class="hg-navmenu__user">Hola, <%= nombreUsuarioSesion != null ? nombreUsuarioSesion : "usuario" %></span>
-                    <a class="hg-btn hg-btn--ghost" href="<%= request.getContextPath() %>/logout.jsp">Cerrar sesion</a>
+                    <%@ include file="/jspf/avatar-cuenta.jspf" %>
                 <% } else { %>
                     <a class="hg-btn hg-btn--ghost" href="<%= request.getContextPath() %>/login.jsp">Iniciar sesion</a>
                     <a class="hg-btn hg-btn--solid" href="<%= request.getContextPath() %>/registro.jsp">Registrarse</a>

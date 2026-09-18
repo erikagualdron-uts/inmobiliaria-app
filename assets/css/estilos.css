@@ -180,6 +180,54 @@ img { max-width: 100%; display: block; }
 .hg-navmenu__auth { display: flex; align-items: center; gap: 10px; }
 .hg-navmenu__user { font-size: .9rem; color: var(--hg-ink-muted); margin-right: 4px; }
 
+/* ---------- Avatar de cuenta + modal ---------- */
+.hg-avatar-trigger {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: none; border: none; cursor: pointer;
+    padding: 4px 12px 4px 4px; border-radius: 999px;
+    transition: background-color .15s ease;
+}
+.hg-avatar-trigger:hover { background: var(--hg-primary-soft); }
+.hg-avatar-trigger__nombre { font-size: .9rem; font-weight: 600; color: var(--hg-ink); }
+
+.hg-avatar {
+    width: 34px; height: 34px; border-radius: 50%; object-fit: cover; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; overflow: hidden;
+}
+.hg-avatar--inicial {
+    background: var(--hg-primary); color: #fff;
+    font-family: 'Fraunces', serif; font-weight: 700; font-size: 1rem;
+}
+.hg-avatar--lg { width: 64px; height: 64px; font-size: 1.7rem; }
+
+.hg-modal-cuenta .modal-body { padding: 30px; position: relative; }
+.hg-modal-cuenta .btn-close { position: absolute; top: 18px; right: 18px; }
+.hg-modal-cuenta__header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; padding-right: 30px; }
+.hg-modal-cuenta__header h3 { font-size: 1.15rem; margin-bottom: 6px; }
+.hg-modal-cuenta__roles { display: flex; gap: 6px; flex-wrap: wrap; }
+.hg-modal-cuenta__datos {
+    display: grid; grid-template-columns: auto 1fr; gap: 8px 14px; margin: 0 0 24px;
+    padding-top: 18px; border-top: 1px dashed var(--hg-border);
+}
+.hg-modal-cuenta__datos dt { color: var(--hg-ink-muted); font-size: .82rem; display: flex; align-items: center; gap: 6px; }
+.hg-modal-cuenta__datos dd { margin: 0; font-size: .92rem; }
+.hg-modal-cuenta__acciones { display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* ---------- Nav del panel interno, con iconos ---------- */
+.hg-panel-nav { display: flex; align-items: center; gap: 2px; flex-wrap: wrap; flex: 1; justify-content: center; }
+.hg-panel-nav a {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: .85rem; font-weight: 600; color: var(--hg-ink-muted);
+    padding: 8px 12px; border-radius: 999px;
+    transition: background-color .15s ease, color .15s ease;
+}
+.hg-panel-nav a i { font-size: 1rem; }
+.hg-panel-nav a:hover { background: var(--hg-primary-soft); color: var(--hg-primary-dark); }
+
+@media (max-width: 992px) {
+    .hg-panel-nav { justify-content: flex-start; order: 3; width: 100%; }
+}
+
 /* ---------- Hero ---------- */
 .hg-hero {
     position: relative;
@@ -443,6 +491,16 @@ img { max-width: 100%; display: block; }
 .hg-alert--success { background: var(--hg-ok-soft); color: var(--hg-ok); border-color: transparent; }
 .hg-alert ul { margin: 0; padding-left: 18px; }
 .hg-alert ul li + li { margin-top: 4px; }
+
+.hg-password-field { position: relative; }
+.hg-password-field input { padding-right: 42px; }
+.hg-password-toggle {
+    position: absolute; top: 50%; right: 4px; transform: translateY(-50%);
+    width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;
+    background: none; border: none; border-radius: var(--hg-radius-sm);
+    color: var(--hg-ink-muted); cursor: pointer; transition: color .15s ease, background-color .15s ease;
+}
+.hg-password-toggle:hover { color: var(--hg-primary); background: var(--hg-primary-soft); }
 
 @media (max-width: 560px) {
     .hg-auth__grid { grid-template-columns: 1fr; }

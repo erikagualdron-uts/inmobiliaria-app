@@ -92,8 +92,11 @@
                     ps.executeUpdate();
                     guardadoExitoso = true;
 
-                    // El nombre mostrado en la barra superior viene de la sesion; se refresca.
+                    // El avatar y el modal de cuenta leen estos datos de la sesion; se refrescan.
                     session.setAttribute("nombreUsuario", nombres);
+                    session.setAttribute("apellidosUsuario", apellidos);
+                    session.setAttribute("telefonoUsuario", telefono.isEmpty() ? null : telefono);
+                    session.setAttribute("fotoUrlUsuario", fotoUrl.isEmpty() ? null : fotoUrl);
                 } catch (SQLException sqlEx) {
                     if ("23000".equals(sqlEx.getSQLState())) {
                         errores.add("Ese numero de documento ya esta registrado por otra cuenta.");

@@ -197,11 +197,21 @@
                     </div>
                     <div class="hg-field">
                         <label for="contrasena">Contrasena</label>
-                        <input class="form-control" type="password" id="contrasena" name="contrasena" minlength="8" required>
+                        <div class="hg-password-field">
+                            <input class="form-control" type="password" id="contrasena" name="contrasena" minlength="8" required>
+                            <button type="button" class="hg-password-toggle" data-toggle-password="contrasena" aria-label="Mostrar contrasena">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
                     </div>
                     <div class="hg-field">
                         <label for="confirmarContrasena">Confirmar contrasena</label>
-                        <input class="form-control" type="password" id="confirmarContrasena" name="confirmarContrasena" minlength="8" required>
+                        <div class="hg-password-field">
+                            <input class="form-control" type="password" id="confirmarContrasena" name="confirmarContrasena" minlength="8" required>
+                            <button type="button" class="hg-password-toggle" data-toggle-password="confirmarContrasena" aria-label="Mostrar contrasena">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <button class="hg-btn hg-btn--primary hg-btn--block" type="submit">Crear cuenta</button>
@@ -211,5 +221,7 @@
         <% } %>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="<%= request.getContextPath() %>/assets/js/main.js"></script>
 </body>
 </html>

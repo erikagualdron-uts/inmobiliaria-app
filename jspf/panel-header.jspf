@@ -1,8 +1,6 @@
 <%@ page pageEncoding="UTF-8" %>
 <%
     // Barra superior para paginas internas ya protegidas por seguridad.jspf.
-    String hgNombrePanel = (String) session.getAttribute("nombreUsuario");
-
     @SuppressWarnings("unchecked")
     java.util.List<String> hgRolesPanel = (java.util.List<String>) session.getAttribute("roles");
 %>
@@ -16,30 +14,29 @@
             </svg>
             <span>Hogaria</span>
         </a>
-        <div class="hg-panel-topbar__user">
+
+        <nav class="hg-panel-nav">
             <% if (hgRolesPanel != null && hgRolesPanel.contains("Inmobiliaria")) { %>
-            <a href="<%= request.getContextPath() %>/inmobiliaria/mis-propiedades.jsp" style="font-size:.9rem; font-weight:600;">Mis propiedades</a>
-            <a href="<%= request.getContextPath() %>/inmobiliaria/citas-recibidas.jsp" style="font-size:.9rem; font-weight:600;">Citas</a>
-            <a href="<%= request.getContextPath() %>/inmobiliaria/solicitudes-recibidas.jsp" style="font-size:.9rem; font-weight:600;">Solicitudes</a>
-            <a href="<%= request.getContextPath() %>/inmobiliaria/reportes.jsp" style="font-size:.9rem; font-weight:600;">Reportes</a>
+            <a href="<%= request.getContextPath() %>/inmobiliaria/mis-propiedades.jsp"><i class="bi bi-houses"></i> Mis propiedades</a>
+            <a href="<%= request.getContextPath() %>/inmobiliaria/citas-recibidas.jsp"><i class="bi bi-calendar-check"></i> Citas</a>
+            <a href="<%= request.getContextPath() %>/inmobiliaria/solicitudes-recibidas.jsp"><i class="bi bi-clipboard-check"></i> Solicitudes</a>
+            <a href="<%= request.getContextPath() %>/inmobiliaria/reportes.jsp"><i class="bi bi-graph-up"></i> Reportes</a>
             <% } %>
             <% if (hgRolesPanel != null && hgRolesPanel.contains("Cliente")) { %>
-            <a href="<%= request.getContextPath() %>/cliente/mis-citas.jsp" style="font-size:.9rem; font-weight:600;">Mis citas</a>
-            <a href="<%= request.getContextPath() %>/cliente/mis-solicitudes.jsp" style="font-size:.9rem; font-weight:600;">Mis solicitudes</a>
-            <a href="<%= request.getContextPath() %>/cliente/favoritos.jsp" style="font-size:.9rem; font-weight:600;">Favoritos</a>
-            <a href="<%= request.getContextPath() %>/cliente/perfil.jsp" style="font-size:.9rem; font-weight:600;">Mi perfil</a>
+            <a href="<%= request.getContextPath() %>/cliente/mis-citas.jsp"><i class="bi bi-calendar-check"></i> Mis citas</a>
+            <a href="<%= request.getContextPath() %>/cliente/mis-solicitudes.jsp"><i class="bi bi-clipboard-check"></i> Mis solicitudes</a>
+            <a href="<%= request.getContextPath() %>/cliente/favoritos.jsp"><i class="bi bi-heart"></i> Favoritos</a>
             <% } %>
             <% if (hgRolesPanel != null && hgRolesPanel.contains("Administrador")) { %>
-            <a href="<%= request.getContextPath() %>/administrador/reportes.jsp" style="font-size:.9rem; font-weight:600;">Reportes</a>
-            <a href="<%= request.getContextPath() %>/administrador/usuarios.jsp" style="font-size:.9rem; font-weight:600;">Usuarios</a>
-            <a href="<%= request.getContextPath() %>/administrador/catalogos.jsp" style="font-size:.9rem; font-weight:600;">Catalogos</a>
-            <a href="<%= request.getContextPath() %>/administrador/auditoria.jsp" style="font-size:.9rem; font-weight:600;">Auditoria</a>
+            <a href="<%= request.getContextPath() %>/administrador/reportes.jsp"><i class="bi bi-graph-up"></i> Reportes</a>
+            <a href="<%= request.getContextPath() %>/administrador/usuarios.jsp"><i class="bi bi-people"></i> Usuarios</a>
+            <a href="<%= request.getContextPath() %>/administrador/catalogos.jsp"><i class="bi bi-tags"></i> Catalogos</a>
+            <a href="<%= request.getContextPath() %>/administrador/auditoria.jsp"><i class="bi bi-journal-text"></i> Auditoria</a>
             <% } %>
-            <span class="hg-panel-topbar__hello">Hola, <%= hgNombrePanel != null ? hgNombrePanel : "usuario" %></span>
-            <% if (hgRolesPanel != null && !hgRolesPanel.isEmpty()) { %>
-            <span class="hg-panel-topbar__role"><%= String.join(" / ", hgRolesPanel) %></span>
-            <% } %>
-            <a class="hg-btn hg-btn--ghost" href="<%= request.getContextPath() %>/logout.jsp">Cerrar sesion</a>
+        </nav>
+
+        <div class="hg-panel-topbar__user">
+            <%@ include file="/jspf/avatar-cuenta.jspf" %>
         </div>
     </div>
 </header>
